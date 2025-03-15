@@ -163221,14 +163221,6 @@ entities:
     - type: Transform
       pos: -125.495964,95.51763
       parent: 2
-- proto: ShuttleGunPerforator
-  entities:
-  - uid: 5749
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -4.5,5.5
-      parent: 13386
 - proto: ShuttleWindow
   entities:
   - uid: 13642
@@ -163648,9 +163640,6 @@ entities:
       pos: -1.5009613,5.678486
       parent: 13386
     - type: DeviceLinkSource
-      linkedPorts:
-        5749:
-        - Pressed: Trigger
   - uid: 22888
     components:
     - type: Transform
@@ -168301,24 +168290,6 @@ entities:
     - type: Transform
       pos: 3.5,-0.5
       parent: 30902
-- proto: StationAiBrain
-  entities:
-  - uid: 7920
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -17.642565,182.4048
-      parent: 2
-    - type: MindContainer
-    - type: MobMover
-    - type: MovementSpeedModifier
-    - type: Emoting
-    missingComponents:
-    - ActionGrant
-    - UserInterface
-    - IntrinsicRadioReceiver
-    - IntrinsicRadioTransmitter
-    - ActiveRadio
 - proto: StationAiUploadCircuitboard
   entities:
   - uid: 8694
