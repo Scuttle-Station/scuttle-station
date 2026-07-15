@@ -1,0 +1,31 @@
+// SPDX-FileCopyrightText: 2025 Amethyst <52829582+jackel234@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Conrad <conradschroder540@gmail.com>
+// SPDX-FileCopyrightText: 2025 Kandiyaki <106633914+Kandiyaki@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 V <97265903+formlessnameless@users.noreply.github.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using Robust.Shared.Audio;
+
+namespace Content.Shared.Heretic.Components;
+
+[RegisterComponent, AutoGenerateComponentPause, AutoGenerateComponentState]
+public sealed partial class BlazingDashComponent : Component
+{
+    /// <summary>
+    ///     Indicates whether the heretic is using blazing dash.
+    /// </summary>
+    [DataField, AutoNetworkedField] public bool BlazingDashActive;
+
+    /// <summary>
+    ///     Indicates when blazing dash should end.
+    /// </summary>
+    [ViewVariables, AutoPausedField] public TimeSpan BlazingDashEndTime;
+
+    public TimeSpan BlazingDashDuration = TimeSpan.FromSeconds(5);
+    public SoundSpecifier DashSound = new SoundPathSpecifier("/Audio/Magic/fireball.ogg");
+    public int DashFireStacks = 1;
+    public float DashWalkSpeed = 1.5f;
+    public float DashRunSpeed = 2f;
+}
+

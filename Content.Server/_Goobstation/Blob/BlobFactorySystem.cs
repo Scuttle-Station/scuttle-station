@@ -1,3 +1,12 @@
+// SPDX-FileCopyrightText: 2024 John Space <bigdumb421@gmail.com>
+// SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
+// SPDX-FileCopyrightText: 2025 Fenn <162015305+TooSillyFennec@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using Content.Server._Goobstation.Blob.Components;
 using Content.Server.Popups;
 using Content.Shared._Goobstation.Blob;
@@ -36,6 +45,14 @@ public sealed class BlobFactorySystem : EntitySystem
         if (TryComp<BlobbernautComponent>(component.Blobbernaut, out var blobbernautComponent))
         {
             blobbernautComponent.Factory = null;
+        }
+
+        foreach (EntityUid blobPod in component.BlobPods)
+        {
+            if (TryComp<BlobPodComponent>(blobPod, out var blobPodComponent))
+            {
+                blobPodComponent.Factory = null;
+            }
         }
     }
 
@@ -152,6 +169,7 @@ public sealed class BlobFactorySystem : EntitySystem
         component.BlobPods.Add(pod);
         var blobPod = EnsureComp<BlobPodComponent>(pod);
         blobPod.Core = blobTileComponent.Core.Value;
+        blobPod.Factory = uid;
         FillSmokeGas((pod,blobPod), blobCoreComponent.CurrentChem);
 
         //smokeOnTrigger.SmokeColor = blobCoreComponent.ChemСolors[blobCoreComponent.CurrentChem];

@@ -1,3 +1,46 @@
+# SPDX-FileCopyrightText: 2021 20kdc <asdd2808@gmail.com>
+# SPDX-FileCopyrightText: 2021 FoLoKe <36813380+FoLoKe@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+# SPDX-FileCopyrightText: 2021 Swept <sweptwastaken@protonmail.com>
+# SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Ygg01 <y.laughing.man.y@gmail.com>
+# SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 T-Stalker <43253663+DogZeroX@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Ed <96445749+TheShuEd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Fluffiest Floofers <thebluewulf@gmail.com>
+# SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Velcroboy <107660393+IamVelcroboy@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 deathride58 <deathride58@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
+# SPDX-FileCopyrightText: 2023 lapatison <100279397+lapatison@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 potato1234_x <79580518+potato1234x@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 TsjipTsjip <19798667+TsjipTsjip@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 VeritableCalamity <34698192+Veritable-Calamity@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Verm <32827189+Vermidia@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 no <165581243+pissdemon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 themias <89101928+themias@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 McBosserson <148172569+McBosserson@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Milon <milonpl.git@proton.me>
+# SPDX-FileCopyrightText: 2025 MissKay1994 <15877268+MissKay1994@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 ThatOneMoon <91613003+ThatOneMoon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 ThatOneMoon <juozas.dringelis@gmail.com>
+# SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 Xcybitt <197952719+Xcybitt@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 # When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_baked_whole.yml & food_baked_single.yml
 # Base
 
@@ -15,6 +58,7 @@
   - type: Tag
     tags:
     - Bread
+    - VoxFood
   - type: SolutionContainerManager
     solutions:
       food:
@@ -201,10 +245,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 20
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -249,12 +293,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 40
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 27.5
         - ReagentId: Vitamin
           Quantity: 5
+        - ReagentId: Cheesium
+          Quantity: 4          
 # Tastes like bread, cheese.
 
 - type: entity
@@ -278,9 +324,11 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 5.5
         - ReagentId: Vitamin
-          Quantity: 1.2
+          Quantity: 1
+        - ReagentId: Cheesium
+          Quantity: 0.8          
 
 - type: entity
   name: meat bread
@@ -304,9 +352,11 @@
         maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 25
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Cheesium
+          Quantity: 4          
   - type: Tag
     tags:
     - Meat
@@ -333,7 +383,9 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 5.2
+        - ReagentId: Cheesium
+          Quantity: 0.8
         - ReagentId: Vitamin
           Quantity: 1.2
   - type: Tag
@@ -364,7 +416,7 @@
         maxVol: 40
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 20
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Nothing
@@ -447,11 +499,9 @@
         maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 25
         - ReagentId: Protein
-          Quantity: 5
+          Quantity: 15
   - type: Tag
     tags:
     - Meat
@@ -477,11 +527,9 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 1
+          Quantity: 3
   - type: Tag
     tags:
     - Meat
@@ -510,9 +558,11 @@
         maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 25
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Cheesium
+          Quantity: 4          
   - type: Tag
     tags:
     - Meat
@@ -539,9 +589,12 @@
         maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 2        
+        - ReagentId: Cheesium
+          Quantity: 0.8
+          
   - type: Tag
     tags:
     - Meat
@@ -570,9 +623,9 @@
         maxVol: 48
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 25
         - ReagentId: Protein
-          Quantity: 12
+          Quantity: 10
 # Tastes like bread, tofu.
 
 - type: entity
@@ -595,9 +648,9 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 2.4
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 2
 
 - type: entity
   name: xeno meat bread
@@ -621,7 +674,9 @@
         maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 26
+        - ReagentId: Cheesium
+          Quantity: 4
         - ReagentId: Vitamin
           Quantity: 5
   - type: Tag
@@ -650,7 +705,9 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 5.2
+        - ReagentId: Cheesium
+          Quantity: 0.8
         - ReagentId: Vitamin
           Quantity: 1.2
   - type: Tag
@@ -675,16 +732,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 15
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 5
         - ReagentId: TableSalt
-          Quantity: 1
+          Quantity: 2.5
         - ReagentId: Blackpepper
-          Quantity: 1
+          Quantity: 2.5
   - type: Clothing
     slots: [ BELT ]
     equippedPrefix: baguette
@@ -702,7 +759,7 @@
         Blunt: 1 # bonk
   - type: Tag #Goobstation
     tags:
-    - BreadEmergency 
+    - BreadEmergency
 
 # Tastes like France.
 
@@ -733,18 +790,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 10
         - ReagentId: Fiber
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 10
         - ReagentId: TableSalt
-          Quantity: 1
+          Quantity: 2.5
         - ReagentId: Blackpepper
-          Quantity: 1
+          Quantity: 2.5
 
 - type: entity
   name: crostini
@@ -818,8 +873,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 1
+        - ReagentId: Butter
+          Quantity: 5
 # Tastes like bread, butter.
 
 - type: entity
@@ -837,12 +892,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 13
+        - ReagentId: Protein
+          Quantity: 12
 # Tastes like bread, butter.
 
 - type: entity
@@ -861,19 +916,21 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Allicin
+          Quantity: 4
 # Tastes like garlic, Italy.
 
 - type: entity
   name: jelly toast
   parent: FoodBreadSliceBase
   id: FoodBreadJellySlice
-  description: As if science are gonna give up their slimes for toast!
+  description: Sometimes, simple is best.
   components:
   - type: FlavorProfile
     flavors:
@@ -885,12 +942,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
 # Tastes like garlic, Italy.
 
 - type: entity
@@ -931,7 +988,7 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 8
         - ReagentId: Vitamin
           Quantity: 2
         - ReagentId: Wine

@@ -1,4 +1,10 @@
-﻿using Content.Shared.Actions;
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Actions;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Movement.Components;
@@ -114,6 +120,7 @@ public abstract class SharedBorgSwitchableTypeSystem : EntitySystem
         if (TryComp(entity, out InteractionPopupComponent? popup))
         {
             _interactionPopup.SetInteractSuccessString((entity.Owner, popup), prototype.PetSuccessString);
+            _interactionPopup.SetInteractPerceivedByOthersString((entity.Owner, popup), prototype.PetSuccessOthersString);
             _interactionPopup.SetInteractFailureString((entity.Owner, popup), prototype.PetFailureString);
         }
 

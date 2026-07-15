@@ -1,4 +1,11 @@
-﻿using Content.Shared._Goobstation.Blob.Components;
+// SPDX-FileCopyrightText: 2024 John Space <bigdumb421@gmail.com>
+// SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
+// SPDX-FileCopyrightText: 2025 ferynn <witchy.girl.me@gmail.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+using Content.Shared._Goobstation.Blob.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.UserInterface;
@@ -25,9 +32,9 @@ public abstract class SharedZombieBlobSystem : EntitySystem
             !TryComp<ActivatableUIComponent>(args.Target, out var uiComp) ||
             !HasComp<ZombieBlobComponent>(args.Actor))
             return;
-
-        if(uiComp.RequiresComplex)
-            args.Cancel();
+        //Funkystation
+        //if(uiComp.RequiresComplex)
+        //    args.Cancel();
     }
 
     private void OnAttemptShoot(Entity<ZombieBlobComponent> ent, ref ShotAttemptedEvent args)

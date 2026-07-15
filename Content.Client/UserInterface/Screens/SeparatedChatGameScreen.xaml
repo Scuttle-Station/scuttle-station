@@ -1,3 +1,18 @@
+<!--
+SPDX-FileCopyrightText: 2023 Flipp Syder <76629141+vulppine@users.noreply.github.com>
+SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+SPDX-FileCopyrightText: 2023 ShadowCommander <10494922+ShadowCommander@users.noreply.github.com>
+SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
+SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 yglop <95057024+yglop@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+
+SPDX-License-Identifier: MIT
+-->
+
 <screens:SeparatedChatGameScreen
     xmlns="https://spacestation14.io"
     xmlns:screens="clr-namespace:Content.Client.UserInterface.Screens"
@@ -34,8 +49,8 @@
             </PanelContainer.PanelOverride>
 
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="10" Margin="10">
-                <menuBar:GameTopMenuBar Name="TopBar" HorizontalExpand="True" Access="Protected" />
-                <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" MinSize="0 0"/>
+                <menuBar:GameTopMenuBar Name="TopBar" HorizontalExpand="True" Access="Public" />
+                <chat:ChatBox StyleClasses="ChatOutput" VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" MinSize="0 0"/>
             </BoxContainer>
         </PanelContainer>
     </SplitContainer>

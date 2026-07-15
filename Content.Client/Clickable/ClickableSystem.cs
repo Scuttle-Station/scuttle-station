@@ -1,4 +1,15 @@
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 TemporalOroboros <TemporalOroboros@gmail.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
+using Content.Client.Sprite;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Utility;
@@ -17,12 +28,14 @@ public sealed class ClickableSystem : EntitySystem
 
     private EntityQuery<ClickableComponent> _clickableQuery;
     private EntityQuery<TransformComponent> _xformQuery;
+    private EntityQuery<FadingSpriteComponent> _fadingSpriteQuery;
 
     public override void Initialize()
     {
         base.Initialize();
         _clickableQuery = GetEntityQuery<ClickableComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+        _fadingSpriteQuery = GetEntityQuery<FadingSpriteComponent>();
     }
 
     /// <summary>
@@ -34,7 +47,7 @@ public sealed class ClickableSystem : EntitySystem
     /// The draw depth for the sprite that captured the click.
     /// </param>
     /// <returns>True if the click worked, false otherwise.</returns>
-    public bool CheckClick(Entity<ClickableComponent?, SpriteComponent, TransformComponent?> entity, Vector2 worldPos, IEye eye, out int drawDepth, out uint renderOrder, out float bottom)
+    public bool CheckClick(Entity<ClickableComponent?, SpriteComponent, TransformComponent?, FadingSpriteComponent?> entity, Vector2 worldPos, IEye eye, bool excludeFaded, out int drawDepth, out uint renderOrder, out float bottom)
     {
         if (!_clickableQuery.Resolve(entity.Owner, ref entity.Comp1, false))
         {
@@ -45,6 +58,14 @@ public sealed class ClickableSystem : EntitySystem
         }
 
         if (!_xformQuery.Resolve(entity.Owner, ref entity.Comp3))
+        {
+            drawDepth = default;
+            renderOrder = default;
+            bottom = default;
+            return false;
+        }
+
+        if (excludeFaded && _fadingSpriteQuery.Resolve(entity.Owner, ref entity.Comp4, false))
         {
             drawDepth = default;
             renderOrder = default;
@@ -66,10 +87,10 @@ public sealed class ClickableSystem : EntitySystem
         drawDepth = sprite.DrawDepth;
         renderOrder = sprite.RenderOrder;
         var (spritePos, spriteRot) = _transforms.GetWorldPositionRotation(transform);
-        var spriteBB = sprite.CalculateRotatedBoundingBox(spritePos, spriteRot, eye.Rotation);
+        var spriteBB = _sprites.CalculateBounds((entity.Owner, sprite), spritePos, spriteRot, eye.Rotation);
         bottom = Matrix3Helpers.CreateRotation(eye.Rotation).TransformBox(spriteBB).Bottom;
 
-        Matrix3x2.Invert(sprite.GetLocalMatrix(), out var invSpriteMatrix);
+        Matrix3x2.Invert(sprite.LocalMatrix, out var invSpriteMatrix);
 
         // This should have been the rotation of the sprite relative to the screen, but this is not the case with no-rot or directional sprites.
         var relativeRotation = (spriteRot + eye.Rotation).Reduced().FlipPositive();
@@ -96,7 +117,7 @@ public sealed class ClickableSystem : EntitySystem
             if (layer.Texture != null)
             {
                 // Convert to image coordinates
-                var imagePos = (Vector2i) (localPos * EyeManager.PixelsPerMeter * new Vector2(1, -1) + layer.Texture.Size / 2f);
+                var imagePos = (Vector2i)(localPos * EyeManager.PixelsPerMeter * new Vector2(1, -1) + layer.Texture.Size / 2f);
 
                 if (_clickMapManager.IsOccluding(layer.Texture, imagePos))
                     return true;
@@ -114,7 +135,7 @@ public sealed class ClickableSystem : EntitySystem
             var layerLocal = Vector2.Transform(localPos, inverseMatrix);
 
             // Convert to image coordinates
-            var layerImagePos = (Vector2i) (layerLocal * EyeManager.PixelsPerMeter * new Vector2(1, -1) + rsiState.Size / 2f);
+            var layerImagePos = (Vector2i)(layerLocal * EyeManager.PixelsPerMeter * new Vector2(1, -1) + rsiState.Size / 2f);
 
             // Next, to get the right click map we need the "direction" of this layer that is actually being used to draw the sprite on the screen.
             // This **can** differ from the dir defined before, but can also just be the same.

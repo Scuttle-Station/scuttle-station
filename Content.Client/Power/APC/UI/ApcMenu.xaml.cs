@@ -3,14 +3,12 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.GameObjects;
 using Robust.Shared.IoC;
 using System;
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared.APC;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
+using System.Numerics;
 
 namespace Content.Client.Power.APC.UI
 {
@@ -18,6 +16,7 @@ namespace Content.Client.Power.APC.UI
     public sealed partial class ApcMenu : FancyWindow
     {
         public event Action? OnBreaker;
+        public event Action? OnSiphon; // EE probably
 
         public ApcMenu()
         {
@@ -25,6 +24,7 @@ namespace Content.Client.Power.APC.UI
             RobustXamlLoader.Load(this);
 
             BreakerButton.OnPressed += _ => OnBreaker?.Invoke();
+            SiphonButton.OnPressed += _ => OnSiphon?.Invoke(); // EE probably
         }
 
         public void SetEntity(EntityUid entity)
@@ -43,7 +43,7 @@ namespace Content.Client.Power.APC.UI
 
             if (PowerLabel != null)
             {
-                PowerLabel.Text = castState.Power + " W";
+                PowerLabel.Text = Loc.GetString("apc-menu-power-state-label-text", ("power", castState.Power));
             }
 
             if (ExternalPowerStateLabel != null)
@@ -52,15 +52,15 @@ namespace Content.Client.Power.APC.UI
                 {
                     case ApcExternalPowerState.None:
                         ExternalPowerStateLabel.Text = Loc.GetString("apc-menu-power-state-none");
-                        ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+                        ExternalPowerStateLabel.SetOnlyStyleClass("negative");
                         break;
                     case ApcExternalPowerState.Low:
                         ExternalPowerStateLabel.Text = Loc.GetString("apc-menu-power-state-low");
-                        ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateLow);
+                        ExternalPowerStateLabel.SetOnlyStyleClass("highlight");
                         break;
                     case ApcExternalPowerState.Good:
                         ExternalPowerStateLabel.Text = Loc.GetString("apc-menu-power-state-good");
-                        ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
+                        ExternalPowerStateLabel.SetOnlyStyleClass("positive");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -73,6 +73,15 @@ namespace Content.Client.Power.APC.UI
                 UpdateChargeBarColor(castState.Charge);
                 var chargePercentage = (castState.Charge / ChargeBar.MaxValue);
                 ChargePercentage.Text = Loc.GetString("apc-menu-charge-label",("percent",  chargePercentage.ToString("P0")));
+            }
+
+            // Disable the siphon button if this APC has already been siphoned.
+            if (SiphonButton != null)
+            {
+                SiphonButton.Disabled = castState.Siphoned;
+                SiphonButton.ToolTip = castState.Siphoned
+                    ? Loc.GetString("apc-menu-siphon-already")
+                    : null;
             }
         }
 
@@ -88,6 +97,16 @@ namespace Content.Client.Power.APC.UI
                 BreakerButton.Disabled = true;
                 BreakerButton.ToolTip = Loc.GetString("apc-component-insufficient-access");
             }
+        }
+
+        public void SetSiphonVisible(bool visible)
+        {
+            if (SiphonSpacer != null)
+                SiphonSpacer.Visible = visible;
+            if (SiphonContainer != null)
+                SiphonContainer.Visible = visible;
+            if (SiphonButton != null)
+                SiphonButton.Visible = visible;
         }
 
         private void UpdateChargeBarColor(float charge)

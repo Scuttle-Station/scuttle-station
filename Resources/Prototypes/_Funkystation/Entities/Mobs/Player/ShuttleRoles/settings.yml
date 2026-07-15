@@ -1,0 +1,35 @@
+# SPDX-FileCopyrightText: 2025 Goomson <GoomsonCode@proton.me>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+## Funkystation Unique shuttle role settings
+
+# Command
+
+# Security
+
+- type: randomHumanoidSettings
+  id: VisitorSecurityClown
+  parent: VisitorSecurity
+  components:
+    - type: GhostRole
+      name: job-name-security-clown
+    - type: Loadout
+      prototypes: [ VisitorSecurityClown ]
+      roleLoadout: [ RoleSurvivalSecurity ]
+
+# Cargo
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+# Silicon
+# unsure if silicon is even needed as they do not have unique loadouts
+
+# Misc

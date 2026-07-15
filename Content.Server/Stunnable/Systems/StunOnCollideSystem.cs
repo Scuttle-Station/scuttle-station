@@ -1,3 +1,19 @@
+// SPDX-FileCopyrightText: 2021 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <gradientvera@outlook.com>
+// SPDX-FileCopyrightText: 2021 metalgearsloth <comedian_vs_clown@hotmail.com>
+// SPDX-FileCopyrightText: 2021 mirrorcult <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2021 pointer-to-null <91910481+pointer-to-null@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Acruid <shatter66@gmail.com>
+// SPDX-FileCopyrightText: 2022 keronshb <54602815+keronshb@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 TrixxedHeart <46364955+TrixxedBit@users.noreply.github.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Stunnable.Components;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
@@ -26,10 +42,22 @@ namespace Content.Server.Stunnable
             if (EntityManager.TryGetComponent<StatusEffectsComponent>(target, out var status))
             {
                 _stunSystem.TryStun(target, TimeSpan.FromSeconds(component.StunAmount), true, status);
+                _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(component.KnockdownAmount), true, status);
 
-                _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(component.KnockdownAmount), true,
-                    status);
-
+                // _Funkystation Start: Apply slowdown only if it doesn't exceed the cap
+                if (component.SlowdownCap.HasValue)
+                {
+                    var slowed = CompOrNull<Content.Shared.Stunnable.SlowedDownComponent>(target);
+                    if (slowed != null)
+                    {
+                        float newWalk = slowed.WalkSpeedModifier * component.WalkSpeedMultiplier;
+                        float newRun = slowed.SprintSpeedModifier * component.RunSpeedMultiplier;
+                        float cap = component.SlowdownCap.Value;
+                        if (newWalk < cap && newRun < cap)
+                            return;
+                    }
+                }
+                // _Funkystation End
                 _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(component.SlowdownAmount), true,
                     component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status);
             }

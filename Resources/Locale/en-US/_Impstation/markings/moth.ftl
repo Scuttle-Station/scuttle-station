@@ -1,3 +1,9 @@
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 hivehum <ketchupfaced@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 marking-MothBodyClaw = Claw Scars
 marking-MothBodyClaw-moth_body_claw = Claw Scars
 marking-MothBurnLeft = Burn Scar (Left)
@@ -20,7 +26,8 @@ marking-ProstheticArmRightMoth = Prosthetic (Right)
 marking-ProstheticArmRightMoth-arm_r_prosthetic_moth = Prosthetic (Right)
 marking-TwistingArmRightMoth = Twisted Scar (Right)
 marking-TwistingArmRightMoth-arm_r_twisting_moth = Twisted Scar (Right)
-marking-WingsBackstabbed = Wings (Backstabbed)
+marking-WingsBackstabbed_primary = Primary
+marking-WingsBackstabbed_secondary = Secondary
 marking-WingsBackstabbed-wings_backstabbed = Wings (Backstabbed)
 marking-ChestChimeraFemaleMoth = Moth Chest (Chimera)
 marking-ChestChimeraFemaleMoth-chest_chimera_f_moth = Moth Chest (Chimera)

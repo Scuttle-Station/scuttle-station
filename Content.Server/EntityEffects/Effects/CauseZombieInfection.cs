@@ -1,3 +1,16 @@
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Emisse <99158783+Emisse@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 TemporalOroboros <TemporalOroboros@gmail.com>
+// SPDX-FileCopyrightText: 2024 Ady4ik <141335742+Ady4ik@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 QueerCats <jansencheng3@gmail.com>
+// SPDX-FileCopyrightText: 2026 Terkala <appleorange64@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Zombies;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
@@ -13,9 +26,8 @@ public sealed partial class CauseZombieInfection : EntityEffect
     // Adds the Zombie Infection Components
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var entityManager = args.EntityManager;
-        entityManager.EnsureComponent<ZombifyOnDeathComponent>(args.TargetEntity);
-        entityManager.EnsureComponent<PendingZombieComponent>(args.TargetEntity);
+        var zombieTumorSystem = args.EntityManager.System<ZombieTumorOrganSystem>();
+        zombieTumorSystem.InfectEntity(args.TargetEntity, ZombieTumorInfectionStage.Incubation);
     }
 }
 

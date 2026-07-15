@@ -1,0 +1,40 @@
+# SPDX-FileCopyrightText: 2025 Goomson <GoomsonCode@proton.me>
+# SPDX-FileCopyrightText: 2025 mkanke-real <mikekanke@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+- type: preloadedGrid
+  id: skeletonMafia
+  path: /Maps/_Funkystation/Shuttles/ShuttleEvent/skeletonMafia.yml
+  copies: 2
+
+- type: preloadedGrid
+  id: clownPatrol
+  path: /Maps/_Funkystation/Shuttles/ShuttleEvent/clownpatrol.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: foamroid
+  path: /Maps/_Funkystation/Shuttles/ShuttleEvent/foamroid.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: loneroboticist
+  path: /Maps/_Funkystation/Shuttles/ShuttleEvent/loneroboticist.yml
+  copies: 2
+
+- type: preloadedGrid
+  id: mouseJumpscare
+  path: /Maps/_Funkystation/Shuttles/ShuttleEvent/mouseJumpscare.yml
+  copies: 2
+
+- type: preloadedGrid
+  id: wanderingNomad
+  path: /Maps/_Funkystation/Shuttles/ShuttleEvent/wanderingNomad.yml
+  copies: 2
+
+- type: preloadedGrid
+  id: wanderingspacecowboy
+  path: /Maps/_Funkystation/Shuttles/ShuttleEvent/spacecowboyshuttle.yml
+  copies: 2

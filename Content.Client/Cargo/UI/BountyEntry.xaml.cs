@@ -1,3 +1,13 @@
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Killerqu00 <47712032+Killerqu00@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2025 Gansu <68031780+GansuLalan@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Gansu <peat.allan13@gmail.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Message;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Prototypes;
@@ -29,19 +39,31 @@ public sealed partial class BountyEntry : BoxContainer
 
         UntilNextSkip = untilNextSkip;
 
-        if (!_prototype.TryIndex<CargoBountyPrototype>(bounty.Bounty, out var bountyPrototype))
-            return;
-
         var items = new List<string>();
-        foreach (var entry in bountyPrototype.Entries)
+        foreach (var entry in bounty.Entries) // Funky Station
         {
-            items.Add(Loc.GetString("bounty-console-manifest-entry",
-                ("amount", entry.Amount),
-                ("item", Loc.GetString(entry.Name))));
+            switch (entry)
+            {
+                case CargoObjectBountyItemData objectBounty:
+                    items.Add(Loc.GetString("bounty-console-manifest-entry",
+                        ("amount", entry.Amount),
+                        ("item", Loc.GetString(entry.Name))));
+                    break;
+                case CargoReagentBountyItemData reagentBounty:
+                    items.Add(Loc.GetString("bounty-console-manifest-entry-reagent",
+                        ("amount", entry.Amount),
+                        ("item", Loc.GetString(entry.Name))));
+                    break;
+                case CargoGasBountyItemData gasBounty:
+                    items.Add(Loc.GetString("bounty-console-manifest-entry-gas",
+                        ("amount", entry.Amount),
+                        ("item", Loc.GetString(entry.Name))));
+                    break;
+            }
         }
         ManifestLabel.SetMarkup(Loc.GetString("bounty-console-manifest-label", ("item", string.Join(", ", items))));
-        RewardLabel.SetMarkup(Loc.GetString("bounty-console-reward-label", ("reward", bountyPrototype.Reward)));
-        DescriptionLabel.SetMarkup(Loc.GetString("bounty-console-description-label", ("description", Loc.GetString(bountyPrototype.Description))));
+        RewardLabel.SetMarkup(Loc.GetString("bounty-console-reward-label", ("reward", bounty.Reward))); // Funky Station
+        DescriptionLabel.SetMarkup(Loc.GetString("bounty-console-description-label", ("description", Loc.GetString(bounty.Description)))); // Funky Station
         IdLabel.SetMarkup(Loc.GetString("bounty-console-id-label", ("id", bounty.Id)));
 
         PrintButton.OnPressed += _ => OnLabelButtonPressed?.Invoke();

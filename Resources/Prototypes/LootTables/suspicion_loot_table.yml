@@ -1,3 +1,16 @@
+# SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2022 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 ZeroDayDaemon <60460608+ZeroDayDaemon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 and_a <and_a@DESKTOP-RJENGIR>
+# SPDX-FileCopyrightText: 2023 TaralGit <76408146+TaralGit@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 W.xyz() <84605679+pirakaplant@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 # These will be spawned randomly around the station
 - type: entityLootTable
   id: SuspicionRule
@@ -30,7 +43,9 @@
     maxAmount: 5
   - id: CrowbarRed
     maxAmount: 5
-  - id: Stunbaton
+#  - id: Stunbaton # Funky
+#    maxAmount: 10
+  - id: Truncheon # Funky
     maxAmount: 10
 
   - id: WeaponRevolverDeckard
@@ -87,9 +102,9 @@
   - id: WeaponXrayCannon
     amount: 0
     maxAmount: 2
-  - id: WeaponDisabler
-    amount: 0
-    maxAmount: 4
+#  - id: WeaponDisabler # funky
+#    amount: 0
+#    maxAmount: 4
 
   - id: WeaponLauncherChinaLake
     prob: 0.30

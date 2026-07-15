@@ -1,4 +1,11 @@
-﻿using Content.Shared.Interaction.Components;
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
 using Content.Shared.Silicons.Borgs.Components;
@@ -135,6 +142,13 @@ public sealed partial class BorgTypePrototype : IPrototype
     /// <seealso cref="InteractionPopupComponent"/>
     [DataField]
     public string PetSuccessString { get; set; } = "petting-success-generic-cyborg";
+
+    /// <summary>
+    /// String to use on petting success, using MessagePerceivedByOthers.
+    /// </summary>
+    /// <seealso cref="InteractionPopupComponent"/>
+    [DataField]
+    public string PetSuccessOthersString { get; set; } = "petting-success-generic-others";
 
     /// <summary>
     /// String to use on petting failure.

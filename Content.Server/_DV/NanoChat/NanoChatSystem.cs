@@ -1,8 +1,18 @@
+// SPDX-FileCopyrightText: 2024 Skubman <ba.fallaria@gmail.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 Icepick <122653407+Icepicked@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using System.Linq;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Kitchen.Components;
 using Content.Server.NameIdentifier;
+using Content.Shared.PDA;
+using Robust.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared._DV.CartridgeLoader.Cartridges;
 using Content.Shared._DV.NanoChat;
@@ -26,8 +36,30 @@ public sealed class NanoChatSystem : SharedNanoChatSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<NanoChatCardComponent, EntGotInsertedIntoContainerMessage>(OnInserted);
+        SubscribeLocalEvent<NanoChatCardComponent, EntGotRemovedFromContainerMessage>(OnRemoved);
+
         SubscribeLocalEvent<NanoChatCardComponent, MapInitEvent>(OnCardInit);
         SubscribeLocalEvent<NanoChatCardComponent, BeingMicrowavedEvent>(OnMicrowaved, after: [typeof(IdCardSystem)]);
+    }
+
+    private void OnInserted(Entity<NanoChatCardComponent> ent, ref EntGotInsertedIntoContainerMessage args)
+    {
+        if (args.Container.ID != PdaComponent.PdaIdSlotId)
+            return;
+
+        ent.Comp.PdaUid = args.Container.Owner;
+        Dirty(ent);
+    }
+
+    private void OnRemoved(Entity<NanoChatCardComponent> ent, ref EntGotRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID != PdaComponent.PdaIdSlotId)
+            return;
+
+        ent.Comp.PdaUid = null;
+        Dirty(ent);
     }
 
     private void OnMicrowaved(Entity<NanoChatCardComponent> ent, ref BeingMicrowavedEvent args)

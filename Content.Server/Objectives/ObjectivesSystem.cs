@@ -1,3 +1,25 @@
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 ShadowCommander <10494922+ShadowCommander@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
+// SPDX-FileCopyrightText: 2023 themias <89101928+themias@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Crotalus <Crotalus@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Ed <96445749+TheShuEd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Hreno <hrenor@gmail.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 nikthechampiongr <32041239+nikthechampiongr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 beck-thompson <107373427+beck-thompson@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.GameTicking;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Cuffs.Components;
@@ -12,9 +34,13 @@ using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
 using Content.Server.Objectives.Commands;
+using Content.Shared._DV.CustomObjectiveSummary;
+using Content.Shared._Funkystation.CCVars;
+using Content.Shared.CCVar; // DeltaV
 using Content.Shared.Prototypes;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives;
@@ -29,6 +55,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!; // funky
 
     private IEnumerable<string>? _objectives;
 
@@ -171,28 +198,63 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     totalObjectives++;
 
                     agentSummary.Append("- ");
-                    if (progress > 0.99f)
+
+                    // begin funky -- use cvars to configure custom objectives
+                    if (_cfg.GetCVar(CCVars_Funky.GreentextEnabled))
+                    {
+                        if (progress > 0.99f)
+                        {
+                            agentSummary.AppendLine(Loc.GetString(
+                                "objectives-objective-success",
+                                ("objective", objectiveTitle),
+                                ("markupColor", "green")
+                            ));
+                            completedObjectives++;
+                        }
+                        else
+                        {
+                            agentSummary.AppendLine(Loc.GetString(
+                                "objectives-objective-fail",
+                                ("objective", objectiveTitle),
+                                ("progress", (int) (progress * 100)),
+                                ("markupColor", "red")
+                            ));
+                        }
+                    }
+                    else // "pinktext" (no objectives green/red) becomes the default in case we accidentally disable both objective cvars
                     {
                         agentSummary.AppendLine(Loc.GetString(
-                            "objectives-objective-success",
-                            ("objective", objectiveTitle),
-                            ("markupColor", "green")
-                        ));
-                        completedObjectives++;
-                    }
-                    else
-                    {
-                        agentSummary.AppendLine(Loc.GetString(
-                            "objectives-objective-fail",
-                            ("objective", objectiveTitle),
-                            ("progress", (int) (progress * 100)),
-                            ("markupColor", "red")
+                            "objectives-objective",
+                            ("objective", objectiveTitle)
                         ));
                     }
+                    // end funky
                 }
             }
 
             var successRate = totalObjectives > 0 ? (float) completedObjectives / totalObjectives : 0f;
+            // Begin DeltaV Additions - custom objective response.
+            if (TryComp<CustomObjectiveSummaryComponent>(mindId, out var customComp) && _cfg.GetCVar(CCVars_Funky.PinktextEnabled)) // funky -- configure objectives with cvars
+            {
+                // We have to spit it like this to make it readable. Yeah, it sucks but for some reason the entire thing
+                // is just one long string...
+                var words = customComp.ObjectiveSummary.Split(" ");
+                var currentLine = "";
+                foreach (var word in words)
+                {
+                    currentLine += word + " ";
+
+                    // magic number
+                    if (currentLine.Length <= 50)
+                        continue;
+
+                    agentSummary.AppendLine(Loc.GetString("custom-objective-format", ("line", currentLine)));
+                    currentLine = "";
+                }
+
+                agentSummary.AppendLine(Loc.GetString("custom-objective-format", ("line", currentLine)));
+            }
+            // End DeltaV Additions
             agentSummaries.Add((agentSummary.ToString(), successRate, completedObjectives));
         }
 

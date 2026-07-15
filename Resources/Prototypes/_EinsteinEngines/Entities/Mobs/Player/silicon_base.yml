@@ -1,3 +1,23 @@
+# SPDX-FileCopyrightText: 2024 Fishbait <Fishbait@git.ml>
+# SPDX-FileCopyrightText: 2024 John Space <bigdumb421@gmail.com>
+# SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 KiraZen_ <209320699+KiraZen-Underscore@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Lyndomen <49795619+lyndomen@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Mish <bluscout78@yahoo.com>
+# SPDX-FileCopyrightText: 2025 Mora <46364955+TrixxedHeart@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 No Elka <125199100+NoElkaTheGod@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 No Elka <no.elka.the.god@gmail.com>
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-FileCopyrightText: 2025 TrixxedHeart <46364955+TrixxedBit@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 jackel234 <52829582+jackel234@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: entity
   save: false
   id: PlayerSiliconHumanoidBase
@@ -23,13 +43,12 @@
       soundHit:
         path: /Audio/Effects/hit_kick.ogg
     - type: Damageable
-      damageContainer: Silicon
+      damageContainer: HumanoidSilicon # DeltaV - change from Silicon
       damageModifierSet: IPC
     - type: InteractionOutline
     - type: MovementSpeedModifier
       baseWalkSpeed: 4
       baseSprintSpeed: 3
-    - type: ZombieImmune
     - type: DoAfter
     - type: RotationVisuals
       horizontalRotation: 90
@@ -64,15 +83,15 @@
         0: 0.00
     - type: Temperature
       heatDamageThreshold: 1800 # GoobStation: Roughly the melting point of mild steels
-      coldDamageThreshold: 260
+      coldDamageThreshold: 100 # DeltaV - has to be very cold
       currentTemperature: 310.15
       specificHeat: 42
       coldDamage:
         types:
-          Cold: 0.1 #per second, scales with temperature & other constants
+          Cold: 0.5 #per second, scales with temperature & other constants
       heatDamage:
         types:
-          Heat: 3 #per second, scales with temperature & other constants
+          Heat: 2 # DeltaV - was 3
       atmosTemperatureTransferEfficiency: 0.05
     - type: KillOnOverheat # GoobStation
     - type: Deathgasp
@@ -133,6 +152,11 @@
         - map: ["shoes"]
         - map: ["ears"]
         - map: ["outerClothing"]
+        - map: [ "culteyes" ] # funky cult
+          sprite: "_Funkystation/BloodCult/Effects/culteyes.rsi"
+          state: "human"  # TODO make IPC version
+          shader: unshaded
+          visible: false
         - map: ["eyes"]
         - map: ["belt"]
         - map: ["neck"]
@@ -142,33 +166,42 @@
         - map: ["enum.HumanoidVisualLayers.HeadSide"]
         - map: ["enum.HumanoidVisualLayers.HeadTop"]
         - map: ["mask"]
+        - map: [ "enum.PaperLabelVisuals.Layer" ] # Funky edit
+          sprite: "_DV/Objects/Misc/stickies.rsi"
+          state: "sticky_face"
+          visible: false
         - map: ["head"]
+        - map: ["enum.HumanoidVisualLayers.Tail"]
         - map: ["pocket1"]
         - map: ["pocket2"]
-        - map: ["enum.HumanoidVisualLayers.Tail"]
         - map: ["clownedon"] # Dynamically generated
           sprite: "Effects/creampie.rsi"
           state: "creampie_human"
           visible: false
+        - map: [ "culthalo" ] # funky cult
+          sprite: "_Funkystation/BloodCult/Effects/halo.rsi"
+          state: "halo"
+          shader: unshaded
+          visible: false
     - type: CanEnterCryostorage # Goobstation
     - type: StatusIcon # Goobstation
       bounds: -0.5,-0.5,0.5,0.5
-    #- type: Bloodstream This is left commented out because it's not necessary for a robot, but you may want it.
-    #  damageBleedModifiers: BloodlossIPC
-    #  bloodReagent: Oil
-    #  bleedReductionAmount: 0
-    #  bloodMaxVolume: 500
-    #  chemicalMaxVolume: 0
-    #  bleedPuddleThreshold: 3
-    #  bleedRefreshAmount: 0
-    #  bloodLossThreshold: 0
-    #  maxBleedAmount: 14
-    #  bloodlossDamage:
-    #    types:
-    #      Burn: 1.5
-    #  bloodlossHealDamage:
-    #    types:
-    #      Burn: 0
+    - type: Bloodstream # begin DeltaV - uncommented
+      damageBleedModifiers: BloodlossIPC
+      bloodReagent: MachineOil
+      bleedReductionAmount: 0
+      bloodMaxVolume: 100
+      chemicalMaxVolume: 0
+      bleedPuddleThreshold: 3
+      bloodRefreshAmount: 0
+      bloodlossThreshold: 0.8
+      maxBleedAmount: 2 # not a lot, but its hard to stop
+      bloodlossDamage:
+        types:
+          Blunt: 0.1 # lubricant is running low
+      bloodlossHealDamage:
+        types:
+          Burn: 0 # end DeltaV
     - type: Flammable
       fireSpread: true
       canResistFire: true
@@ -205,6 +238,18 @@
           clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
             True: { visible: true }
             False: { visible: false }
+        enum.CultHaloVisuals.CultHalo:
+          culthalo:
+            True: { visible: true }
+            False: { visible: false }
+        enum.CultEyesVisuals.CultEyes:
+          culteyes:
+            True: { visible: true }
+            False: { visible: false }
+        enum.PaperLabelVisuals.HasLabel:
+          enum.PaperLabelVisuals.Layer:
+            True: { visible: true }
+            False: { visible: false }
     - type: Cuffable
     - type: AnimationPlayer
     - type: Buckle
@@ -223,8 +268,17 @@
           type: StoreBoundUserInterface
         enum.HereticLivingHeartKey.Key: # goob edit - heretics
           type: LivingHeartMenuBoundUserInterface
+        enum.BloodCultistCommuneUIKey.Key: # funky edit - cultists
+          type: BloodCultCommuneBoundUserInterface
+          requireInputValidation: false
+        enum.SpellsUiKey.Key: # funky edit - cultists
+          type: SpellsBoundUserInterface
+          requireInputValidation: false
         enum.SurgeryUIKey.Key: # Shitmed
           type: SurgeryBui
+        enum.ThavenMoodsUiKey.Key: # impstation edit
+          type: ThavenMoodsBoundUserInterface
+          requireInputValidation: false
     - type: Emoting
     - type: Grammar
       attributes:
@@ -319,3 +373,17 @@
     - type: Targeting
     - type: SurgeryTarget
     - type: LayingDown
+    - type: ContainerContainer # Funky - put sticky notes on those IPCs
+      containers:
+        paper_label: !type:ContainerSlot
+    - type: ItemSlots
+    - type: PaperLabel
+      labelSlot:
+        insertVerbText: comp-paper-label-insert
+        ejectVerbText: comp-paper-label-eject
+        whitelist:
+          tags:
+          - StickyNoteYellow
+          - StickyNotePink
+          - StickyNoteGreen
+          - StickyNoteBlue

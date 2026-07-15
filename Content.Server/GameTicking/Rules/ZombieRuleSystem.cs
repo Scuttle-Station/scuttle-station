@@ -1,3 +1,43 @@
+// SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 sBasalto <109002990+sBasalto@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Jezithyr <jezithyr@gmail.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 OctoRocket <88291550+OctoRocket@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Pieter-Jan Briers <pieterjan.briers@gmail.com>
+// SPDX-FileCopyrightText: 2023 ShadowCommander <10494922+ShadowCommander@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Slava0135 <40753025+Slava0135@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Tom Leys <tom@crump-leys.com>
+// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Vyacheslav Titov <rincew1nd@ya.ru>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 ArchPigeon <bookmaster3@gmail.com>
+// SPDX-FileCopyrightText: 2024 Brandon Hu <103440971+Brandon-Huu@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 LordCarve <27449516+LordCarve@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Mr. 27 <45323883+Dutch-VanDerLinde@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Rainfey <rainfey0+github@gmail.com>
+// SPDX-FileCopyrightText: 2024 Simon <63975668+Simyon264@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 Wrexbe (Josh) <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 JoulesBerg <104539820+JoulesBerg@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 QueerCats <jansencheng3@gmail.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 ferynn <117872973+ferynn@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 ferynn <witchy.girl.me@gmail.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 Terkala <appleorange64@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Antag;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
@@ -8,6 +48,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Zombies;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
@@ -15,6 +56,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Content.Shared.Zombies;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -29,12 +71,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!; // Einstein Engines - Zombie Improvements Take 2
     [Dependency] private readonly ZombieSystem _zombie = default!;
+    [Dependency] private readonly ZombieTumorOrganSystem _zombieTumor = default!;
+    [Dependency] private readonly CBurnShuttleSpawnSystem _cburnSpawn = default!;
 
     public override void Initialize()
     {
@@ -43,6 +88,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         SubscribeLocalEvent<InitialInfectedRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<ZombieRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<IncurableZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
+        SubscribeLocalEvent<ZombieRuleComponent, AfterAntagEntitySelectedEvent>(OnAntagSelected);
     }
 
     private void OnGetBriefing(Entity<InitialInfectedRoleComponent> role, ref GetBriefingEvent args)
@@ -111,7 +157,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     /// <summary>
     ///     The big kahoona function for checking if the round is gonna end
     /// </summary>
-    private void CheckRoundEnd(ZombieRuleComponent zombieRuleComponent)
+    private void CheckRoundEnd(EntityUid uid, ZombieRuleComponent zombieRuleComponent)
     {
         var healthy = GetHealthyHumans();
         if (healthy.Count == 1) // Only one human left. spooky
@@ -129,8 +175,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                     announcementSound: new SoundPathSpecifier("/Audio/Announcements/outbreak7.ogg"));
         }
 
-        if (GetInfectedFraction(false) > zombieRuleComponent.ZombieShuttleCallPercentage && !_roundEnd.IsRoundEndRequested())
+        if (GetInfectedFraction(false) > zombieRuleComponent.ZombieShuttleCallPercentage && !_roundEnd.IsRoundEndRequested() && !zombieRuleComponent.RoundEndCalled)
         {
+            zombieRuleComponent.RoundEndCalled = true;
             foreach (var station in _station.GetStations())
             {
                 _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-shuttle-call"), colorOverride: Color.Crimson);
@@ -140,8 +187,25 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
         // we include dead for this count because we don't want to end the round
         // when everyone gets on the shuttle.
-        if (GetInfectedFraction() >= 1) // Oops, all zombies
+        if (GetInfectedFraction() >= 1 && !_roundEnd.IsRoundEndRequested()) // Oops, all zombies
             _roundEnd.EndRound();
+        // Check if 80% of connected players are zombified, dead, or ghosts
+        else if (CheckZombieVictoryPercentage() && !_roundEnd.IsRoundEndRequested())
+            _roundEnd.EndRound();
+
+        // Check if 55% of connected players are dead or zombified - spawn CBURN shuttles
+        else if (CheckDeadOrZombiePercentage(0.55f))
+        {
+            var spawnComp = CompOrNull<CBurnShuttleSpawnComponent>(uid);
+            if (spawnComp != null && !spawnComp.HasSpawned)
+            {
+                _cburnSpawn.SpawnCBurnShuttles(spawnComp);
+                spawnComp.HasSpawned = true;
+                Dirty(uid, spawnComp);
+            }
+        }
+
+
     }
 
     protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -149,6 +213,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         base.Started(uid, component, gameRule, args);
 
         component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
+        
+        // Add CBURN shuttle spawn component to monitor and spawn shuttles
+        EnsureComp<CBurnShuttleSpawnComponent>(uid);
     }
 
     protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -156,7 +223,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         base.ActiveTick(uid, component, gameRule, frameTime);
         if (!component.NextRoundEndCheck.HasValue || component.NextRoundEndCheck > _timing.CurTime)
             return;
-        CheckRoundEnd(component);
+        CheckRoundEnd(uid, component);
         component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
 
@@ -165,6 +232,13 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         _zombie.ZombifyEntity(uid);
         if (component.Action != null)
             Del(component.Action.Value);
+    }
+
+    private void OnAntagSelected(Entity<ZombieRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
+    {
+        // Apply zombie tumor infection to selected players instead of InitialInfected component
+        // Start at Incubation stage so infection doesn't spread immediately
+        _zombieTumor.InfectEntity(args.EntityUid, ZombieTumorInfectionStage.Incubation);
     }
 
     /// <summary>
@@ -222,5 +296,98 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             healthy.Add(uid);
         }
         return healthy;
+    }
+
+    /// <summary>
+    /// Checks if a given percentage of all currently connected players are dead or zombified.
+    /// Does not count ghosts (only dead and zombies).
+    /// </summary>
+    private bool CheckDeadOrZombiePercentage(float threshold)
+    {
+        var totalConnectedPlayers = 0;
+        var deadOrZombieCount = 0;
+
+        // Count all connected players
+        foreach (var session in _playerManager.Sessions)
+        {
+            // Skip if player has no attached entity
+            if (session.AttachedEntity == null)
+                continue;
+
+            var entity = session.AttachedEntity.Value;
+            totalConnectedPlayers++;
+
+            // Check if player is a zombie
+            if (HasComp<ZombieComponent>(entity))
+            {
+                deadOrZombieCount++;
+                continue;
+            }
+
+            // Check if player is dead
+            if (TryComp<MobStateComponent>(entity, out var mobState) && _mobState.IsDead(entity, mobState))
+            {
+                deadOrZombieCount++;
+                continue;
+            }
+        }
+
+        // Need at least 1 connected player to check
+        if (totalConnectedPlayers == 0)
+            return false;
+
+        // Check if threshold percentage or more are dead/zombified
+        var percentage = (float)deadOrZombieCount / totalConnectedPlayers;
+        return percentage >= threshold;
+    }
+
+    /// <summary>
+    /// Checks if 80% of all currently connected players are zombified, dead, or ghosts.
+    /// Returns true if zombie victory condition is met (only 20% or less are alive living humanoids).
+    /// </summary>
+    private bool CheckZombieVictoryPercentage()
+    {
+        var totalConnectedPlayers = 0;
+        var zombifiedDeadOrGhostCount = 0;
+
+        // Count all connected players
+        foreach (var session in _playerManager.Sessions)
+        {
+            // Skip if player has no attached entity
+            if (session.AttachedEntity == null)
+                continue;
+
+            var entity = session.AttachedEntity.Value;
+            totalConnectedPlayers++;
+
+            // Check if player is a zombie
+            if (HasComp<ZombieComponent>(entity))
+            {
+                zombifiedDeadOrGhostCount++;
+                continue;
+            }
+
+            // Check if player is dead
+            if (TryComp<MobStateComponent>(entity, out var mobState) && _mobState.IsDead(entity, mobState))
+            {
+                zombifiedDeadOrGhostCount++;
+                continue;
+            }
+
+            // Check if player is a ghost
+            if (HasComp<GhostComponent>(entity))
+            {
+                zombifiedDeadOrGhostCount++;
+                continue;
+            }
+        }
+
+        // Need at least 1 connected player to check
+        if (totalConnectedPlayers == 0)
+            return false;
+
+        // Check if 80% or more are zombified/dead/ghosts (20% or less are alive living humanoids)
+        var percentage = (float)zombifiedDeadOrGhostCount / totalConnectedPlayers;
+        return percentage >= 0.8f;
     }
 }

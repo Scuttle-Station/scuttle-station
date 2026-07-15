@@ -1,9 +1,30 @@
+// SPDX-FileCopyrightText: 2021 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 Acruid <shatter66@gmail.com>
+// SPDX-FileCopyrightText: 2021 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <gradientvera@outlook.com>
+// SPDX-FileCopyrightText: 2021 wrexbe <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 20kdc <asdd2808@gmail.com>
+// SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 Kevin Zheng <kevinz5000@gmail.com>
+// SPDX-FileCopyrightText: 2022 metalgearsloth <metalgearsloth@gmail.com>
+// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Brandon Hu <103440971+Brandon-Huu@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 ElectroJr <leonsfriedrich@gmail.com>
+// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Vasilis <vasilis@pikachu.systems>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
-using Content.Shared.CCVar;
-using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization;
@@ -18,8 +39,7 @@ namespace Content.Server.Mapping
     sealed class MappingCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
-        [Dependency] private readonly IMapManager _map = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
 
         public string Command => "mapping";
         public string Description => Loc.GetString("cmd-mapping-desc");
@@ -32,9 +52,8 @@ namespace Content.Server.Mapping
                 case 1:
                     return CompletionResult.FromHint(Loc.GetString("cmd-hint-mapping-id"));
                 case 2:
-                    var res = IoCManager.Resolve<IResourceManager>();
-                    var opts = CompletionHelper.UserFilePath(args[1], res.UserData)
-                        .Concat(CompletionHelper.ContentFilePath(args[1], res));
+                    var opts = CompletionHelper.UserFilePath(args[1], _resourceManager.UserData)
+                        .Concat(CompletionHelper.ContentFilePath(args[1], _resourceManager));
                     return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-hint-mapping-path"));
                 case 3:
                     return CompletionResult.FromHintOptions(["false", "true"], Loc.GetString("cmd-mapping-hint-grid"));
@@ -152,10 +171,14 @@ namespace Content.Server.Mapping
             }
 
             // map successfully created. run misc helpful mapping commands
-            if (player.AttachedEntity is { Valid: true } playerEntity &&
-                _entities.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype?.ID != GameTicker.AdminObserverPrototypeName)
+            if (player.AttachedEntity is { Valid: true } playerEntity)
             {
-                shell.ExecuteCommand("aghost");
+                var metaData = _entities.GetComponent<MetaDataComponent>(playerEntity);
+                if (metaData.EntityPrototype?.ID is not null &&
+                    metaData.EntityPrototype.ID != GameTicker.AdminObserverPrototypeName)
+                {
+                    shell.ExecuteCommand("aghost");
+                }
             }
 
             // don't interrupt mapping with events or auto-shuttle

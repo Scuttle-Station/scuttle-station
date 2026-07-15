@@ -1,3 +1,13 @@
+// SPDX-FileCopyrightText: 2023 Pieter-Jan Briers <pieterjan.briers@gmail.com>
+// SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -101,7 +111,8 @@ public sealed class MedibotSystem : EntitySystem
         if (!TryComp<DamageableComponent>(target, out var damageable)) return false;
         if (!_solutionContainer.TryGetInjectableSolution(target, out _, out _)) return false;
 
-        if (mobState.CurrentState != MobState.Alive && mobState.CurrentState != MobState.Critical)
+        if (mobState.CurrentState != MobState.Alive &&
+            (mobState.CurrentState != MobState.Critical || mobState.CurrentState != MobState.SoftCritical || mobState.CurrentState != MobState.HardCritical))
         {
             _popup.PopupClient(Loc.GetString("medibot-target-dead"), medibot, medibot);
             return false;

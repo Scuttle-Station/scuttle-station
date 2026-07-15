@@ -1,4 +1,12 @@
-﻿using Content.Server.Atmos;
+// SPDX-FileCopyrightText: 2024 John Space <bigdumb421@gmail.com>
+// SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
+// SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+using Content.Server._Goobstation.Blob.Components;
+using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -202,6 +210,15 @@ public sealed class ZombieBlobSystem : SharedZombieBlobSystem
         }
         */
         _trigger.Trigger(component.BlobPodUid);
+        if (TryComp<BlobPodComponent>(component.BlobPodUid, out var podComp))
+        {
+            if (podComp.Factory != null && TryComp<BlobFactoryComponent>(podComp.Factory, out var factoryComp))
+            {
+                factoryComp.BlobPods.Remove(component.BlobPodUid);
+                factoryComp.SpawnedCount -= 1;
+            }
+        }
+
         QueueDel(component.BlobPodUid);
 
         EnsureComp<NpcFactionMemberComponent>(uid);

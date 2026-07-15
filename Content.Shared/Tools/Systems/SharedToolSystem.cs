@@ -1,3 +1,27 @@
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Pieter-Jan Briers <pieterjan.briers@gmail.com>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Blazeror <154933882+Blazeror@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 MilenVolf <63782763+MilenVolf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 Verm <32827189+Vermidia@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 nikthechampiongr <32041239+nikthechampiongr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 DVDPlayerOfDiscordFame <drew.c.bergen@gmail.com>
+// SPDX-FileCopyrightText: 2025 MaiaArai <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Steve <marlumpy@gmail.com>
+// SPDX-FileCopyrightText: 2025 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 marc-pelletier <113944176+marc-pelletier@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared._Goobstation.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
@@ -7,7 +31,9 @@ using Content.Shared.Item.ItemToggle;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
+using Content.Shared.Whitelist; // imp
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -18,6 +44,7 @@ namespace Content.Shared.Tools.Systems;
 
 public abstract partial class SharedToolSystem : EntitySystem
 {
+    [Dependency] private   readonly EntityWhitelistSystem _whitelist = default!; // imp
     [Dependency] private   readonly IMapManager _mapManager = default!;
     [Dependency] private   readonly IPrototypeManager _protoMan = default!;
     [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
@@ -41,6 +68,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         InitializeMultipleTool();
         InitializeTile();
         InitializeWelder();
+        InitializeSolutionRefuel(); // imp
         SubscribeLocalEvent<ToolComponent, ToolDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ToolComponent, ExaminedEvent>(OnExamine);
     }
@@ -87,12 +115,12 @@ public abstract partial class SharedToolSystem : EntitySystem
         args.PushMessage(message);
     }
 
-    public void PlayToolSound(EntityUid uid, ToolComponent tool, EntityUid? user)
+    public void PlayToolSound(EntityUid uid, ToolComponent tool, EntityUid? user, AudioParams? audioParams = null) // Goob - audioParams
     {
         if (tool.UseSound == null)
             return;
 
-        _audioSystem.PlayPredicted(tool.UseSound, uid, user);
+        _audioSystem.PlayPredicted(tool.UseSound, uid, user, audioParams); // also goob - audioParams
     }
 
     /// <summary>
@@ -167,7 +195,8 @@ public abstract partial class SharedToolSystem : EntitySystem
             return false;
 
         var toolEvent = new ToolDoAfterEvent(fuel, doAfterEv, GetNetEntity(target));
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
+        var doAfterLength = delay / toolComponent.SpeedModifier; // Goob - doAfterLength var
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, doAfterLength, toolEvent, tool, target: target, used: tool)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -176,7 +205,11 @@ public abstract partial class SharedToolSystem : EntitySystem
             AttemptFrequency = fuel > 0 ? AttemptFrequency.EveryTick : AttemptFrequency.Never
         };
 
-        _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
+        // Goobstation - Moved `TryStartDoAfter` into a check and added `UseToolEvent`.
+        if (_doAfterSystem.TryStartDoAfter(doAfterArgs, out id))
+        {
+            RaiseLocalEvent(tool, new UseToolEvent(user, target, id.Value.Index, doAfterLength));
+        }
         return true;
     }
 
@@ -266,7 +299,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     #region DoAfterEvents
 
     [Serializable, NetSerializable]
-    protected sealed partial class ToolDoAfterEvent : DoAfterEvent
+    public sealed partial class ToolDoAfterEvent : DoAfterEvent // Goob - Protected -> Public
     {
         [DataField]
         public float Fuel;

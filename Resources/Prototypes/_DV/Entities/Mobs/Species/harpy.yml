@@ -1,3 +1,21 @@
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 VMSolidus <evilexecutive@gmail.com>
+# SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 whateverusername0 <whateveremail>
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 jackel234 <52829582+jackel234@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: entity
   save: false
   name: Urist McHarpy
@@ -37,10 +55,18 @@
         type: StoreBoundUserInterface
       enum.HereticLivingHeartKey.Key: # goob edit - heretics
         type: LivingHeartMenuBoundUserInterface
+      enum.BloodCultistCommuneUIKey.Key: # funky edit - cultists
+        type: BloodCultCommuneBoundUserInterface
+        requireInputValidation: false
+      enum.SpellsUiKey.Key: # funky edit - cultists
+        type: SpellsBoundUserInterface
+        requireInputValidation: false
       enum.SurgeryUIKey.Key: # Shitmed
         type: SurgeryBui
+      enum.ThavenMoodsUiKey.Key: # impstation edit
+        type: ThavenMoodsBoundUserInterface
+        requireInputValidation: false
   - type: Sprite
-    scale: 0.9, 0.9
     layers:
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
       - map: [ "enum.HumanoidVisualLayers.Head" ]
@@ -66,18 +92,27 @@
       - map: [ "gloves" ]
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
+      - map: [ "culteyes" ] # funky cult
+        sprite: "_Funkystation/BloodCult/Effects/culteyes.rsi"
+        state: "human"  # TODO make harpy version
+        shader: unshaded
+        visible: false
       - map: [ "eyes" ]
       - map: [ "belt" ]
       - map: [ "neck" ]
       - map: [ "back" ]
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
-      - map: [ "enum.HumanoidVisualLayers.Tail" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
       - map: [ "clownedon" ] # Dynamically generated
         sprite: "Effects/creampie.rsi"
         state: "creampie_human"
+        visible: false
+      - map: [ "culthalo" ] # funky cult
+        sprite: "_Funkystation/BloodCult/Effects/halo.rsi"
+        state: "halo"
+        shader: unshaded
         visible: false
 # Yes, RArm has to be down here
       - map: [ "enum.HumanoidVisualLayers.RArm" ]
@@ -85,6 +120,7 @@
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
       - map: [ "mask" ]
       - map: [ "head" ]
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
       - map: [ "singingLayer" ]
         sprite: _DV/Effects/harpysinger.rsi
         state: singing_music_notes
@@ -142,12 +178,14 @@
     - FootstepSound
     - DoorBumpOpener
     - HarpyEmotes
+    - AnomalyHost
   - type: StepTriggerImmune
     whitelist:
       types:
       - Shard
       - Landmine
       - Mousetrap
+  - type: FootprintOwner
 
 - type: entity
   save: false
@@ -184,6 +222,11 @@
       - map: [ "gloves" ]
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
+      - map: [ "culteyes" ] # funky cult
+        sprite: "_Funkystation/BloodCult/Effects/culteyes.rsi"
+        state: "human"  # TODO make harpy version
+        shader: unshaded
+        visible: false
       - map: [ "eyes" ]
       - map: [ "belt" ]
       - map: [ "neck" ]
@@ -191,18 +234,23 @@
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
-      - map: [ "enum.HumanoidVisualLayers.Tail" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
       - map: [ "clownedon" ] # Dynamically generated
         sprite: "Effects/creampie.rsi"
         state: "creampie_human"
         visible: false
+      - map: [ "culthalo" ] # funky cult
+        sprite: "_Funkystation/BloodCult/Effects/halo.rsi"
+        state: "halo"
+        shader: unshaded
+        visible: false
 # Yes, RArm has to be down here
       - map: [ "enum.HumanoidVisualLayers.RArm" ]
       - map: [ "enum.HumanoidVisualLayers.Hair" ]
       - map: [ "mask" ]
       - map: [ "head" ]
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
 
 - type: entity
   id: ActionHarpyPlayMidi

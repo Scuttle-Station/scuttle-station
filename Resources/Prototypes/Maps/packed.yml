@@ -1,3 +1,36 @@
+# SPDX-FileCopyrightText: 2022 Cheackraze <71046427+Cheackraze@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Moony <moonheart08@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Peptide90 <78795277+Peptide90@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Checkraze <71046427+Cheackraze@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Moony <moony@hellomouse.net>
+# SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 BeeRobynn <robynthewarcrime@proton.me>
+# SPDX-FileCopyrightText: 2024 Emisse <99158783+Emisse@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 John Space <bigdumb421@gmail.com>
+# SPDX-FileCopyrightText: 2024 Kira Bridgeton <161087999+Verbalase@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 NkoKirkto <153374559+NkoKirkto@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 NkoKirkto <halloleute640mail.com>
+# SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2024 Pissachu <161140558+Pissachu@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 88tv <131759102+88tv@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2026 8tv <eightev@gmail.com>
+# SPDX-FileCopyrightText: 2026 willow <willowzeta632146@proton.me>
+# SPDX-FileCopyrightText: 2026 wilowzeta <willowzeta632146@proton.me>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: gameMap
   id: Packed
   mapName: 'Packed'
@@ -17,11 +50,13 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_crimson.yml
         - type: StationJobs
           availableJobs:
+            #central command
+            NanotrasenRepresentative: [ 1, 1 ]
+            InternalAffairsAgent: [ 2, 2 ]
+            Magistrate: [ 1, 1 ]
             #service
-            # Goobstation - TODO: add bso and ntr
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
-            InternalAffairsAgent: [ 1, 1 ]
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 2 ]
             Chef: [ 1, 1 ]
@@ -29,10 +64,11 @@
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
+            Lawyer: [ 1, 1 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 2, 2 ]
-            StationEngineer: [ 4, 4 ]
+            # AtmosphericTechnician: [ 2, 2 ]
+            StationEngineer: [ 6, 6 ]
             TechnicalAssistant: [ 3, 3 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
@@ -40,6 +76,7 @@
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
+            Psychologist: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 3, 3 ]
@@ -51,23 +88,24 @@
             SecurityOfficer: [ 3, 3 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
-            Lawyer: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 2, 2 ]
-            CargoTechnician: [ 2, 2 ]
+            CargoTechnician: [ 3, 3 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            Boxer: [ 1, 1 ]
+            Reporter: [ 1, 1 ]
             #silicon
             StationAi: [ 1, 1 ]
-            Borg: [ 1, 1 ]
+            Borg: [ 2, 2 ]
 
-        # Goobstation blob-config-start SMALL+
+        # Goobstation blob-config-start (FUNKY TESTING)
         - type: StationBlobConfig
-          stageBegin: 25
+          stageBegin: 60
           stageCritical: 350
-          stageTheEnd: 700
+          stageTheEnd: 650
         # Goobstation blob-config-end

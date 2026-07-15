@@ -1,0 +1,40 @@
+# SPDX-FileCopyrightText: 2025 Goomson <GoomsonCode@proton.me>
+# SPDX-FileCopyrightText: 2025 mkanke-real <mikekanke@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+###Funkystation Visitors with Visitor ID
+
+# Command
+
+# Security
+
+- type: startingGear
+  id: VisitorSecurityClown
+  equipment:
+    mask: ClothingMaskClownSecurity
+    jumpsuit: ClothingUniformJumpsuitClown
+    shoes: ClothingShoesClown
+    outerClothing: ClothingOuterArmorBasic
+    id: VisitorPDA
+    back: ClothingBackpackClown
+    ears: ClothingHeadsetSecurity
+    belt: BikeHorn
+  storage:
+    back:
+    - Flash
+    - ClownRecorder
+
+# Cargo
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+# Misc
+

@@ -1,3 +1,12 @@
+// SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 whateverusername0 <whateveremail>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using Content.Shared.Actions;
 using Content.Shared.Heretic.Prototypes;
 using Content.Shared.Heretic;
@@ -26,7 +35,10 @@ public sealed partial class HereticKnowledgeSystem : EntitySystem
 
         if (data.ActionPrototypes != null && data.ActionPrototypes.Count > 0)
             foreach (var act in data.ActionPrototypes)
-                _action.AddAction(uid, act);
+            { // BEGIN FUNKY CHANGES - Record actions to a hashset
+                var actionEnt = _action.AddAction(uid, act);
+                comp.ActionEntities.Add(actionEnt);
+            } // END FUNKY CHANGES
 
         if (data.RitualPrototypes != null && data.RitualPrototypes.Count > 0)
             foreach (var ritual in data.RitualPrototypes)

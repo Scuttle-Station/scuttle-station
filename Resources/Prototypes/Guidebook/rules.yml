@@ -1,7 +1,28 @@
-﻿- type: guideEntry # Default for forks and stuff. Should not be listed anywhere if the server is using a custom ruleset.
+# SPDX-FileCopyrightText: 2024 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 DevilishMilk <michaellapjr@gmail.com>
+# SPDX-FileCopyrightText: 2024 Kira Gbedan <161087999+Verbalase@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <92357316+Piras314@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 basic pack <159909786+packmore@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Icepick <122653407+Icepicked@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Icepick <icepickedcyanide@gmail.com>
+# SPDX-FileCopyrightText: 2025 JoulesBerg <104539820+JoulesBerg@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 JoulesBerg <thejoulesberg@gmail.com>
+# SPDX-FileCopyrightText: 2025 Mish <bluscout78@yahoo.com>
+# SPDX-FileCopyrightText: 2025 PoquitoDondito <danielchristianstone@gmail.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 Sadie <sadiecmstone@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+- type: guideEntry # Default for forks and stuff. Should not be listed anywhere if the server is using a custom ruleset.
   id: DefaultRuleset
   name: guide-entry-rules
-  priority: 60
+  priority: -10
   text: "/ServerInfo/Guidebook/ServerRules/DefaultRules.xml"
   children:
   - CoreRules
@@ -10,6 +31,7 @@
   - RoleTypes
   - BanTypes
   - BanDurations
+  - Metashield
 
 - type: guideEntry
   id: RoleTypes
@@ -36,9 +58,6 @@
   - RuleC9
   - RuleC10
   - RuleC11
-  - RuleC12
-  - RuleC13
-#  - RuleC14
 
 - type: guideEntry
   id: RuleC1
@@ -94,49 +113,42 @@
   name: guide-entry-rules-c8
   ruleEntry: true
   priority: 8
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC8Names.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC8UseProperEscalation.xml"
 
 - type: guideEntry
   id: RuleC9
   name: guide-entry-rules-c9
   ruleEntry: true
   priority: 9
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC9UseProperEscalation.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC9SiliconPolicy.xml"
 
 - type: guideEntry
   id: RuleC10
   name: guide-entry-rules-c10
   ruleEntry: true
   priority: 10
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC10SecandCommand.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC10Antag.xml"
 
 - type: guideEntry
   id: RuleC11
   name: guide-entry-rules-c11
   ruleEntry: true
   priority: 11
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC11SiliconPolicy.xml"
-
-- type: guideEntry
-  id: RuleC12
-  name: guide-entry-rules-c12
-  ruleEntry: true
-  priority: 12
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC12Antag.xml"
-
-- type: guideEntry
-  id: RuleC13
-  name: guide-entry-rules-c13
-  ruleEntry: true
-  priority: 13
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC13NoEORG.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC11LOOC.xml"
 
 - type: guideEntry
   id: Metashield
   name: guide-entry-metashield
-  ruleEntry: true
+  ruleEntry: false
   priority: 4
   text: "/ServerInfo/Guidebook/ServerRules/Metashield.xml"
+
+- type: guideEntry
+  id: NamingScheme
+  name: guide-entry-namingscheme
+  ruleEntry: true
+  priority: 4
+  text: "/ServerInfo/Guidebook/ServerRules/NamingScheme.xml"
 
 #- type: guideEntry
 #  id: RuleC14

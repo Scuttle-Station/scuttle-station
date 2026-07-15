@@ -1,7 +1,25 @@
+// SPDX-FileCopyrightText: 2021 E F R <602406+Efruit@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Vera Aguilera Puerto <gradientvera@outlook.com>
+// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2023 Kevin Zheng <kevinz5000@gmail.com>
+// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 Steve <marlumpy@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Shared.Atmos.Piping.Components;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -31,6 +49,28 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             // Re-anchoring should be handled by the parent change.
             SubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
             SubscribeLocalEvent<AtmosDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchorChanged);
+
+            SubscribeLocalEvent<AtmosDeviceComponent, ExaminedEvent>(OnExamine); // Funkystation - examine device order
+        }
+
+        private void OnExamine(Entity<AtmosDeviceComponent> ent, ref ExaminedEvent args)
+        {
+            if (ent.Comp.JoinedGrid is not { } gridUid || !TryComp<GridAtmosphereComponent>(gridUid, out var gridAtmos))
+                return;
+
+            int index = 1;
+            foreach (var device in gridAtmos.AtmosDevices)
+            {
+                if (device == ent)
+                {
+                    using (args.PushGroup(nameof(AtmosDeviceComponent)))
+                    {
+                        args.PushMarkup(Loc.GetString("atmos-device-examine-order", ("index", index)));
+                    }
+                    return;
+                }
+                index++;
+            }
         }
 
         public void JoinAtmosphere(Entity<AtmosDeviceComponent> ent)

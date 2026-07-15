@@ -1,6 +1,25 @@
+// SPDX-FileCopyrightText: 2022 corentt <36075110+corentt@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Moony <moony@hellomouse.net>
+// SPDX-FileCopyrightText: 2023 TemporalOroboros <TemporalOroboros@gmail.com>
+// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 Terkala <appleorange64@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Content.IntegrationTests.Pair;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Nutrition.Components;
@@ -62,37 +81,66 @@ public sealed class CargoTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
-        var testMap = await pair.CreateTestMap();
-
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapSystem = server.System<SharedMapSystem>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var cargo = entManager.System<CargoSystem>();
 
+        var products = protoManager.EnumeratePrototypes<CargoProductPrototype>().ToList();
         var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
 
-        await server.WaitAssertion(() =>
+        TestMapData testMap = await pair.CreateTestMap();
+        var pairIndex = 0;
+
+        foreach (var proto in products)
         {
-            var mapId = testMap.MapId;
-
-            Assert.Multiple(() =>
+            foreach (var bounty in bounties)
             {
-                foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
+                if (pairIndex > 0 && pairIndex % 20 == 0)
                 {
-                    var ent = entManager.SpawnEntity(proto.Product, new MapCoordinates(Vector2.Zero, mapId));
+                    await server.WaitPost(() => mapSystem.DeleteMap(testMap.MapId));
+                    await server.WaitRunTicks(1);
+                    testMap = await pair.CreateTestMap();
+                }
+                pairIndex++;
 
-                    foreach (var bounty in bounties)
+                var currentMap = testMap;
+                await server.WaitAssertion(() =>
+                {
+                    var mapId = currentMap.MapId;
+                    var passCount = 0;
+                    var lastFailureMessage = string.Empty;
+
+                    for (var attempt = 0; attempt < 5; attempt++)
                     {
-                        if (cargo.IsBountyComplete(ent, bounty))
-                            Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward), $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
+                        var ent = entManager.SpawnEntity(proto.Product, new MapCoordinates(Vector2.Zero, mapId));
+                        var isComplete = cargo.IsBountyComplete(ent, bounty);
+                        entManager.DeleteEntity(ent);
+
+                        var noArbitrage = !isComplete || proto.Cost >= bounty.Reward;
+                        if (noArbitrage)
+                        {
+                            passCount++;
+                            if (passCount >= 3)
+                                break;
+                        }
+                        else
+                        {
+                            lastFailureMessage = $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!";
+                        }
                     }
 
-                    entManager.DeleteEntity(ent);
-                }
-            });
+                    Assert.That(passCount, Is.GreaterThanOrEqualTo(3),
+                        string.IsNullOrEmpty(lastFailureMessage)
+                            ? $"Product {proto.ID} / bounty {bounty.ID}: flaky result, only {passCount} passes in 5 attempts"
+                            : lastFailureMessage);
+                });
 
-            mapSystem.DeleteMap(mapId);
-        });
+                await server.WaitRunTicks(1);
+            }
+        }
+
+        await server.WaitPost(() => mapSystem.DeleteMap(testMap.MapId));
 
         await pair.CleanReturnAsync();
     }

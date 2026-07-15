@@ -1,3 +1,41 @@
+# SPDX-FileCopyrightText: 2021 20kdc <asdd2808@gmail.com>
+# SPDX-FileCopyrightText: 2021 FoLoKe <36813380+FoLoKe@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+# SPDX-FileCopyrightText: 2021 Swept <sweptwastaken@protonmail.com>
+# SPDX-FileCopyrightText: 2021 SweptWasTaken <sweptwastaken@protonmail.com>
+# SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Ygg01 <y.laughing.man.y@gmail.com>
+# SPDX-FileCopyrightText: 2021 mirrorcult <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 FunkySphere <89979928+FunkySphere@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 T-Stalker <43253663+DogZeroX@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Derby <Derby@ss14>
+# SPDX-FileCopyrightText: 2023 DerbyX <50932435+DerbyX@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Velcroboy <107660393+IamVelcroboy@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Joel Zimmerman <JoelZimmerman@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+# SPDX-FileCopyrightText: 2024 VeritableCalamity <34698192+Veritable-Calamity@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 jmcb <joelsgp@protonmail.com>
+# SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 mkanke-real <mikekanke@gmail.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 ThatOneMoon <91613003+ThatOneMoon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 ThatOneMoon <juozas.dringelis@gmail.com>
+# SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+# SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 Xcybitt <197952719+Xcybitt@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 # When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_meal.yml & food_single.yml
 # Base
 
@@ -16,12 +54,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 100
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 60
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 20
   - type: SliceableFood
     count: 8
   - type: Item
@@ -49,12 +87,12 @@
     solutions:
       food:
         # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
-        maxVol: 6
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 7.5
         - ReagentId: Vitamin
-          Quantity: 0.8
+          Quantity: 2.5
   - type: Item
     size: Tiny
   - type: Tag
@@ -76,6 +114,17 @@
       - cheesy
       - oily
       - bread
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 50
+        - ReagentId: Vitamin
+          Quantity: 30
+        - ReagentId: Cheesium
+          Quantity: 2          
   - type: Sprite
     layers:
     - state: margherita
@@ -93,6 +142,17 @@
       - cheesy
       - oily
       - bread
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6.25
+        - ReagentId: Vitamin
+          Quantity: 3.75
+        - ReagentId: Cheesium
+          Quantity: 0.5          
   - type: Sprite
     layers:
     - state: margherita-slice
@@ -109,6 +169,17 @@
       - cheesy
       - oily
       - bread
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 40
+        - ReagentId: Protein
+          Quantity: 40
+        - ReagentId: Cheesium
+          Quantity: 2          
   - type: Sprite
     layers:
     - state: meat
@@ -131,6 +202,17 @@
       - cheesy
       - oily
       - bread
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Cheesium
+          Quantity: 0.5          
   - type: Sprite
     layers:
     - state: meat-slice
@@ -152,6 +234,15 @@
       - mushroom
       - oily
       - bread
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 50
+        - ReagentId: Vitamin
+          Quantity: 30
   - type: Sprite
     layers:
     - state: mushroom
@@ -169,6 +260,15 @@
       - mushroom
       - oily
       - bread
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6.25
+        - ReagentId: Vitamin
+          Quantity: 3.75
   - type: Sprite
     layers:
     - state: mushroom-slice
@@ -196,14 +296,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 100
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
-        - ReagentId: JuiceCarrot
-          Quantity: 5
+          Quantity: 40
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 40
 
 - type: entity
   name: slice of vegetable pizza
@@ -226,14 +324,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: JuiceCarrot
-          Quantity: 1
+          Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 5
 
 # Tastes like crust, tomato, cheese, carrot.
 
@@ -254,14 +350,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 100
         reagents:
         - ReagentId: Nutriment
-          Quantity: 27
+          Quantity: 55
         - ReagentId: Vitamin
-          Quantity: 6
+          Quantity: 15
         - ReagentId: Omnizine
-          Quantity: 9
+          Quantity: 12
+        - ReagentId: Cheesium
+          Quantity: 2          
   - type: Tag
     tags:
     - Meat
@@ -283,14 +381,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4.5
+          Quantity: 6.87
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 1.88
         - ReagentId: Omnizine
           Quantity: 1.5
+        - ReagentId: Cheesium
+          Quantity: 0.5          
   - type: Tag
     tags:
     - Meat
@@ -318,12 +418,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 100
         reagents:
         - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
           Quantity: 20
         - ReagentId: THC
           Quantity: 30
+        - ReagentId: Cheesium
+          Quantity: 2          
 
 - type: entity
   name: slice of dank pizza
@@ -343,12 +447,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3.5
+          Quantity: 3.75
+        - ReagentId: Vitamin
+          Quantity: 2.5
         - ReagentId: THC
-          Quantity: 5
+          Quantity: 3.75
+        - ReagentId: Cheesium
+          Quantity: 0.5          
 # Tastes like crust, tomato, cheese, meat, satisfaction.
 
 - type: entity
@@ -408,6 +516,17 @@
       - cheesy
       - oily
       - bread
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 40
+        - ReagentId: Vitamin
+          Quantity: 20
+        - ReagentId: Protein
+          Quantity: 20
   - type: Sprite
     layers:
     - state: pineapple
@@ -431,6 +550,17 @@
       - cheesy
       - oily
       - bread
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 2.5
+        - ReagentId: Protein
+          Quantity: 2.5
   - type: Sprite
     layers:
     - state: pineapple-slice
@@ -463,16 +593,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 85
+        maxVol: 100
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
+        - ReagentId: Protein
+          Quantity: 25
         - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Iron
-          Quantity: 10
+          Quantity: 25
         - ReagentId: Omnizine
           Quantity: 30
+        - ReagentId: Cheesium
+          Quantity: 5          
   - type: Tag
     tags:
     - Meat
@@ -499,14 +629,14 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 3.13
         - ReagentId: Vitamin
-          Quantity: 0.8
-        - ReagentId: Iron
-          Quantity: 1.6
+          Quantity: 3.13
         - ReagentId: Omnizine
-          Quantity: 5
+          Quantity: 3.75
+        - ReagentId: Cheesium
+          Quantity: 0.8          
   - type: Tag
     tags:
     - Meat
@@ -573,10 +703,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 100
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 60
         - ReagentId: Radium
           Quantity: 4
         - ReagentId: Uranium
@@ -611,10 +741,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2.5
+          Quantity: 7.5
         - ReagentId: Radium
           Quantity: 0.5
         - ReagentId: Uranium
@@ -649,14 +779,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 100
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 30
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 20
         - ReagentId: Fiber
-          Quantity: 10
+          Quantity: 30
 
 - type: entity
   name: slice of cotton pizza
@@ -679,11 +809,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3.5
+          Quantity: 3.75
         - ReagentId: Vitamin
-          Quantity: 0.8
+          Quantity: 2.5
         - ReagentId: Fiber
-          Quantity: 1.5
+          Quantity: 3.75
+

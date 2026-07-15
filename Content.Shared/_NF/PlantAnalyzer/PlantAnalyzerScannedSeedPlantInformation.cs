@@ -1,3 +1,9 @@
+// SPDX-FileCopyrightText: 2025 Liamofthesky <157073227+Liamofthesky@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 ReconPangolin <67752926+ReconPangolin@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._NF.PlantAnalyzer;
@@ -6,7 +12,7 @@ namespace Content.Shared._NF.PlantAnalyzer;
 ///     The information about the last scanned plant/seed is stored here.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfaceMessage
+public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfaceState //Funkystation - Swapped to set BoundUserInterfaceState instead of BoundUserInterfaceMessage
 {
     public NetEntity? TargetEntity;
     public bool IsTray;
@@ -14,8 +20,8 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
     public string? SeedName;
     public string[]? SeedChem;
     public AnalyzerHarvestType HarvestType;
-    public GasFlags ExudeGases;
-    public GasFlags ConsumeGases;
+    public string[]? ExudeGases; //Funkystation - Swapped to string
+    public string[]? ConsumeGases; //Funkystation - Swapped to string
     public float Endurance;
     public int SeedYield;
     public float Lifespan;

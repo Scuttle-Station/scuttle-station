@@ -1,3 +1,52 @@
+// SPDX-FileCopyrightText: 2022 EmoGarbage404 <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Jezithyr <Jezithyr.@gmail.com>
+// SPDX-FileCopyrightText: 2022 Jezithyr <Jezithyr@gmail.com>
+// SPDX-FileCopyrightText: 2022 Moony <moonheart08@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Will Robson <WPRobson@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 keronshb <54602815+keronshb@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Emisse <99158783+Emisse@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Ilushkins33 <128389588+Ilushkins33@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Jezithyr <jezithyr@gmail.com>
+// SPDX-FileCopyrightText: 2023 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Phill101 <28949487+Phill101@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Phill101 <holypics4@gmail.com>
+// SPDX-FileCopyrightText: 2023 Pieter-Jan Briers <pieterjan.briers@gmail.com>
+// SPDX-FileCopyrightText: 2023 TemporalOroboros <TemporalOroboros@gmail.com>
+// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Vordenburg <114301317+Vordenburg@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Whisper <121047731+QuietlyWhisper@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 faint <46868845+ficcialfaint@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 0x6273 <0x40@keemail.me>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Cojoke <83733158+Cojoke-dot@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 DrSmugleaf <10968691+DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 LordCarve <27449516+LordCarve@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 beck-thompson <107373427+beck-thompson@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 themias <89101928+themias@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 88tv <131759102+88tv@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Orsoniks <orsoniksstuff@gmail.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 Doctor-Cpu <77215380+Doctor-Cpu@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2026 MaiaArai <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2026 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2026 alex-infdev <185717397+alex-infdev@users.noreply.github.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Body.Components;
 using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
@@ -12,9 +61,11 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Drunk;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids;
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.HealthExaminable;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
@@ -41,6 +92,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     public override void Initialize()
     {
@@ -153,7 +205,8 @@ public sealed class BloodstreamSystem : EntitySystem
                 _drunkSystem.TryApplyDrunkenness(
                     uid,
                     (float) bloodstream.UpdateInterval.TotalSeconds * 2,
-                    applySlur: false);
+                    applySlur: false,
+                    applyTolerance: false);
                 _stutteringSystem.DoStutter(uid, bloodstream.UpdateInterval * 2, refresh: false);
 
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
@@ -258,17 +311,29 @@ public sealed class BloodstreamSystem : EntitySystem
     /// </summary>
     private void OnHealthBeingExamined(Entity<BloodstreamComponent> ent, ref HealthBeingExaminedEvent args)
     {
-        // Shows profusely bleeding at half the max bleed rate.
-        if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount / 2)
+        // Shows massively bleeding at 0.75x the max bleed rate.
+        if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount * 0.75f)
         {
             args.Message.PushNewline();
-            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", ent.Owner)));
+            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-massive-bleeding", ("target", ent.Owner)));
         }
-        // Shows bleeding message when bleeding, but less than profusely.
-        else if (ent.Comp.BleedAmount > 0)
+        // Shows bleeding message when bleeding above half the max rate, but less than massively.
+        else if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount * 0.5f)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-strong-bleeding", ("target", ent.Owner)));
+        }
+        // Shows bleeding message when bleeding above 0.25x the max rate, but less than half the max.
+        else if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount * 0.25f)
         {
             args.Message.PushNewline();
             args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-bleeding", ("target", ent.Owner)));
+        }
+        // Shows bleeding message when bleeding below 0.25x the max cap
+        else if (ent.Comp.BleedAmount > 0)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-slight-bleeding", ("target", ent.Owner)));
         }
 
         // If the mob's blood level is below the damage threshhold, the pale message is added.
@@ -390,6 +455,30 @@ public sealed class BloodstreamSystem : EntitySystem
                 tempSolution.AddSolution(temp, _prototypeManager);
             }
 
+            // stain clothes on bleed
+            var stainEv = new SpilledOnEvent(uid, tempSolution);
+            RaiseLocalEvent(uid, stainEv);
+
+            // stain neighbors
+            var xform = Transform(uid);
+            var lookup = _lookup.GetEntitiesInRange(xform.Coordinates, 1.5f);
+            foreach (var ent in lookup)
+            {
+                if (ent == uid)
+                    continue;
+
+                // only try staining things that have an inventory
+                // event is relayed by InventoryComponent
+                if (!HasComp<InventoryComponent>(ent))
+                    continue;
+
+                var neighborStainEv = new SpilledOnEvent(uid, tempSolution);
+                RaiseLocalEvent(ent, neighborStainEv);
+
+                if (tempSolution.Volume <= 0)
+                    break;
+            }
+
             _puddleSystem.TrySpillAt(uid, tempSolution, out var puddleUid, sound: false);
 
             tempSolution.RemoveAllSolution();
@@ -505,7 +594,8 @@ public sealed class BloodstreamSystem : EntitySystem
         if (TryComp<DnaComponent>(uid, out var donorComp))
         {
             dnaData.DNA = donorComp.DNA;
-        } else
+        }
+        else
         {
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
         }

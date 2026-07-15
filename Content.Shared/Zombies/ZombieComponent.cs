@@ -1,3 +1,36 @@
+// SPDX-FileCopyrightText: 2022 EmoGarbage404 <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 metalgearsloth <metalgearsloth@gmail.com>
+// SPDX-FileCopyrightText: 2023 Alex Evgrashin <aevgrashin@yandex.ru>
+// SPDX-FileCopyrightText: 2023 Doru991 <75124791+Doru991@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Tom Leys <tom@crump-leys.com>
+// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Vyacheslav Titov <rincew1nd@ya.ru>
+// SPDX-FileCopyrightText: 2023 corentt <36075110+corentt@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Bellwether <157836624+BellwetherLogic@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Mr. 27 <45323883+Dutch-VanDerLinde@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2024 liltenhead <104418166+liltenhead@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 nikthechampiongr <32041239+nikthechampiongr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 shamp <140359015+shampunj@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Mish <bluscout78@yahoo.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 QueerCats <jansencheng3@gmail.com>
+// SPDX-FileCopyrightText: 2026 Terkala <appleorange64@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Antag;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Reagent;
@@ -27,7 +60,13 @@ public sealed partial class ZombieComponent : Component
     /// being invincible by bundling up.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float MinZombieInfectionChance = 0.25f;
+    public float MinZombieInfectionChance = 0.10f;
+
+    /// <summary>
+    /// Infection chance multiplier
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float ZombieInfectionChanceMultiplier = 1.0f;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float ZombieMovementSpeedDebuff = 0.70f;
@@ -99,11 +138,11 @@ public sealed partial class ZombieComponent : Component
     {
         DamageDict = new ()
         {
-            { "Blunt", -0.6 },
-            { "Slash", -0.3 },
-            { "Piercing", -0.3 },
-            { "Heat", -0.02 },
-            { "Shock", -0.02 }
+            { "Blunt", -0.35 },
+            { "Slash", -0.35 },
+            { "Piercing", -0.35 },
+            { "Heat", -0.15 },
+            { "Shock", -0.15 }
         }
     };
 
@@ -121,9 +160,44 @@ public sealed partial class ZombieComponent : Component
     {
         DamageDict = new()
         {
-            { "Blunt", -2 },
-            { "Slash", -2 },
-            { "Piercing", -2 }
+            { "Blunt", -5 }, //funkystation
+            { "Slash", -5 }, //funkystation
+            { "Piercing", -5 } //funkystation
+        }
+    };
+
+    /// <summary>
+    /// The damage dealt on bite, dehardcoded for your enjoyment
+    /// </summary>
+    [DataField]
+    public DamageSpecifier DamageOnBite = new()
+    {
+        DamageDict = new()
+        {
+            { "Slash", 13 },
+            { "Piercing", 7 },
+            { "Structural", 10 }
+        }
+    };
+
+    /// <summary>
+    /// The damage modifier on zombies
+    /// </summary>
+    [DataField]
+    public DamageModifierSet DamageModifier = new()
+    {
+        Coefficients = new ()
+        {
+            {"Blunt", 0.9f},
+            {"Slash", 0.9f},
+            {"Piercing", 0.9f},
+            {"Heat", 0.9f},
+            {"Shock", 0.9f},
+            {"Cold", 0.9f},
+            {"Caustic", 0.9f},
+            {"Poison", 0.9f},
+            {"Radiation", 0.9f},
+            {"Cellular", 0.9f},
         }
     };
 

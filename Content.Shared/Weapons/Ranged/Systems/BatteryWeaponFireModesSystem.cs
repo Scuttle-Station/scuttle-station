@@ -1,7 +1,23 @@
-using System.Linq;
+// SPDX-FileCopyrightText: 2023 chromiumboy <50505512+chromiumboy@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Matthew Herber <32679887+happyrobot33@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 McBosserson <148172569+McBosserson@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 Toaster <mrtoastymyroasty@gmail.com>
+// SPDX-FileCopyrightText: 2025 imatsoup <93290208+imatsoup@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -14,12 +30,14 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BatteryWeaponFireModesComponent, ActivateInWorldEvent>(OnInteractHandEvent);
+        SubscribeLocalEvent<BatteryWeaponFireModesComponent, UseInHandEvent>(OnUseInHandEvent);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetVerbsEvent<Verb>>(OnGetVerb);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, ExaminedEvent>(OnExamined);
     }
@@ -44,10 +62,13 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
     private void OnGetVerb(EntityUid uid, BatteryWeaponFireModesComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
             return;
 
         if (component.FireModes.Count < 2)
+            return;
+
+        if (!_accessReaderSystem.IsAllowed(args.User, uid))
             return;
 
         for (var i = 0; i < component.FireModes.Count; i++)
@@ -62,11 +83,11 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
                 Category = VerbCategory.SelectType,
                 Text = entProto.Name,
                 Disabled = i == component.CurrentFireMode,
-                Impact = LogImpact.Low,
+                Impact = LogImpact.Medium,
                 DoContactInteraction = true,
                 Act = () =>
                 {
-                    SetFireMode(uid, component, index, args.User);
+                    TrySetFireMode(uid, component, index, args.User);
                 }
             };
 
@@ -74,24 +95,35 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         }
     }
 
-    private void OnInteractHandEvent(EntityUid uid, BatteryWeaponFireModesComponent component, ActivateInWorldEvent args)
+    private void OnUseInHandEvent(EntityUid uid, BatteryWeaponFireModesComponent component, UseInHandEvent args)
     {
-        if (!args.Complex)
+        if(args.Handled)
             return;
 
-        if (component.FireModes.Count < 2)
-            return;
-
-        CycleFireMode(uid, component, args.User);
+        args.Handled = true;
+        TryCycleFireMode(uid, component, args.User);
     }
 
-    private void CycleFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, EntityUid user)
+    public void TryCycleFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, EntityUid? user = null)
     {
         if (component.FireModes.Count < 2)
             return;
 
         var index = (component.CurrentFireMode + 1) % component.FireModes.Count;
+        TrySetFireMode(uid, component, index, user);
+    }
+
+    public bool TrySetFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, int index, EntityUid? user = null)
+    {
+        if (index < 0 || index >= component.FireModes.Count)
+            return false;
+
+        if (user != null && !_accessReaderSystem.IsAllowed(user.Value, uid))
+            return false;
+
         SetFireMode(uid, component, index, user);
+
+        return true;
     }
 
     private void SetFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, int index, EntityUid? user = null)
@@ -100,26 +132,49 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         component.CurrentFireMode = index;
         Dirty(uid, component);
 
+        if (_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
+        {
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
+                _appearanceSystem.SetData(uid, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
+
+            if (user != null)
+                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, user.Value);
+        }
+
         if (TryComp(uid, out ProjectileBatteryAmmoProviderComponent? projectileBatteryAmmoProviderComponent))
         {
-            if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
-                return;
-
             // TODO: Have this get the info directly from the batteryComponent when power is moved to shared.
             var OldFireCost = projectileBatteryAmmoProviderComponent.FireCost;
             projectileBatteryAmmoProviderComponent.Prototype = fireMode.Prototype;
             projectileBatteryAmmoProviderComponent.FireCost = fireMode.FireCost;
+
             float FireCostDiff = (float)fireMode.FireCost / (float)OldFireCost;
-            projectileBatteryAmmoProviderComponent.Shots = (int)Math.Round(projectileBatteryAmmoProviderComponent.Shots/FireCostDiff);
-            projectileBatteryAmmoProviderComponent.Capacity = (int)Math.Round(projectileBatteryAmmoProviderComponent.Capacity/FireCostDiff);
+            projectileBatteryAmmoProviderComponent.Shots = (int)Math.Round(projectileBatteryAmmoProviderComponent.Shots / FireCostDiff);
+            projectileBatteryAmmoProviderComponent.Capacity = (int)Math.Round(projectileBatteryAmmoProviderComponent.Capacity / FireCostDiff);
+
+            //Dirty the component immediately to send state update to client
             Dirty(uid, projectileBatteryAmmoProviderComponent);
+
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
             RaiseLocalEvent(uid, ref updateClientAmmoEvent);
+        }
 
-            if (user != null)
-            {
-                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, user.Value);
-            }
+        // Also handle hitscan mode switching
+        if (TryComp(uid, out HitscanBatteryAmmoProviderComponent? hitscanBatteryAmmoProviderComponent))
+        {
+            var OldFireCost = hitscanBatteryAmmoProviderComponent.FireCost;
+            hitscanBatteryAmmoProviderComponent.Prototype = fireMode.Prototype;
+            hitscanBatteryAmmoProviderComponent.FireCost = fireMode.FireCost;
+
+            float FireCostDiff = (float)fireMode.FireCost / (float)OldFireCost;
+            hitscanBatteryAmmoProviderComponent.Shots = (int)Math.Round(hitscanBatteryAmmoProviderComponent.Shots / FireCostDiff);
+            hitscanBatteryAmmoProviderComponent.Capacity = (int)Math.Round(hitscanBatteryAmmoProviderComponent.Capacity / FireCostDiff);
+
+            //Dirty the component immediately to send state update to client
+            Dirty(uid, hitscanBatteryAmmoProviderComponent);
+
+            var updateClientAmmoEvent = new UpdateClientAmmoEvent();
+            RaiseLocalEvent(uid, ref updateClientAmmoEvent);
         }
     }
 }

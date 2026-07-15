@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2025 Goomson <GoomsonCode@proton.me>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+## Funkystation Unique shuttle roles
+
+# Command
+
+# Security
+- type: entity
+  id: RandomHumanoidVisitorSecurityClown
+  name: visiting Security Clown ghost role
+  components:
+   - type: Sprite
+     sprite: Markers/jobs.rsi
+     state: clown
+   - type: RandomHumanoidSpawner
+     settings: VisitorSecurityClown
+   - type: AutoImplant
+     implants:
+     - MindShieldImplant
+
+# Cargo
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+# Silicon
+
+# Misc

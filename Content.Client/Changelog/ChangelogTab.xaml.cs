@@ -1,3 +1,15 @@
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Pieter-Jan Briers <pieterjan.briers@gmail.com>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 Winkarst <74284083+Winkarst-cpu@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Brandon Li <48413902+aspiringLich@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using System.Numerics;
 using Content.Client.Resources;
@@ -58,7 +70,7 @@ public sealed partial class ChangelogTab : Control
             ChangelogBody.AddChild(new Label
             {
                 Text = dayNice,
-                StyleClasses = { StyleBase.StyleClassLabelHeading },
+                StyleClasses = { StyleClass.LabelHeading },
                 Margin = new Thickness(4, 6, 0, 0)
             });
 
@@ -117,7 +129,7 @@ public sealed partial class ChangelogTab : Control
                     };
 
                     readDivider.AddChild(hBox);
-                    readDivider.AddChild(new PanelContainer { StyleClasses = { StyleBase.ClassLowDivider } });
+                    readDivider.AddChild(new PanelContainer { StyleClasses = { StyleClass.LowDivider } });
                     ChangelogBody.AddChild(readDivider);
 
                     if (first)
@@ -131,13 +143,13 @@ public sealed partial class ChangelogTab : Control
                     Margin = new Thickness(6, 0, 0, 0),
                 };
                 authorLabel.SetMessage(
-                    FormattedMessage.FromMarkupOrThrow(Loc.GetString("changelog-author-changed", ("author", author))));
+                    FormattedMessage.FromMarkupOrThrow(Loc.GetString("changelog-author-changed", ("author", FormattedMessage.EscapeText(author)))));
                 ChangelogBody.AddChild(authorLabel);
 
                 foreach (var change in groupedEntry.SelectMany(c => c.Changes))
                 {
                     var text = new RichTextLabel();
-                    text.SetMessage(FormattedMessage.FromMarkupOrThrow(change.Message));
+                    text.SetMessage(FormattedMessage.FromUnformatted(change.Message));
                     ChangelogBody.AddChild(new BoxContainer
                     {
                         Orientation = LayoutOrientation.Horizontal,

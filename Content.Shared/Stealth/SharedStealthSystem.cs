@@ -1,7 +1,23 @@
+// SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 keronshb <54602815+keronshb@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Nim <128169402+Nimfar11@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2024 TemporalOroboros <TemporalOroboros@gmail.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Benjamin Velliquette <32338704+bVelliquette@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Examine;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Stealth.Components;
+using Robust.Shared.Physics.Components; // Goobstation
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
@@ -15,8 +31,6 @@ public abstract class SharedStealthSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StealthComponent, ComponentGetState>(OnStealthGetState);
-        SubscribeLocalEvent<StealthComponent, ComponentHandleState>(OnStealthHandleState);
         SubscribeLocalEvent<StealthOnMoveComponent, MoveEvent>(OnMove);
         SubscribeLocalEvent<StealthOnMoveComponent, GetVisibilityModifiersEvent>(OnGetVisibilityModifiers);
         SubscribeLocalEvent<StealthComponent, EntityPausedEvent>(OnPaused);
@@ -96,22 +110,6 @@ public abstract class SharedStealthSystem : EntitySystem
         component.LastUpdated = _timing.CurTime;
     }
 
-    private void OnStealthGetState(EntityUid uid, StealthComponent component, ref ComponentGetState args)
-    {
-        args.State = new StealthComponentState(component.LastVisibility, component.LastUpdated, component.MaxVisibility, component.Enabled); // Shitmed Change
-    }
-
-    private void OnStealthHandleState(EntityUid uid, StealthComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not StealthComponentState cast)
-            return;
-
-        SetEnabled(uid, cast.Enabled, component);
-        component.LastVisibility = cast.Visibility;
-        component.LastUpdated = cast.LastUpdated;
-        component.MaxVisibility = cast.MaxVisibility; // Shitmed Change
-    }
-
     private void OnMove(EntityUid uid, StealthOnMoveComponent component, ref MoveEvent args)
     {
         if (_timing.ApplyingState)
@@ -124,10 +122,15 @@ public abstract class SharedStealthSystem : EntitySystem
         ModifyVisibility(uid, delta);
     }
 
+    // Goobstation - Proper invisibility
     private void OnGetVisibilityModifiers(EntityUid uid, StealthOnMoveComponent component, GetVisibilityModifiersEvent args)
     {
-        var mod = args.SecondsSinceUpdate * component.PassiveVisibilityRate;
-        args.FlatModifier += mod;
+        var limit = args.Stealth.MinVisibility;
+        if (TryComp<PhysicsComponent>(uid, out var phys))
+            limit += Math.Min(component.MaxInvisibilityPenalty, phys.LinearVelocity.Length() * component.InvisibilityPenalty);
+
+        if (args.Stealth.LastVisibility > limit)
+            args.FlatModifier += args.SecondsSinceUpdate * component.PassiveVisibilityRate;
     }
 
     /// <summary>

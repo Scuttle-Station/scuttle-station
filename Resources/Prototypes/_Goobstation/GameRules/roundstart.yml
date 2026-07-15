@@ -1,3 +1,21 @@
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Fenn <162015305+TooSillyFennec@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 John Space <bigdumb421@gmail.com>
+# SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
+# SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 whateverusername0 <whateveremail>
+# SPDX-FileCopyrightText: 2025 Mish <bluscout78@yahoo.com>
+# SPDX-FileCopyrightText: 2025 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 misghast <51974455+misterghast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: entity
   parent: BaseGameRule
   id: Changeling
@@ -14,7 +32,7 @@
     - EscapeIdentityObjective
     - ChangelingSurviveObjective
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
@@ -29,7 +47,7 @@
 
 - type: entity
   parent: BaseTraitorRule
-  id: CalmTraitor # For Dual Antag Gamemodes
+  id: CalmTraitor # For Dual Antag Gamemodes / Funky: For gamemodes that need nerfed antags
   components:
   - type: GameRule
     minPlayers: 15
@@ -37,7 +55,7 @@
       min: 240
       max: 420
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Traitor ]
       max: 4
@@ -55,7 +73,7 @@
 
 - type: entity
   parent: Changeling
-  id: CalmLing # For Dual Antag Gamemodes
+  id: CalmLing # For Dual Antag Gamemodes / Funky: For gamemodes that need nerfed antags
   components:
   - type: GameRule
     minPlayers: 15
@@ -63,7 +81,7 @@
       min: 30
       max: 60
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
@@ -78,10 +96,10 @@
 
 - type: entity
   parent: BaseNukeopsRule
-  id: Calmops # For Dual Antag Gamemodes
+  id: Calmops # For Dual Antag Gamemodes / Funky: For gamemodes that need nerfed antags
   components:
   - type: GameRule
-    minPlayers: 30
+    minPlayers: 40
   - type: LoadMapRule
     mapPath: /Maps/Nonstations/nukieplanet.yml
   - type: AntagSelection
@@ -95,8 +113,8 @@
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments:
-        - nukeops-role-commander
-        - SyndicateNamesElite
+        - NamesNukieFirstCommander
+        - NamesSyndicateElite
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -110,8 +128,8 @@
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments:
-        - nukeops-role-agent
-        - SyndicateNamesNormal
+        - NamesNukieFirstAgent
+        - NamesSyndicateNormal
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -121,14 +139,14 @@
       fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsOperative
       max: 2
-      playerRatio: 15
+      playerRatio: 30
       startingGear: SyndicateOperativeGearFull
       components:
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments:
-        - nukeops-role-operator
-        - SyndicateNamesNormal
+        - NamesNukieFirstOperator
+        - NamesSyndicateNormal
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -136,17 +154,17 @@
       - MindRoleNukeops
   - type: Tag
     tags:
-      - CalmAntag
+      - RoundstartAntag # Calmer than extreme = normal
 
 - type: entity
-  id: CalmRevs # For Dual Antag Gamemodes
+  id: CalmRevs # For Dual Antag Gamemodes / Funky: For rounds that need a nerfed version in general
   parent: BaseGameRule
   components:
   - type: GameRule
     minPlayers: 30
   - type: RevolutionaryRule
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ HeadRev ]
       max: 2
@@ -155,7 +173,7 @@
         text: head-rev-role-greeting
         color: CornflowerBlue
         sound: "/Audio/Ambience/Antag/headrev_start.ogg"
-      startingGear: HeadRevGear
+      #startingGear: HeadRevGear
       components:
       - type: Revolutionary
       - type: HeadRevolutionary
@@ -163,7 +181,7 @@
       - MindRoleHeadRevolutionary
   - type: Tag
     tags:
-      - CalmAntag
+      - RoundstartAntag # Funky: Calmer than extreme = normal
 # Blob
 - type: entity
   id: BlobRule
@@ -211,6 +229,16 @@
     earliestStart: 50
     minimumPlayers: 25
     maxOccurrences: 2
+    chaos:
+      Hostile: 150
+      Medical: 150
+      Death: 150
+    maxChaos:
+      Hostile: 30
+      Combat: -60
+      Power: 70
+      Medical: 70
+      Atmos: 70
   - type: BlobSpawnRule
     carrierBlobProtos:
     - SpawnPointGhostBlobRat

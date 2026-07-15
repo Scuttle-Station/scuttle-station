@@ -1,3 +1,36 @@
+# SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 DrSmugleaf <drsmugleaf@gmail.com>
+# SPDX-FileCopyrightText: 2023 I.K <45953835+notquitehadouken@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Kara <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 MilenVolf <63782763+MilenVolf@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Nairod <110078045+Nairodian@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Simon <63975668+Simyon264@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 lzk <124214523+lzk228@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Morb <14136326+Morb0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Mr. 27 <45323883+Dutch-VanDerLinde@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+# SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 Ubaser <134914314+UbaserB@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 whateverusername0 <whateveremail>
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 coolbloxxie <30777998+coolbloxxie@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 emmawantsblahaj <coolbloxxie@yahoo.com.au>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 W.xyz() <84605679+pirakaplant@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: entity
   save: false
   name: Urist McRat
@@ -9,6 +42,7 @@
     species: Rodentia
   - type: Hunger
     baseDecayRate: 0.0467 # 33% faster than usual
+  - type: Thirst
   - type: Carriable # Carrying system from nyanotrasen.
   - type: Inventory
     speciesId: rodentia
@@ -21,20 +55,20 @@
     speechVerb: Rodentia
     speechSounds: Squeak
     allowedEmotes: ['Squeak']
-  - type: Fixtures
-    fixtures: # TODO: This needs a second fixture just for mob collisions.
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.28
-        density: 140
-        restitution: 0.0
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
+  #- type: Fixtures # Funky - Removed to be consistent with full scaled rodentia
+    #fixtures: # TODO: This needs a second fixture just for mob collisions.
+      #fix1:
+        #shape:
+          #!type:PhysShapeCircle
+          #radius: 0.28
+        #density: 100
+        #restitution: 0.0
+        #mask:
+        #- MobMask
+        #layer:
+        #- MobLayer
   - type: Sprite
-    scale: 0.8, 0.8
+    #scale: 0.8, 0.8 - Funkystation hehehell naw
     layers:
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
       - map: [ "enum.HumanoidVisualLayers.Head" ]
@@ -59,6 +93,11 @@
       - map: [ "shoes" ]
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
+      - map: [ "culteyes" ] # funky cult
+        sprite: "_Funkystation/BloodCult/Effects/culteyes.rsi"
+        state: "human"  # TODO make rodentia version
+        shader: unshaded
+        visible: false
       - map: [ "eyes" ]
       - map: [ "belt" ]
       - map: [ "neck" ]
@@ -67,14 +106,19 @@
       - map: [ "enum.HumanoidVisualLayers.Hair" ]
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
-      - map: [ "enum.HumanoidVisualLayers.Tail" ]
       - map: [ "mask" ]
       - map: [ "head" ]
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
       - map: [ "clownedon" ] # Dynamically generated
         sprite: "_DV/Effects/creampie.rsi"
         state: "creampie_rodentia"
+        visible: false
+      - map: [ "culthalo" ] # funky cult
+        sprite: "_Funkystation/BloodCult/Effects/halo.rsi"
+        state: "halo"
+        shader: unshaded
         visible: false
   - type: MeleeWeapon
     soundHit:
@@ -100,17 +144,12 @@
       Unsexed: MaleRodentia
   - type: Rummager
   - type: AlwaysTriggerMousetrap
-  - type: PseudoItem
-    storedOffset: -10,0
-    shape:
-      - 0, 0, 3, 2
-      - 0, 2, 5, 4
   - type: MouthStorage
     mouthProto: CheekStorage
     openStorageAction: ActionOpenMouthStorage
     spitDamageThreshold: 3
-  - type: CrawlUnderObjects
-    actionProto: ActionToggleSneakMode
+#  - type: CrawlUnderObjects
+#    actionProto: ActionToggleSneakMode - funkystation no sneak
 
 - type: entity
   save: false

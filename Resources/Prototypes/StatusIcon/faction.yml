@@ -1,3 +1,23 @@
+# SPDX-FileCopyrightText: 2023 IntegerTempest <30300017+IntegerTempest@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 coolmankid12345 <55817627+coolmankid12345@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 coolmankid12345 <coolmankid12345@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Brandon Hu <103440971+Brandon-Huu@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Golinth <amh2023@gmail.com>
+# SPDX-FileCopyrightText: 2024 Killerqu00 <47712032+Killerqu00@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 MilenVolf <63782763+MilenVolf@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: factionIcon
   id: ZombieFaction
   priority: 11
@@ -7,8 +27,48 @@
     - Zombie
     - InitialInfected
   icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Zombie
+    sprite: /Textures/_Funkystation/Interface/Misc/zombie_job_icons.rsi
+    state: Stage5
+
+- type: factionIcon
+  id: ZombieInfectionIncubation
+  priority: 11
+  showTo:
+    components:
+    - ShowAntagIcons
+  icon:
+    sprite: /Textures/_Funkystation/Interface/Misc/zombie_job_icons.rsi
+    state: Stage1
+
+- type: factionIcon
+  id: ZombieInfectionEarly
+  priority: 11
+  showTo:
+    components:
+    - ShowAntagIcons
+  icon:
+    sprite: /Textures/_Funkystation/Interface/Misc/zombie_job_icons.rsi
+    state: Stage2
+
+- type: factionIcon
+  id: ZombieInfectionTumorFormed
+  priority: 11
+  showTo:
+    components:
+    - ShowAntagIcons
+  icon:
+    sprite: /Textures/_Funkystation/Interface/Misc/zombie_job_icons.rsi
+    state: Stage3
+
+- type: factionIcon
+  id: ZombieInfectionAdvanced
+  priority: 11
+  showTo:
+    components:
+    - ShowAntagIcons
+  icon:
+    sprite: /Textures/_Funkystation/Interface/Misc/zombie_job_icons.rsi
+    state: Stage4
 
 - type: factionIcon
   id: InitialInfectedFaction
@@ -30,6 +90,8 @@
     components:
       - ShowAntagIcons
       - HeadRevolutionary
+      - ShowRevolutionaryIcons
+      - RevolutionaryLieutenant
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Revolutionary
@@ -42,9 +104,23 @@
     components:
       - ShowAntagIcons
       - Revolutionary
+      - RevolutionaryLieutenant
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: HeadRevolutionary
+
+- type: factionIcon
+  id: RevolutionaryLieutenantFaction
+  isShaded: true
+  priority: 11
+  showTo:
+    components:
+     - ShowAntagIcons
+     - Revolutionary
+     - RevolutionaryLieutenant
+  icon:
+    sprite: /Textures/_Funkystation/Interface/Misc/job_icons.rsi
+    state: Lieutenant
 
 - type: factionIcon
   id: SyndicateFaction
@@ -53,3 +129,16 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
+
+- type: factionIcon
+  id: BloodCultFaction
+  isShaded: true
+  priority: 11
+  showTo:
+    components:
+      - ShowAntagIcons
+      - BloodCultist
+      - BloodCultConstruct
+  icon:
+    sprite: /Textures/_Funkystation/Interface/Misc/cult_job_icons.rsi
+    state: Cultist

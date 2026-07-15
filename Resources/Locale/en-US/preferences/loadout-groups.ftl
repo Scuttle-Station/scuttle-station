@@ -1,13 +1,47 @@
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 BeeRobynn <robynthewarcrime@proton.me>
+# SPDX-FileCopyrightText: 2024 Cojoke <83733158+Cojoke-dot@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Ghagliiarghii <68826635+Ghagliiarghii@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 KingFroozy <froozy345@mail.ru>
+# SPDX-FileCopyrightText: 2024 Liamofthesky <157073227+Liamofthesky@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Mr. 27 <45323883+Dutch-VanDerLinde@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2024 PoorMansDreams <150595537+PoorMansDreams@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 SpeltIncorrectyl <66873282+SpeltIncorrectyl@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 TakoDragon <69509841+BackeTako@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Verm <32827189+Vermidia@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 cool dolphin <36332236+Afrokada@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 pigeonpeas <147350443+pigeonpeas@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 themias <89101928+themias@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 88tv <131759102+88tv@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 8tv <eightev@gmail.com>
+# SPDX-FileCopyrightText: 2025 Icepick <122653407+Icepicked@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 Teasq <Xerithin@gmail.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
 # Errors
 loadout-group-species-restriction = This item is not available for your current species.
 
 # Miscellaneous
 loadout-group-trinkets = Trinkets
+loadout-group-jobtrinkets = Job trinkets
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
 loadout-group-instruments = Instruments
+loadout-group-jobtoys = Toys
 loadout-group-survival-basic = Survival Box
 loadout-group-survival-extended = Extended Survival Box
+loadout-group-survival-salvage-extended = Extended Survival Box
 loadout-group-survival-clown = Clown Survival Box
 loadout-group-survival-medical = Medical Survival Box
 loadout-group-survival-security = Security Survival Box
@@ -15,6 +49,7 @@ loadout-group-survival-syndicate = Github is forcing me to write text that is li
 loadout-group-breath-tool = Species-dependent breath tools
 loadout-group-tank-harness = Species-specific survival equipment
 loadout-group-EVA-tank = Species-specific gas tank
+loadout-group-vox-tank = Vox-specific gas tank
 loadout-group-pocket-tank-double = Species-specific double emergency tank in pocket
 loadout-group-survival-mime = Mime Survival Box
 
@@ -24,12 +59,14 @@ loadout-group-captain-jumpsuit = Captain jumpsuit
 loadout-group-captain-neck = Captain neck
 loadout-group-captain-backpack = Captain backpack
 loadout-group-captain-outerclothing = Captain outer clothing
+loadout-group-captain-shoes = Captain shoes
 
 loadout-group-hop-head = Head of Personnel head
 loadout-group-hop-jumpsuit = Head of Personnel jumpsuit
 loadout-group-hop-neck = Head of Personnel neck
 loadout-group-hop-backpack = Head of Personnel backpack
 loadout-group-hop-outerclothing = Head of Personnel outer clothing
+loadout-group-hop-shoes = Head of Personnel shoes
 
 # Civilian
 loadout-group-passenger-jumpsuit = Passenger jumpsuit
@@ -42,6 +79,12 @@ loadout-group-passenger-neck = Passenger neck
 loadout-group-bartender-head = Bartender head
 loadout-group-bartender-jumpsuit = Bartender jumpsuit
 loadout-group-bartender-outerclothing = Bartender outer clothing
+
+loadout-group-generic-hats = Hats
+loadout-group-service_jumpsuit = Service jumpsuit
+loadout-group-gloves = Gloves
+loadout-group-generic-outerclothing = Outer clothing
+loadout-group-generic-shoes = Shoes
 
 loadout-group-chef-head = Chef head
 loadout-group-chef-mask = Chef mask
@@ -64,6 +107,7 @@ loadout-group-janitor-head = Janitor head
 loadout-group-janitor-jumpsuit = Janitor jumpsuit
 loadout-group-janitor-gloves = Janitor gloves
 loadout-group-janitor-outerclothing = Janitor outer clothing
+loadout-group-janitor-shoes = Janitor galoshes
 loadout-group-janitor-plunger = Janitor plunger
 
 loadout-group-botanist-head = Botanist head
@@ -78,7 +122,6 @@ loadout-group-clown-backpack = Clown backpack
 loadout-group-clown-outerclothing = Clown outer clothing
 loadout-group-clown-shoes = Clown shoes
 
-loadout-group-mime-head = Mime head
 loadout-group-mime-mask = Mime mask
 loadout-group-mime-jumpsuit = Mime jumpsuit
 loadout-group-mime-backpack = Mime backpack
@@ -96,11 +139,15 @@ loadout-group-quartermaster-outerclothing = Quartermaster outer clothing
 loadout-group-quartermaster-shoes = Quartermaster shoes
 
 loadout-group-cargo-technician-head = Cargo Technician head
+loadout-group-cargo-technician-neck = Cargo Technician neck
 loadout-group-cargo-technician-jumpsuit = Cargo Technician jumpsuit
 loadout-group-cargo-technician-backpack = Cargo Technician backpack
 loadout-group-cargo-technician-outerclothing = Cargo Technician outer clothing
 loadout-group-cargo-technician-shoes = Cargo Technician shoes
+loadout-group-cargo-technician-id = Cargo Technician ID
 
+loadout-group-salvage-specialist-head = Salvage Specialist head
+loadout-group-salvage-specialist-jumpsuit = Salvage Specialist jumpsuit
 loadout-group-salvage-specialist-backpack = Salvage Specialist backpack
 loadout-group-salvage-specialist-outerclothing = Salvage Specialist outer clothing
 loadout-group-salvage-specialist-shoes = Salvage Specialist shoes
@@ -109,8 +156,10 @@ loadout-group-salvage-specialist-shoes = Salvage Specialist shoes
 loadout-group-chief-engineer-head = Chief Engineer head
 loadout-group-chief-engineer-jumpsuit = Chief Engineer jumpsuit
 loadout-group-chief-engineer-outerclothing = Chief Engineer outer clothing
+loadout-group-chief-engineer-belt = Chief Engineer belt
 loadout-group-chief-engineer-neck = Chief Engineer neck
 loadout-group-chief-engineer-shoes = Chief Engineer shoes
+loadout-group-engineering-goggles = Engineering goggles
 
 loadout-group-technical-assistant-jumpsuit = Technical Assistant jumpsuit
 
@@ -118,6 +167,7 @@ loadout-group-station-engineer-head = Station Engineer head
 loadout-group-station-engineer-jumpsuit = Station Engineer jumpsuit
 loadout-group-station-engineer-backpack = Station Engineer backpack
 loadout-group-station-engineer-outerclothing = Station Engineer outer clothing
+loadout-group-station-engineer-belt = Station Engineer belt
 loadout-group-station-engineer-shoes = Station Engineer shoes
 loadout-group-station-engineer-id = Station Engineer ID
 
@@ -125,6 +175,7 @@ loadout-group-atmospheric-technician-head = Atmospheric Technician head
 loadout-group-atmospheric-technician-jumpsuit = Atmospheric Technician jumpsuit
 loadout-group-atmospheric-technician-backpack = Atmospheric Technician backpack
 loadout-group-atmospheric-technician-outerclothing = Atmospheric Technician outer clothing
+loadout-group-atmospheric-technician-belt = Atmospheric Technician belt
 loadout-group-atmospheric-technician-shoes = Atmospheric Technician shoes
 
 # Science
@@ -143,6 +194,8 @@ loadout-group-scientist-gloves = Scientist gloves
 loadout-group-scientist-shoes = Scientist shoes
 loadout-group-scientist-id = Scientist ID
 loadout-group-roboticist-id = Roboticist ID
+loadout-group-roboticist-glasses = Diagnostics glasses
+loadout-group-scientist-glasses = Scientist eyewear
 
 loadout-group-research-assistant-jumpsuit = Research Assistant jumpsuit
 
@@ -151,6 +204,7 @@ loadout-group-head-of-security-head = Head of Security head
 loadout-group-head-of-security-jumpsuit = Head of Security jumpsuit
 loadout-group-head-of-security-neck = Head of Security neck
 loadout-group-head-of-security-outerclothing = Head of Security outer clothing
+loadout-group-security-glasses = Security glasses
 
 loadout-group-warden-head = Warden head
 loadout-group-warden-jumpsuit = Warden jumpsuit
@@ -163,26 +217,33 @@ loadout-group-security-neck = Security neck
 loadout-group-security-backpack = Security backpack
 loadout-group-security-belt = Security Belt
 loadout-group-security-outerclothing = Security outer clothing
+loadout-group-security-gloves = Security gloves
 loadout-group-security-shoes = Security shoes
 loadout-group-security-id = Security ID
+loadout-group-security-weapon = Security Weapon
 
 loadout-group-detective-head = Detective head
 loadout-group-detective-neck = Detective neck
 loadout-group-detective-jumpsuit = Detective jumpsuit
 loadout-group-detective-outerclothing = Detective outer clothing
+loadout-group-detective-id = Detective ID
+loadout-group-detective-weapon = Detective Weapon
 
+loadout-group-security-cadet-hat = Security cadet hat
 loadout-group-security-cadet-jumpsuit = Security cadet jumpsuit
 loadout-group-security-star = Security Star
 
 # Medical
 loadout-group-medical-gloves = Medical gloves
 loadout-group-medical-mask = Medical mask
+loadout-group-medical-neck = Medical neck
 
 loadout-group-chief-medical-officer-head = Chief Medical Officer head
 loadout-group-chief-medical-officer-jumpsuit = Chief Medical Officer jumpsuit
 loadout-group-chief-medical-officer-outerclothing = Chief Medical Officer outer clothing
 loadout-group-chief-medical-officer-shoes = Chief Medical Officer shoes
 loadout-group-chief-medical-officer-neck = Chief Medical Officer neck
+loadout-group-medical-doctor-glasses = Medical glasses
 
 loadout-group-medical-doctor-head = Medical Doctor head
 loadout-group-medical-doctor-jumpsuit = Medical Doctor jumpsuit
@@ -195,9 +256,14 @@ loadout-group-medical-intern-jumpsuit = Medical intern jumpsuit
 
 loadout-group-chemist-jumpsuit = Chemist jumpsuit
 loadout-group-chemist-outerclothing = Chemist outer clothing
+loadout-group-chemist-gloves = Chemist gloves
+loadout-group-chemist-shoes = Chemist shoes
 loadout-group-chemist-backpack = Chemist backpack
+loadout-group-medical-chemist-glasses = Chemist glasses
+loadout-group-medical-chemist-head = Chemist head
 
 loadout-group-paramedic-head = Paramedic head
+loadout-group-paramedic-glasses = Paramedic glasses
 loadout-group-paramedic-jumpsuit = Paramedic jumpsuit
 loadout-group-paramedic-outerclothing = Paramedic outer clothing
 loadout-group-paramedic-shoes = Paramedic shoes

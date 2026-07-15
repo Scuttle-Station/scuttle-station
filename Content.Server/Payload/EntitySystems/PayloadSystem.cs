@@ -1,5 +1,26 @@
+// SPDX-FileCopyrightText: 2022 0x6273 <0x40@keemail.me>
+// SPDX-FileCopyrightText: 2022 Paul Ritter <ritter.paul1@googlemail.com>
+// SPDX-FileCopyrightText: 2022 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Emisse <99158783+Emisse@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Cojoke <83733158+Cojoke-dot@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 TemporalOroboros <TemporalOroboros@gmail.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 alex-infdev <185717397+alex-infdev@users.noreply.github.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Administration.Logs;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -11,6 +32,7 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Payload.EntitySystems;
 
@@ -18,10 +40,13 @@ public sealed class PayloadSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly PuddleSystem _puddleSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
+
+    private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
 
     public override void Initialize()
     {
@@ -44,7 +69,7 @@ public sealed class PayloadSystem : EntitySystem
         {
             foreach (var entity in container.ContainedEntities)
             {
-                if (_tagSystem.HasTag(entity, "Payload"))
+                if (_tagSystem.HasTag(entity, PayloadTag))
                     yield return entity;
             }
         }
@@ -60,6 +85,8 @@ public sealed class PayloadSystem : EntitySystem
         {
             RaiseLocalEvent(ent, args, false);
         }
+
+        QueueDel(uid);
     }
 
     private void OnTriggerTriggered(EntityUid uid, PayloadTriggerComponent component, TriggerEvent args)
@@ -71,7 +98,7 @@ public sealed class PayloadSystem : EntitySystem
             return;
 
         // Ensure we don't enter a trigger-loop
-        DebugTools.Assert(!_tagSystem.HasTag(uid, "Payload"));
+        DebugTools.Assert(!_tagSystem.HasTag(uid, PayloadTag));
 
         RaiseLocalEvent(parent, args, false);
     }
@@ -166,11 +193,7 @@ public sealed class PayloadSystem : EntitySystem
         _solutionContainerSystem.TryAddSolution(solnA.Value, solutionB);
         _solutionContainerSystem.RemoveAllSolution(solnB.Value);
 
-        // The grenade might be a dud. Redistribute solution:
-        var tmpSol = _solutionContainerSystem.SplitSolution(solnA.Value, solutionA.Volume * solutionB.MaxVolume / solutionA.MaxVolume);
-        _solutionContainerSystem.TryAddSolution(solnB.Value, tmpSol);
-        solutionA.MaxVolume -= solutionB.MaxVolume;
-        _solutionContainerSystem.UpdateChemicals(solnA.Value);
+        _puddleSystem.TrySpillAt(entity.Owner, solutionA, out _);
 
         args.Handled = true;
     }

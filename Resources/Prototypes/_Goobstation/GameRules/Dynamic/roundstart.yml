@@ -1,3 +1,17 @@
+# SPDX-FileCopyrightText: 2024 Fenn <162015305+TooSillyFennec@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+# SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Middleson5 <Chance@thethiers.com>
+# SPDX-FileCopyrightText: 2025 Mish <bluscout78@yahoo.com>
+# SPDX-FileCopyrightText: 2025 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 # major antags that get picked once during roundstart.
 # the max number of antags is so small because it's used for midround events too.
 # regards.
@@ -23,7 +37,7 @@
   - type: GameRule
     minPlayers: 45 # when the difference between low/med/high actually changes antag count
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Traitor ]
       max: 2
@@ -45,7 +59,7 @@
     cost: 16
     scalingCost: 18
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Traitor ]
       max: 4
@@ -69,7 +83,7 @@
   - type: GameRule
     minPlayers: 30
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Traitor ]
       max: 6
@@ -104,7 +118,7 @@
       maxPicks: 10
     maxDifficulty: 2.5
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     agentName: thief-round-end-agent-name
     definitions:
     - prefRoles: [ Thief ]
@@ -143,7 +157,7 @@
     - EscapeIdentityObjective
     - ChangelingSurviveObjective
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
@@ -176,7 +190,7 @@
     - EscapeIdentityObjective
     - ChangelingSurviveObjective
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
@@ -205,7 +219,7 @@
   - type: GameRule
     minPlayers: 40
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     agentName: heretic-roundend-name
     definitions:
     - prefRoles: [ Heretic ]
@@ -236,7 +250,7 @@
   - type: GameRule
     minPlayers: 20
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     agentName: heretic-roundend-name
     definitions:
     - prefRoles: [ Heretic ]
@@ -268,7 +282,7 @@
   - type: GameRule
     minPlayers: 20
   - type: AntagSelection
-    selectionTime: BeforeJobs
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ HeadRev ]
       max: 3
@@ -315,8 +329,8 @@
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments: # Vocaloid Names Fix
-        - nukeops-role-commander
-        - SyndicateNamesElite
+        - NamesNukieFirstCommander
+        - NamesSyndicateElite
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -332,8 +346,8 @@
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments: # Vocaloid Names Fix
-        - nukeops-role-agent
-        - SyndicateNamesNormal
+        - NamesNukieFirstAgent
+        - NamesSyndicateNormal
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -351,8 +365,8 @@
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments: # Vocaloid Names Fix
-        - nukeops-role-operator
-        - SyndicateNamesNormal
+        - NamesNukieFirstOperator
+        - NamesSyndicateNormal
       - type: NpcFactionMember
         factions:
         - Syndicate

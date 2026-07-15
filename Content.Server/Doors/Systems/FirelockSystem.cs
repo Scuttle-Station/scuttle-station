@@ -1,3 +1,36 @@
+// SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Moony <moony@hellomouse.net>
+// SPDX-FileCopyrightText: 2022 Paul Ritter <ritter.paul1@googlemail.com>
+// SPDX-FileCopyrightText: 2022 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 corentt <36075110+corentt@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 moonheart08 <moonheart08@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 vulppine <vulppine@gmail.com>
+// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Theomund <34360334+Theomund@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Tom Leys <tom@crump-leys.com>
+// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <comedian_vs_clown@hotmail.com>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Cojoke <83733158+Cojoke-dot@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Partmedia <kevinz5000@gmail.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 nikthechampiongr <32041239+nikthechampiongr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 MaiaArai <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 ShadowCommander <10494922+ShadowCommander@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 jackel234 <52829582+jackel234@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
@@ -58,9 +91,11 @@ namespace Content.Server.Doors.Systems
             while (query.MoveNext(out var uid, out var firelock, out var door))
             {
                 // only bother to check pressure on doors that are some variation of closed.
+                // we also check open now to handle auto-closing logic
                 if (door.State != DoorState.Closed
                     && door.State != DoorState.Welded
-                    && door.State != DoorState.Denying)
+                    && door.State != DoorState.Denying
+                    && door.State != DoorState.Open)
                 {
                     continue;
                 }
@@ -69,15 +104,29 @@ namespace Content.Server.Doors.Systems
                     && xformQuery.TryGetComponent(uid, out var xform)
                     && appearanceQuery.TryGetComponent(uid, out var appearance))
                 {
-                    var (pressure, fire) = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery);
-                    _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
-                    firelock.Temperature = fire;
-                    firelock.Pressure = pressure;
-                    Dirty(uid, firelock);
+                    // if the door is open, we pass 'true' to checkEvenIfOpen so we can detect hazards
+                    var (pressure, fire) = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery, door.State == DoorState.Open);
 
-                    if (pointLightQuery.TryComp(uid, out var pointLight))
+                    if (door.State == DoorState.Open)
                     {
-                        _pointLight.SetEnabled(uid, fire | pressure, pointLight);
+                        if (pressure || fire)
+                        {
+                            EmergencyPressureStop(uid, firelock, door);
+                        }
+                    }
+                    else
+                    {
+                        _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
+                        firelock.Temperature = fire;
+                        firelock.Pressure = pressure;
+                        _appearance.SetData(uid, FirelockVisuals.PressureWarning, pressure, appearance);
+                        _appearance.SetData(uid, FirelockVisuals.TemperatureWarning, fire, appearance);
+                        Dirty(uid, firelock);
+
+                        if (pointLightQuery.TryComp(uid, out var pointLight))
+                        {
+                            _pointLight.SetEnabled(uid, fire | pressure, pointLight);
+                        }
                     }
                 }
             }
@@ -115,9 +164,10 @@ namespace Content.Server.Doors.Systems
         FirelockComponent firelock,
         TransformComponent xform,
         AirtightComponent airtight,
-        EntityQuery<AirtightComponent> airtightQuery)
+        EntityQuery<AirtightComponent> airtightQuery,
+        bool checkEvenIfOpen = false)
         {
-            if (!airtight.AirBlocked)
+            if (!checkEvenIfOpen && !airtight.AirBlocked)
                 return (false, false);
 
             if (TryComp(uid, out DockingComponent? dock) && dock.Docked)
@@ -127,6 +177,9 @@ namespace Content.Server.Doors.Systems
             }
 
             if (!HasComp<GridAtmosphereComponent>(xform.ParentUid))
+                return (false, false);
+
+            if (xform.MapUid == null || !HasComp<MapAtmosphereComponent>(xform.MapUid.Value))
                 return (false, false);
 
             var grid = Comp<MapGridComponent>(xform.ParentUid);

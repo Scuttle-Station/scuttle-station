@@ -1,3 +1,10 @@
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Heretic.Prototypes;
@@ -26,7 +33,12 @@ namespace Content.Server.Heretic.Ritual;
 
         var mix = _atmos.GetTileMixture(args.Platform);
 
-        if (mix == null || mix.TotalMoles == 0) // just accept space as it is
+        if (mix == null)
+            return true;
+
+        // treat near-vacuum as space
+        // because breathing can temporarily leave residual gas in space before it gets removed
+        if (mix.TotalMoles <= 0.1)
             return true;
 
         if (mix.Temperature > Atmospherics.T0C + MaxThreshold)

@@ -1,3 +1,9 @@
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 hivehum <ketchupfaced@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 marking-SlimeNose-nose = Nose (Profile)
 marking-SlimeNose = Nose (Profile)
 
@@ -7,8 +13,23 @@ marking-SlimeMouth = Mouth
 marking-SlimeBrain-brain = Brain
 marking-SlimeBrain = Brain
 
-marking-SlimeEyeglow-eyeglow = Eye Glow
-marking-SlimeEyeglow = Eye Glow
+marking-SlimeEyesDefault = Eyes
+marking-SlimeEyesDefault-eyes = Eyes (Default)
+
+marking-SlimeEyeDefaultGlow = Glowing Eyes
+marking-SlimeEyeDefaultGlow-eyeglow = Glowing Eyes
+
+marking-SlimeEyesDroopy = Droopy Eyes
+marking-SlimeEyesDroopy-droopy = Droopy Eyes
+
+marking-SlimeEyesDroopyGlow = Droopy Glowing Eyes
+marking-SlimeEyesDroopyGlow-droopyglow = Droopy Glowing Eyes
+
+marking-SlimeEyesCyclops = Cyclops Eye
+marking-SlimeEyesCyclops-cyclops = Cyclops Eye
+
+marking-SlimeEyesCyclopsGlow = Cyclops Glowing Eye
+marking-SlimeEyesCyclopsGlow-cyclopsglow = Cyclops Glowing Eye
 
 marking-SlimeCore-core = Core
 marking-SlimeCore = Core

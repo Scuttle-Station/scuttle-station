@@ -1,4 +1,9 @@
-﻿using Content.Server._Goobstation.StationEvents.Metric;
+// SPDX-FileCopyrightText: 2025 misghast <51974455+misterghast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+using Content.Server._Goobstation.StationEvents.Metric;
 using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -43,16 +48,22 @@ public sealed partial class GameDirectorComponent : Component
     public List<ProtoId<StoryBeatPrototype>> RemainingBeats = new();
 
     /// <summary>
-    /// Does this round start with multiple antags.
+    /// Does this round start with calm antags or regular roundstart antags?
     /// </summary>
     [DataField]
-    public bool DualAntags;
+    public bool CalmAntags;
 
     /// <summary>
-    /// Does this round start with antags at all?.
+    /// How many antags does this round start with?
     /// </summary>
     [DataField]
-    public bool NoRoundstartAntags;
+    public int NormalAntagAmount;
+
+    [DataField]
+    public int ExtremeAntagAmount;
+
+    [DataField]
+    public int CalmAntagAmount;
 
     /// <summary>
     ///   Which stories the director can choose from (so we can change flavor of director by loading different stories)

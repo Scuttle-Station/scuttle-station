@@ -1,3 +1,20 @@
+# SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Adrian16199 <144424013+Adrian16199@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 Ubaser <134914314+UbaserB@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 coolsurf6 <coolsurf24@yahoo.com.au>
+# SPDX-FileCopyrightText: 2025 Fr0goo <153249069+Fr0goo@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Fr0goo <frogoofrog@outlook.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 hivehum <ketchupfaced@gmail.com>
+# SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 unknown <daniel.thomas.staal@gmail.com>
+# SPDX-FileCopyrightText: 2026 unknown <kit.ds.kat@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: species
   id: Reptilian
   name: species-name-reptilian
@@ -8,8 +25,8 @@
   markingLimits: MobReptilianMarkingLimits
   dollPrototype: MobReptilianDummy
   skinColoration: Hues
-  maleFirstNames: names_reptilian_male
-  femaleFirstNames: names_reptilian_female
+  maleFirstNames: NamesReptilianMale
+  femaleFirstNames: NamesReptilianFemale
   naming: FirstDashFirst
 
 - type: speciesBaseSprites
@@ -21,7 +38,7 @@
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking
-    Eyes: MobHumanoidEyes
+    Eyes: MobReptilianEyes
     LArm: MobReptilianLArm
     RArm: MobReptilianRArm
     LHand: MobReptilianLHand
@@ -36,7 +53,7 @@
   onlyWhitelisted: true
   points:
     Hair:
-      points: 0
+      points: 1
       required: false
     FacialHair:
       points: 0
@@ -53,7 +70,7 @@
       points: 2
       required: false
     HeadSide:
-      points: 1
+      points: 2
       required: false
     Chest:
       points: 4 # imp 3<4
@@ -148,3 +165,9 @@
   baseSprite:
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: r_foot
+
+- type: humanoidBaseSprite
+  id: MobReptilianEyes
+  baseSprite:
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: eyes

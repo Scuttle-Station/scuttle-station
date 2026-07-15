@@ -1,3 +1,23 @@
+// SPDX-FileCopyrightText: 2022 Alex Klos <alexklos@prohobo.dev>
+// SPDX-FileCopyrightText: 2022 Alex Klos <alexklos@proton.me>
+// SPDX-FileCopyrightText: 2022 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2022 Ygg01 <y.laughing.man.y@gmail.com>
+// SPDX-FileCopyrightText: 2022 metalgearsloth <comedian_vs_clown@hotmail.com>
+// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 KISS <59531932+YuriyKiss@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 no <165581243+pissdemon@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 beck <163376292+widgetbeck@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Gravity;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.Whitelist;
@@ -241,6 +261,19 @@ public sealed class StepTriggerSystem : EntitySystem
             return;
 
         component.Active = active;
+        Dirty(uid, component);
+    }
+
+    // Goobstation
+    public void SetIgnoreWeightless(EntityUid uid, bool ignore, StepTriggerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (ignore == component.IgnoreWeightless)
+            return;
+
+        component.IgnoreWeightless = ignore;
         Dirty(uid, component);
     }
 }

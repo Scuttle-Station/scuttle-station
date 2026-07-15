@@ -1,3 +1,19 @@
+// SPDX-FileCopyrightText: 2023 PixelTK <85175107+PixelTheKermit@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 PrPleGoo <PrPleGoo@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Krunklehorn <42424291+Krunklehorn@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 MilenVolf <63782763+MilenVolf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 Zergologist <114537969+Chedd-Error@users.noreply.github.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
@@ -6,6 +22,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusIcon;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -151,7 +168,18 @@ public sealed class HungerSystem : EntitySystem
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
         }
 
-        if (component.HungerThresholdAlerts.TryGetValue(component.CurrentThreshold, out var alertId))
+        if (HasComp<IgnoreMinorBodilyAlertsComponent>(uid)) //funk intercept, not currently aware of a better way
+        {
+            if (IgnoreMinorBodilyAlertsComponent.HungerThresholdAlerts.TryGetValue(component.CurrentThreshold, out var alertId))
+            {
+                _alerts.ShowAlert(uid, alertId);
+            }
+            else
+            {
+                _alerts.ClearAlertCategory(uid, component.HungerAlertCategory);
+            }
+        }
+        else if (component.HungerThresholdAlerts.TryGetValue(component.CurrentThreshold, out var alertId))
         {
             _alerts.ShowAlert(uid, alertId);
         }

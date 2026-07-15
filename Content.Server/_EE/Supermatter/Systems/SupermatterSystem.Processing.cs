@@ -1,3 +1,20 @@
+// SPDX-FileCopyrightText: 2025 BrightNibbleston <218794821+BrightNibbleston@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 BrightNibbleston <brightnibbleston@gmail.com>
+// SPDX-FileCopyrightText: 2025 Do You Like Beans <bowenjonathan407@gmail.com>
+// SPDX-FileCopyrightText: 2025 Homingpenguins <59744509+Homingpenguins@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Homingpenguins <asadellace4@gmail.com>
+// SPDX-FileCopyrightText: 2025 Steve <marlumpy@gmail.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+// SPDX-FileCopyrightText: 2025 VMSolidus <evilexecutive@gmail.com>
+// SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 marc-pelletier <113944176+marc-pelletier@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 MeowVal <meowval@catkatnya.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -27,13 +44,14 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Spawners;
-using Vector4 = Robust.Shared.Maths.Vector4;
 using Content.Shared.DeviceLinking;
+using Robust.Shared.Timing;
 
 namespace Content.Server._EE.Supermatter.Systems;
 
 public sealed partial class SupermatterSystem
 {
+    [Dependency] private readonly IGameTiming _SmTiming = default!;
     /// <summary>
     /// Handle power and radiation output depending on atmospheric things.
     /// </summary>
@@ -175,6 +193,31 @@ public sealed partial class SupermatterSystem
                 gasReleased.AdjustMoles(Gas.Pluoxium, consumedCO2);
             }
         }
+
+        if (mix.GetMoles(Gas.AntiNoblium) > 0.01f && mix.GetMoles(Gas.Helium) > 0.01f)
+        {
+            // finds the minumum amount of either anti-noblium or helium
+            var consumedAN =  Math.Min(gasReleased.GetMoles(Gas.Helium), gasReleased.GetMoles(Gas.AntiNoblium))* 0.5f;
+            // finds zapPower by dividing the consumededAN and the total mols than multiplying it by 5 (capped between 1 and 3)
+            // finds zapCount by dividing the consumedAN by 4
+            var zapPower = (int) Math.Clamp((Math.Round(consumedAN / mix.TotalMoles) * 5), 1 ,3);
+            var zapCount = (int) Math.Clamp(Math.Round(consumedAN/4), 1, 10);
+            var zapRange = Math.Clamp(sm.Power / 1000, 2, 7);
+
+            if (consumedAN > 0)
+            {
+                //removes consumed gasses
+                gasReleased.AdjustMoles(Gas.AntiNoblium, -consumedAN);
+                gasReleased.AdjustMoles(Gas.Helium, -consumedAN);
+                gasReleased.AdjustMoles(Gas.HyperNoblium, consumedAN);
+                // delay for lightning zaps
+                if (sm.ZapLast + TimeSpan.FromSeconds(5) <= _SmTiming.CurTime)
+                {
+                    _lightning.ShootRandomLightnings(uid, zapRange, zapCount, sm.LightningPrototypes[zapPower], hitCoordsChance: sm.ZapHitCoordinatesChance); sm.ZapLast = _SmTiming.CurTime;
+                }
+            }
+        }
+
         // Assmos - /tg/ gases end
 
         // Release the waste
@@ -366,6 +409,8 @@ public sealed partial class SupermatterSystem
         // Absorbed gas from surrounding area
         var absorbedGas = mix.Remove(sm.GasEfficiency * mix.TotalMoles);
         var moles = absorbedGas.TotalMoles;
+        // Funky Fix: Release Gas
+        var gasReturned = absorbedGas;
 
         var totalDamage = 0f;
 
@@ -393,6 +438,8 @@ public sealed partial class SupermatterSystem
         }
         else
             sm.HeatHealing = 0f;
+            // Funky Fix: Returns gas
+            _atmosphere.Merge(mix, gasReturned);
 
         // Check for space tiles next to SM
         if (TryComp<MapGridComponent>(gridId, out var grid))
@@ -707,8 +754,9 @@ public sealed partial class SupermatterSystem
 
         foreach (var mob in mobLookup)
         {
-            // Ignore silicons
-            if (HasComp<SiliconLawBoundComponent>(uid))
+            // Ignore immune entities
+            if (HasComp<SupermatterHallucinationImmuneComponent>(mob) || // Immune to supermatter hallucinations
+            HasComp<SiliconLawBoundComponent>(mob))                // Silicons don't get supermatter hallucinations
                 continue;
 
             if (!EnsureComp<ParacusiaComponent>(mob, out var paracusia))
@@ -801,7 +849,15 @@ public sealed partial class SupermatterSystem
                 _paracusia.SetSounds(mob, paracusiaSounds, paracusia);
                 _paracusia.SetTime(mob, paracusiaMinTime, paracusiaMaxTime, paracusia);
                 _paracusia.SetDistance(mob, paracusiaDistance, paracusia);
+                sm.Hallucinating.Add(mob);
             }
+        }
+
+        foreach (var mob in sm.Hallucinating.Except(lookup).ToList())
+        {
+            // Mob left the hallucination area of the supermatter
+            RemComp<ParacusiaComponent>(mob);
+            sm.Hallucinating.Remove(mob);
         }
 
         sm.PsyCoefficient = Math.Clamp(sm.PsyCoefficient + psyDiff, 0f, 1f);

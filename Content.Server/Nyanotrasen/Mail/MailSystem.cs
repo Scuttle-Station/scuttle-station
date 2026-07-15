@@ -1,3 +1,13 @@
+// SPDX-FileCopyrightText: 2024 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
@@ -54,6 +64,10 @@ using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Server._DV.Cargo.Systems;
+using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Prototypes;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Mail
 {
@@ -78,6 +92,7 @@ namespace Content.Server.Mail
         [Dependency] private readonly ItemSystem _itemSystem = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         // DeltaV - system that keeps track of mail and cargo stats
         [Dependency] private readonly LogisticStatsSystem _logisticsStatsSystem = default!;
@@ -251,7 +266,7 @@ namespace Content.Server.Mail
                 if (_stationSystem.GetOwningStation(uid) != station)
                     continue;
 
-                _cargoSystem.UpdateBankAccount(station, account, component.Bounty);
+                _cargoSystem.UpdateBankAccount((station, account), (int) component.Bounty, _cargoSystem.CreateAccountDistribution((station, account)));
             }
         }
 
@@ -309,7 +324,9 @@ namespace Content.Server.Mail
                 if (_stationSystem.GetOwningStation(uid) != station)
                     continue;
 
-                _cargoSystem.UpdateBankAccount(station, account, component.Penalty);
+                _cargoSystem.UpdateBankAccount((station, account),
+                    (int) component.Penalty,
+                    _cargoSystem.CreateAccountDistribution((station, account)));
                 return;
             }
         }
@@ -751,6 +768,29 @@ namespace Content.Server.Mail
                 return;
             }
 
+            if (!_tagSystem.HasTag(uid, "MailEnvelope"))
+            {
+                int peanutCount = component.IsLarge
+                    ? _random.Next(12, 25)
+                    : _random.Next(6, 12);
+
+                var xform = Transform(uid);
+                for (int i = 0; i < peanutCount; i++)
+                {
+                    var peanut = EntityManager.SpawnEntity("FoodPackingPeanut", xform.Coordinates);
+
+                    if (TryComp<PhysicsComponent>(peanut, out var physics))
+                    {
+                        _physics.WakeBody(peanut, body: physics);
+
+                        var angle = _random.NextAngle();
+                        var strength = _random.NextFloat(3.0f, 6.0f);
+
+                        var velocity = angle.ToWorldVec() * strength;
+                        _physics.SetLinearVelocity(peanut, velocity, body: physics);
+                    }
+                }
+            }
             foreach (var entity in contents.ContainedEntities.ToArray())
             {
                 _handsSystem.PickupOrDrop(user, entity);

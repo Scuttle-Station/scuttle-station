@@ -1,3 +1,21 @@
+// SPDX-FileCopyrightText: 2024 Ed <96445749+TheShuEd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 MilenVolf <63782763+MilenVolf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 TemporalOroboros <TemporalOroboros@gmail.com>
+// SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -16,6 +34,7 @@ using Content.Shared.Light.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
+using Content.Shared.Tag;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared;
@@ -50,6 +69,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
 
     private EntityQuery<BiomeComponent> _biomeQuery;
     private EntityQuery<FixturesComponent> _fixturesQuery;
@@ -59,6 +79,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private readonly HashSet<EntityUid> _handledEntities = new();
     private const float DefaultLoadRange = 16f;
     private float _loadRange = DefaultLoadRange;
+    private static readonly ProtoId<TagPrototype> AllowBiomeLoadingTag = "AllowBiomeLoading";
 
     private List<(Vector2i, Tile)> _tiles = new();
 
@@ -321,7 +342,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     private bool CanLoad(EntityUid uid)
     {
-        return !_ghostQuery.HasComp(uid);
+        return !_ghostQuery.HasComp(uid) || _tags.HasTag(uid, AllowBiomeLoadingTag);
     }
 
     public override void Update(float frameTime)
@@ -1076,5 +1097,67 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
 
         _mapSystem.SetTiles(mapUid, mapGrid, tiles);
+    }
+
+    /// <summary>
+    /// Marks specific tiles as modified in the biome component.
+    /// This prevents the biome system from spawning entities on these tiles.
+    /// </summary>
+    public void MarkTilesAsModified(EntityUid gridUid, BiomeComponent biome, IEnumerable<Vector2i> tiles)
+    {
+        foreach (var tile in tiles)
+        {
+            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize) * ChunkSize;
+            var modifiedTiles = biome.ModifiedTiles.GetOrNew(chunkOrigin);
+            modifiedTiles.Add(tile);
+        }
+    }
+
+    /// <summary>
+    /// Forces immediate loading of all biome chunks for a grid.
+    /// This should be called when a biome is applied to a pre-built grid and needs to spawn entities immediately.
+    /// </summary>
+    public void ForceLoadAllChunks(EntityUid gridUid, BiomeComponent? biome = null, MapGridComponent? grid = null)
+    {
+        if (!Resolve(gridUid, ref biome, ref grid, false))
+            return;
+
+        if (!biome.Enabled)
+            return;
+
+        var seed = biome.Seed;
+        var chunks = new HashSet<Vector2i>();
+
+        // Get all chunks in the grid's bounds
+        var bounds = grid.LocalAABB;
+        var enumerator = new ChunkIndicesEnumerator(bounds, ChunkSize);
+
+        while (enumerator.MoveNext(out var chunkOrigin))
+        {
+            chunks.Add(chunkOrigin.Value * ChunkSize);
+        }
+
+        // Temporarily set active chunks for this biome
+        _activeChunks[biome] = chunks;
+        _markerChunks.GetOrNew(biome);
+
+        // Add marker chunks if the biome has marker layers
+        foreach (var layer in biome.MarkerLayers)
+        {
+            var layerProto = ProtoManager.Index(layer);
+            var markerEnumerator = new ChunkIndicesEnumerator(bounds, layerProto.Size);
+            var markerChunks = _markerChunks[biome].GetOrNew(layer);
+
+            while (markerEnumerator.MoveNext(out var markerChunk))
+            {
+                markerChunks.Add(markerChunk.Value * layerProto.Size);
+            }
+        }
+
+        // Load all chunks immediately
+        LoadChunks(biome, gridUid, grid, seed);
+
+        // Clear temporary active chunks
+        _activeChunks.Remove(biome);
     }
 }

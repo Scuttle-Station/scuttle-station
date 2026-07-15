@@ -1,3 +1,10 @@
+// SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
+// SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
@@ -40,6 +47,20 @@ public sealed class TargetObjectiveSystem : EntitySystem
 
         comp.Target = target;
     }
+
+    // begin imp
+    /// <summary>
+    /// Sets the Target field for the title and other components to use, and adds the target to a list to prevent reuse for other targets for the same mind.
+    /// </summary>
+    public void SetTargetExclusive(EntityUid uid, MindComponent mind, EntityUid target, TargetObjectiveComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.Target = target;
+        mind.ObjectiveTargets.Add(target);
+    }
+    // end imp
 
     /// <summary>
     /// Gets the target from the component.

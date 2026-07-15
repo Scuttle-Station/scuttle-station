@@ -1,3 +1,12 @@
+// SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Drywink <43855731+Drywink@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using Content.Server.Heretic.Components;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
@@ -33,7 +42,10 @@ public sealed partial class EldritchInfluenceSystem : EntitySystem
         {
             MagicItemActive = ev.Handled,
         };
-        var dargs = new DoAfterArgs(EntityManager, user, 10f, doAfter, influence, influence);
+        var dargs = new DoAfterArgs(EntityManager, user, 10f, doAfter, influence, influence)
+        {
+            Hidden = true,
+        };
         _popup.PopupEntity(Loc.GetString("heretic-influence-start"), influence, user);
         return _doafter.TryStartDoAfter(dargs);
     }

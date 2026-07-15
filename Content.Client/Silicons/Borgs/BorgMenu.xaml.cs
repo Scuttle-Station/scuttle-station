@@ -1,3 +1,12 @@
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 ShadowCommander <shadowjjt@gmail.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.NameIdentifier;
@@ -92,14 +101,14 @@ public sealed partial class BorgMenu : FancyWindow
             BrainView.Visible = true;
             BrainView.SetEntity(brain);
             BrainButton.Disabled = false;
-            BrainButton.AddStyleClass(StyleBase.ButtonOpenLeft);
+            BrainButton.AddStyleClass(StyleClass.ButtonOpenLeft);
         }
         else
         {
             BrainButton.Text = Loc.GetString("borg-ui-no-brain");
             BrainButton.Disabled = true;
             BrainView.Visible = false;
-            BrainButton.RemoveStyleClass(StyleBase.ButtonOpenLeft);
+            BrainButton.RemoveStyleClass(StyleClass.ButtonOpenLeft);
         }
     }
 

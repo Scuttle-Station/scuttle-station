@@ -1,7 +1,21 @@
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 mkanke-real <mikekanke@gmail.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Instruments;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.PowerCell;
 using Content.Shared.Audio.Jukebox;
+using Content.Shared.Instruments;
+using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -18,6 +32,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {
@@ -29,8 +45,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, JukeboxSetTimeMessage>(OnJukeboxSetTime);
         SubscribeLocalEvent<JukeboxComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<JukeboxComponent, ComponentShutdown>(OnComponentShutdown);
-
         SubscribeLocalEvent<JukeboxComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<JukeboxComponent, ItemToggledEvent>(OnToggled);
     }
 
     private void OnComponentInit(EntityUid uid, JukeboxComponent component, ComponentInit args)
@@ -43,6 +59,9 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnJukeboxPlay(EntityUid uid, JukeboxComponent component, ref JukeboxPlayingMessage args)
     {
+        if (!CanPlay(uid, component))
+            return;
+
         if (Exists(component.AudioStream))
         {
             Audio.SetState(component.AudioStream, AudioState.Playing);
@@ -158,5 +177,32 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         }
 
         _appearanceSystem.SetData(uid, JukeboxVisuals.VisualState, finalState);
+    }
+
+    private bool CanPlay(EntityUid uid, JukeboxComponent component)
+    {
+
+        if (component.NeedsBattery)
+        {
+            if (!_toggle.IsActivated(uid))
+                return false;
+
+            if (!_powerCell.HasActivatableCharge(uid))
+                return false;
+        }
+
+        return true;
+
+    }
+
+    private void OnToggled(Entity<JukeboxComponent> ent, ref ItemToggledEvent args)
+    {
+        if (!ent.Comp.NeedsBattery)
+            return;
+
+        if (args.Activated)
+            return;
+
+        Stop(ent);
     }
 }

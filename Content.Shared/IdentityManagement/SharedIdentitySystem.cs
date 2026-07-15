@@ -1,3 +1,13 @@
+// SPDX-FileCopyrightText: 2022 Emisse <99158783+Emisse@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Arendian <137322659+Arendian@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 themias <89101928+themias@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Clothing;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
@@ -17,6 +27,7 @@ public abstract class SharedIdentitySystem : EntitySystem
         SubscribeLocalEvent<IdentityComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<IdentityBlockerComponent, SeeIdentityAttemptEvent>(OnSeeIdentity);
         SubscribeLocalEvent<IdentityBlockerComponent, InventoryRelayedEvent<SeeIdentityAttemptEvent>>((e, c, ev) => OnSeeIdentity(e, c, ev.Args));
+        SubscribeLocalEvent<IdentityBlockerComponent, ItemHeadToggledEvent>(OnHeadToggled);
         SubscribeLocalEvent<IdentityBlockerComponent, ItemMaskToggledEvent>(OnMaskToggled);
     }
 
@@ -35,6 +46,10 @@ public abstract class SharedIdentitySystem : EntitySystem
         component.IdentityEntitySlot = _container.EnsureContainer<ContainerSlot>(uid, SlotName);
     }
 
+    private void OnHeadToggled(Entity<IdentityBlockerComponent> ent, ref ItemHeadToggledEvent args)
+    {
+        ent.Comp.Enabled = !args.IsToggled;
+    }
     private void OnMaskToggled(Entity<IdentityBlockerComponent> ent, ref ItemMaskToggledEvent args)
     {
         ent.Comp.Enabled = !args.IsToggled;

@@ -1,3 +1,16 @@
+# SPDX-FileCopyrightText: 2025 IronDragoon <8961391+IronDragoon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 IronDragoon <you@example.com>
+# SPDX-FileCopyrightText: 2025 Mish <bluscout78@yahoo.com>
+# SPDX-FileCopyrightText: 2025 TheSecondLord <88201625+TheSecondLord@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Zergologist <114537969+Chedd-Error@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 mkanke-real <mikekanke@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 thecopbennet <bennetgood@gmail.com>
+# SPDX-FileCopyrightText: 2025 thecopbennet <thecopbennet@proton.me>
+# SPDX-FileCopyrightText: 2026 Xcybitt <197952719+Xcybitt@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: listing
   id: UplinkDinoCubeBoxNukie #dino ops
   name: uplink-syndicate-dinocube-box-name
@@ -47,3 +60,230 @@
     whitelist:
     - Bartender
     - Zookeeper
+
+- type: listing
+  id: UplinkBowlerHatRazor
+  name: uplink-syndicate-bowler-hat-razor-name
+  description: uplink-syndicate-bowler-hat-razor-desc
+  icon: { sprite:  Clothing/Head/Hats/bowler_hat.rsi, state: icon}
+  productEntity: ClothingHeadHatBowlerHatRazor
+  cost:
+    Telecrystal: 7
+  categories:
+  - UplinkWeaponry
+  saleLimit: 1
+
+#Single autoinjector, similar to listing for hypopen in that it is useless without also buying injectors. May change this to a small kit with several bundled
+- type: listing
+  id: UplinkAutoInjector
+  name: uplink-syndicate-autoinjector-name
+  description: uplink-syndicate-autoinjector-desc
+  productEntity: SyndicateHypo
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkChemicals
+  conditions:
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkAutoInjectorSoftCase
+  name: uplink-syndicate-autoinjector-softcase-name
+  description: uplink-syndicate-autoinjector-softcase-desc
+  productEntity: autoInjectorCartridgeCaseSoftFilled
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkChemicals
+  conditions:
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  saleLimit: 1
+
+- type: listing
+  id: UplinkAutoInjectorCartridgeSedative
+  name: uplink-autoinjector-cart-sedative-name
+  description: uplink-autoinjector-cart-sedative-desc
+  productEntity: CartridgeSedativeSyndicate
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkChemicals
+
+- type: listing
+  id: UplinkAutoInjectorCartridgeGunshot
+  name: uplink-autoinjector-cart-gunshot-name
+  description: uplink-autoinjector-cart-gunshot-desc
+  productEntity: CartridgeGunshotSyndicate
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkChemicals
+
+- type: listing
+  id: UplinkAutoInjectorBundle
+  name: uplink-autoinjector-bundle-name
+  description: uplink-autoinjector-bundle-desc
+  productEntity: ClothingBackpackDuffelSyndicateCartridgeAutoinjectorBundleFilled
+  cost:
+    Telecrystal: 100
+  categories:
+  - UplinkChemicals
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+  saleLimit: 1
+
+- type: listing
+  id: UplinkDAGDAutoInjectorBundle
+  name: uplink-autoinjector-bundle-name
+  description: uplink-autoinjector-bundle-desc
+  productEntity: ClothingBackpackDuffelSyndicateCartridgeAutoinjectorBundleFilled
+  cost:
+    Telecrystal: 50
+  categories:
+  - UplinkDAGD
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - DAGDUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+  saleLimit: 1
+
+- type: listing
+  id: UplinkSyndieKit
+  name: uplink-syndie-kit-name
+  description: uplink-syndie-kit-desc
+  productEntity: RandomSyndieKitSpawner
+  cost:
+    Telecrystal: 100
+  categories:
+  - UplinkDisruption
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  saleLimit: 1
+
+- type: listing
+  id: UplinkRadioHandheldSyndicate
+  name: uplink-radio-handheld-syndicate-name
+  description: uplink-radio-handheld-syndicate-desc
+  productEntity: RadioHandheldSyndicate
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkDeception
+  saleBlacklist: true # So cheap that getting it on sale would be sad
+
+- type: listing
+  id: UplinkEmpFlashlight
+  name: uplink-emp-flashlight-name
+  description: uplink-emp-flashlight-desc
+  productEntity: EmpFlashlight
+  cost:
+    Telecrystal: 15
+  categories:
+  - UplinkDisruption
+  saleLimit: 1
+
+- type: listing
+  id: UplinkReagentImplanter
+  name: uplink-reagent-implanter-name
+  description: uplink-reagent-implanter-desc
+  icon: { sprite: /Textures/Objects/Specific/Medical/medipen.rsi, state: stimpen }
+  productEntity: EmptyReagentImplanter
+  cost:
+    Telecrystal: 12   # Pretty cheap since it comes empty
+  categories:
+  - UplinkImplants
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink # I don't really wanna mess with nukie balancing
+  saleLimit: 1
+
+- type: listing
+  id: UplinkDAGDNukeCodePaperStation
+  name: uplink-nuke-code-paper-station-name
+  description: uplink-nuke-code-paper-station-desc
+  icon: { sprite: Objects/Misc/bureaucracy.rsi, state: paper_words-blood }
+  productEntity: NukeCodePaperStation
+  cost:
+    Telecrystal: 25 # goob
+  categories:
+  - UplinkDAGD
+  conditions:
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - DAGDUplink
+  saleLimit: 1 # WD EDIT
+
+# Implants
+
+- type: listing
+  id: UplinkFastDrawImplanter
+  name: Fast Draw implanter
+  description: A syringe with tools for quick implant removal. It has small gold stars on its body.
+  productEntity: RevsFastDrawImplanter
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkImplants
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+# Pointless
+
+- type: listing
+  id: UplinkSyndicateTowel
+  name: uplink-towel-syndicate-name
+  description: uplink-towel-syndicate-desc
+  productEntity: TowelColorSyndicate
+  cost:
+    Telecrystal: 3 # gives a towel with a mean whip, three TC is probably a good cost for it
+  categories:
+  - UplinkPointless
+  saleBlacklist: true
+
+- type: listing
+  id: UplinkPinpointerUniversalSyndicate
+  name: uplink-pinpointer-name
+  description: uplink-pinpointer-desc
+  productEntity: PinpointerUniversalSyndicate #ideally, used for nukies for cohesion, for protect targets OR for steal items where you plant it somewhere
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkPointless
+  saleBlacklist: true

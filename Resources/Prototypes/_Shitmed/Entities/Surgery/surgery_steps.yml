@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2025 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 ferynn <witchy.girl.me@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: entity
   id: SurgeryStepBase
   categories: [ HideSpawnMenu ]
@@ -67,7 +74,7 @@
   - type: SurgeryDamageChangeEffect # DeltaV
     damage:
       types:
-        Slash: 4
+        Blunt: 1 # funky
 
 - type: entity
   parent: SurgeryStepBase
@@ -581,9 +588,6 @@
   name: Add heart
   categories: [ HideSpawnMenu ]
   components:
-  - type: SurgerySpecialDamageChangeEffect
-    damageType: Rot
-    isConsumable: true
   - type: SurgeryOperatingTableCondition # funkystation - fuck you
 
 - type: entity

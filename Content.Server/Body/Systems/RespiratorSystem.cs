@@ -1,3 +1,41 @@
+// SPDX-FileCopyrightText: 2021 Fishfish458 <47410468+Fishfish458@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <gradientvera@outlook.com>
+// SPDX-FileCopyrightText: 2021 metalgearsloth <comedian_vs_clown@hotmail.com>
+// SPDX-FileCopyrightText: 2022 Acruid <shatter66@gmail.com>
+// SPDX-FileCopyrightText: 2022 Illiux <newoutlook@gmail.com>
+// SPDX-FileCopyrightText: 2022 Jezithyr <Jezithyr@gmail.com>
+// SPDX-FileCopyrightText: 2022 Kevin Zheng <kevinz5000@gmail.com>
+// SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Emisse <99158783+Emisse@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Jezithyr <jezithyr@gmail.com>
+// SPDX-FileCopyrightText: 2023 TemporalOroboros <TemporalOroboros@gmail.com>
+// SPDX-FileCopyrightText: 2024 0x6273 <0x40@keemail.me>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Cojoke <83733158+Cojoke-dot@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Mervill <mervills.email@gmail.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 Verm <32827189+Vermidia@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 MaiaArai <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
+// SPDX-FileCopyrightText: 2025 otokonoko-dev <248204705+otokonoko-dev@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
@@ -20,7 +58,8 @@ using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-
+using Content.Shared._DV.CosmicCult.Components; // DeltaV
+using Content.Shared.Cpr;
 
 namespace Content.Server.Body.Systems;
 
@@ -66,20 +105,55 @@ public sealed class RespiratorSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<RespiratorComponent, BodyComponent>();
-        while (query.MoveNext(out var uid, out var respirator, out var body))
+        var query = EntityQueryEnumerator<RespiratorComponent>();
+        while (query.MoveNext(out var uid, out var respirator))
         {
             if (_gameTiming.CurTime < respirator.NextUpdate)
                 continue;
+
+            // resolve body optionally to support simple mobs
+            TryComp<BodyComponent>(uid, out var body);
 
             respirator.NextUpdate += respirator.UpdateInterval;
 
             if (_mobState.IsDead(uid) || HasComp<BreathingImmunityComponent>(uid)) // Shitmed: BreathingImmunity
                 continue;
 
-            UpdateSaturation(uid, -(float) respirator.UpdateInterval.TotalSeconds, respirator);
+            // Begin DeltaV Additions
+            var multiplier = 0f; // default to 0 for bodiless mobs so they don't suffocate automatically
+            if (body != null)
+            {
+                multiplier = -1f;
+                var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((uid, body));
+                foreach (var (_, lung, _) in organs)
+                {
+                    multiplier *= lung.SaturationLoss;
+                }
+            }
+            // End DeltaV Additions
 
-            if (!_mobState.IsIncapacitated(uid) && !HasComp<DebrainedComponent>(uid)) // Shitmed Change - Cannot breathe in crit or when no brain.
+            UpdateSaturation(uid, multiplier * (float) respirator.UpdateInterval.TotalSeconds, respirator); // DeltaV: use multiplier instead of negating
+
+            var breathe = false;
+
+            // 1. Check if receiving CPR (Assisted Breathing)
+            if (TryComp<AssistedRespirationComponent>(uid, out var assist))
+            {
+                // can breathe if not dead and breathing is assisted
+                if (!_mobState.IsDead(uid) && assist.AssistedUntil >= _gameTiming.CurTime)
+                    breathe = true;
+
+                // We leave the component lingering after it stopped having an effect, to be able to detect CPR being performed too slowly
+                if (assist.AssistedUntil + TimeSpan.FromSeconds(10) < _gameTiming.CurTime)
+                    RemCompDeferred<AssistedRespirationComponent>(uid);
+            }
+
+            // 2. Normal Breathing Check (Not Incapacitated AND Has a Brain)
+            if (!_mobState.IsIncapacitated(uid) && !HasComp<DebrainedComponent>(uid)) // Shitmed Change
+                breathe = true;
+
+            // 3. Execute Breathing Logic
+            if (breathe)
             {
                 switch (respirator.Status)
                 {
@@ -96,6 +170,9 @@ public sealed class RespiratorSystem : EntitySystem
 
             if (respirator.Saturation < respirator.SuffocationThreshold)
             {
+                // DeltaV: Cosmic Cult - One line change but a refactor would be better. this is kinda cringe. Makes cultists gasp and respirate but not asphyxiate in space.
+                if (TryComp<CosmicCultComponent>(uid, out var cultComponent) && !cultComponent.Respiration && !_mobState.IsIncapacitated(uid)) return;
+
                 if (_gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown)
                 {
                     respirator.LastGaspEmoteTime = _gameTiming.CurTime;

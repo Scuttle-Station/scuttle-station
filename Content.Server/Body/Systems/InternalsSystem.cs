@@ -1,3 +1,34 @@
+// SPDX-FileCopyrightText: 2022 Bright0 <55061890+Bright0@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Justin Trotter <trotter.justin@gmail.com>
+// SPDX-FileCopyrightText: 2022 Kognise <felix.mattick@gmail.com>
+// SPDX-FileCopyrightText: 2022 corentt <36075110+corentt@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <drsmugleaf@gmail.com>
+// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Ygg01 <y.laughing.man.y@gmail.com>
+// SPDX-FileCopyrightText: 2023 keronshb <54602815+keronshb@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 0x6273 <0x40@keemail.me>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 DrSmugleaf <10968691+DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Jake Huxell <JakeHuxell@pm.me>
+// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Stalen <33173619+stalengd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 nikthechampiongr <32041239+nikthechampiongr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 themias <89101928+themias@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 QueerCats <jansencheng3@gmail.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 otokonoko-dev <248204705+otokonoko-dev@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
@@ -101,6 +132,7 @@ public sealed class InternalsSystem : EntitySystem
         if (!Resolve(uid, ref internals, logMissing: false))
             return;
 
+
         // Toggle off if they're on
         if (AreInternalsWorking(internals))
         {
@@ -121,7 +153,15 @@ public sealed class InternalsSystem : EntitySystem
             return;
         }
 
-        var tank = FindBestGasTank(uid);
+        Entity<GasTankComponent>? tank = null;
+        if (internals.GasTankEntity != null && TryComp<GasTankComponent>(internals.GasTankEntity, out var preTank))
+        {
+            tank = (internals.GasTankEntity.Value, preTank);
+        }
+        else
+        {
+            tank = FindBestGasTank(uid);
+        }
 
         if (tank is null)
         {
@@ -182,10 +222,22 @@ public sealed class InternalsSystem : EntitySystem
 
     private void OnInhaleLocation(Entity<InternalsComponent> ent, ref InhaleLocationEvent args)
     {
-        if (AreInternalsWorking(ent))
+        var working = AreInternalsWorking(ent);
+        if (working)
         {
-            var gasTank = Comp<GasTankComponent>(ent.Comp.GasTankEntity!.Value);
-            args.Gas = _gasTank.RemoveAirVolume((ent.Comp.GasTankEntity.Value, gasTank), Atmospherics.BreathVolume);
+            var gasTankEnt = ent.Comp.GasTankEntity!.Value;
+            var gasTank = Comp<GasTankComponent>(gasTankEnt);
+            var removed = _gasTank.RemoveAirVolume((gasTankEnt, gasTank), Atmospherics.BreathVolume);
+            float plasma = 0;
+            try
+            {
+                plasma = removed[(int)Gas.Plasma];
+            }
+            catch
+            {
+                // ignore
+            }
+            args.Gas = removed;
             // TODO: Should listen to gas tank updates instead I guess?
             _alerts.ShowAlert(ent, ent.Comp.InternalsAlert, GetSeverity(ent));
         }
@@ -214,7 +266,9 @@ public sealed class InternalsSystem : EntitySystem
     public void DisconnectTank(Entity<InternalsComponent> ent)
     {
         if (TryComp(ent.Comp.GasTankEntity, out GasTankComponent? tank))
+        {
             _gasTank.DisconnectFromInternals((ent.Comp.GasTankEntity.Value, tank));
+        }
 
         ent.Comp.GasTankEntity = null;
         _alerts.ShowAlert(ent.Owner, ent.Comp.InternalsAlert, GetSeverity(ent.Comp));
@@ -281,7 +335,7 @@ public sealed class InternalsSystem : EntitySystem
             return (backEntity.Value, backGasTank);
         }
 
-        if (_inventory.TryGetSlotEntity(user, "suitstorage", out var entity, user.Comp2, user.Comp3) &&
+        if (_inventory.TryGetSlotEntity(user, "tankstorage", out var entity, user.Comp2, user.Comp3) &&
             TryComp<GasTankComponent>(entity, out var gasTank) &&
             _gasTank.CanConnectToInternals((entity.Value, gasTank)))
         {

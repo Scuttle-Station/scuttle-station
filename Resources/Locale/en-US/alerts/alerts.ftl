@@ -1,3 +1,24 @@
+# SPDX-FileCopyrightText: 2022 Morb <14136326+Morb0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Kara <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2023 Phill101 <28949487+Phill101@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Phill101 <holypics4@gmail.com>
+# SPDX-FileCopyrightText: 2023 Vordenburg <114301317+Vordenburg@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
+# SPDX-FileCopyrightText: 2023 keronshb <54602815+keronshb@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 lapatison <100279397+lapatison@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Hannah Giovanna Dawson <karakkaraz@gmail.com>
+# SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
 alerts-low-oxygen-name = [color=red]Low Oxygen[/color]
 alerts-low-oxygen-desc = There is [color=red]not enough oxygen[/color] in the air you are breathing. Put on [color=green]internals[/color].
 
@@ -35,6 +56,9 @@ alerts-stunned-desc = You're [color=yellow]stunned[/color]! Something is impairi
 
 alerts-handcuffed-name = [color=yellow]Handcuffed[/color]
 alerts-handcuffed-desc = You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist.
+
+alerts-cocooned-name = [color=yellow]Cocooned[/color]
+alerts-cocooned-desc = You're [color=yellow]wrapped in a cocoon[/color] and can't move or use your hands.
 
 alerts-ensnared-name = [color=yellow]Ensnared[/color]
 alerts-ensnared-desc = You're [color=yellow]ensnared[/color] and is impairing your ability to move.
@@ -82,10 +106,10 @@ alerts-muted-name = Muted
 alerts-muted-desc = You have lost the ability to speak.
 
 alerts-vow-silence-name = Vow of Silence
-alerts-vow-silence-desc = You have taken a vow forbidding verbal or written communication as part of initiation into the Mystiko Tagma Mimon. Click to break your vow.
+alerts-vow-silence-desc = You have taken a vow of silence as part of initiation into the Mystiko Tagma Mimon. Click to break your vow.
 
 alerts-vow-broken-name = Vow Broken
-alerts-vow-broken-desc = You've broken your vows to Mimes everywhere. You can speak and write, but you've lost your powers for at least 5 entire minutes!!! Click to try and retake your vow.
+alerts-vow-broken-desc = You've broken your vows to Mimes everywhere. You can speak, but you've lost your powers for at least 5 entire minutes!!! Click to try and retake your vow.
 
 alerts-pulled-name = Pulled
 alerts-pulled-desc = You're being pulled. Move to break free.

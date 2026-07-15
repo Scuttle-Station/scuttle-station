@@ -1,3 +1,60 @@
+# SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Moony <moonheart08@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Paul Ritter <ritter.paul1@googlemail.com>
+# SPDX-FileCopyrightText: 2022 TekuNut <13456422+TekuNut@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 moonheart08 <moonheart08@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Ed <96445749+TheShuEd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Moony <moony@hellomouse.net>
+# SPDX-FileCopyrightText: 2023 Skye <22365940+Skyedra@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 coolmankid12345 <55817627+coolmankid12345@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 coolmankid12345 <coolmankid12345@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Adrian16199 <144424013+Adrian16199@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 IProduceWidgets <107586145+IProduceWidgets@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Jezithyr <jezithyr@gmail.com>
+# SPDX-FileCopyrightText: 2024 John Space <bigdumb421@gmail.com>
+# SPDX-FileCopyrightText: 2024 Kara <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2024 Kira Bridgeton <161087999+Verbalase@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 MACMAN2003 <macman2003c@gmail.com>
+# SPDX-FileCopyrightText: 2024 Mr. 27 <45323883+Dutch-VanDerLinde@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 PoTeletubby <108604614+PoTeletubby@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Rainfey <rainfey0+github@gmail.com>
+# SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+# SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 88tv <131759102+88tv@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 8tv <eightev@gmail.com>
+# SPDX-FileCopyrightText: 2025 ArtisticRoomba <145879011+ArtisticRoomba@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Komoni <131829655+Komonighub@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Middleson5 <Chance@thethiers.com>
+# SPDX-FileCopyrightText: 2025 Mish <bluscout78@yahoo.com>
+# SPDX-FileCopyrightText: 2025 Rainbow <ev0lvkitten@gmail.com>
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Southbridge <7013162+southbridge-fur@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-FileCopyrightText: 2025 UristMcWiki <endernate2015@gmail.com>
+# SPDX-FileCopyrightText: 2025 amatwiedle <amatwiedle@gmail.com>
+# SPDX-FileCopyrightText: 2025 misghast <51974455+misterghast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+# SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 QueerCats <jansencheng3@gmail.com>
+# SPDX-FileCopyrightText: 2026 Ralkern <47386688+ralkern@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: entity
   id: BaseGameRule
   abstract: true
@@ -21,20 +78,20 @@
   - type: SubGamemodes
     rules:
     - id: Thief
-      prob: 0.5
-    - id: SubWizard
-      prob: 0.05
-    - id: Heretic # goob edit
-      prob: 0.4 # funkystation - 20% of rounds can have a heretic as a treat
+      prob: 0.65
+    - id: Heretic
+      prob: 0.3
+    - id: Wizard
+      prob: 0.01
 
 - type: entity
   parent: BaseGameRule
-  id: SubGamemodesRuleNoWizard
+  id: DummyNonAntagChance
   components:
   - type: SubGamemodes
     rules:
-    - id: Thief
-      prob: 0.5
+    - id: DummyNonAntag
+      prob: 0.3
 
 - type: entity
   id: DeathMatch31
@@ -88,8 +145,8 @@
   components:
   - type: RandomMetadata #this generates the random operation name cuz it's cool.
     nameSegments:
-    - operationPrefix
-    - operationSuffix
+    - NamesOperationPrefix
+    - NamesOperationSuffix
   - type: NukeopsRule
   - type: RuleGrids
   - type: AntagSelection
@@ -115,6 +172,8 @@
     - prefRoles: [ NukeopsCommander ]
       fallbackRoles: [ Nukeops, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsCommander
+      min: 1
+      max: 1     # fixed a lot of things. Commanders currently spawn en masse on Funky, so this limits the values to ensure that does not happen.
       startingGear: SyndicateCommanderGearFull
       roleLoadout:
       - RoleSurvivalNukie
@@ -122,16 +181,17 @@
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments:
-        - nukeops-role-commander
-        - SyndicateNamesElite
+        - NamesNukieFirstCommander
+        - NamesSyndicateElite
       - type: NpcFactionMember
         factions:
         - Syndicate
       mindRoles:
       - MindRoleNukeopsCommander
     - prefRoles: [ NukeopsMedic ]
-      fallbackRoles: [ Nukeops, NukeopsCommander ]
+      fallbackRoles: [ Nukeops] # prevents the roundstarter from assigning multiple back up commanders.
       spawnerPrototype: SpawnPointNukeopsMedic
+      max: 1
       startingGear: SyndicateOperativeMedicFull
       roleLoadout:
       - RoleSurvivalNukie
@@ -139,18 +199,18 @@
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments:
-        - nukeops-role-agent
-        - SyndicateNamesNormal
+        - NamesNukieFirstAgent
+        - NamesSyndicateNormal
       - type: NpcFactionMember
         factions:
         - Syndicate
       mindRoles:
       - MindRoleNukeopsMedic
     - prefRoles: [ Nukeops ]
-      fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
+      fallbackRoles: [ NukeopsMedic ]  # prevents the roundstarter from assigning multiple back up commanders.
       spawnerPrototype: SpawnPointNukeopsOperative
       max: 3
-      playerRatio: 10
+      playerRatio: 8
       startingGear: SyndicateOperativeGearFull
       roleLoadout:
       - RoleSurvivalNukie
@@ -158,13 +218,16 @@
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments:
-        - nukeops-role-operator
-        - SyndicateNamesNormal
+        - NamesNukieFirstOperator
+        - NamesSyndicateNormal
       - type: NpcFactionMember
         factions:
         - Syndicate
       mindRoles:
       - MindRoleNukeops
+  - type: Tag
+    tags:
+    - ExtremeAntag # Funky
 
 - type: entity
   abstract: true
@@ -188,7 +251,7 @@
   - type: GameRule
     minPlayers: 5
   - type: AntagSelection
-    selectionTime: BeforeJobs # Goobstation
+    selectionTime: IntraPlayerSpawn # Goobstation
     definitions:
     - prefRoles: [ Traitor ]
       max: 8
@@ -221,15 +284,13 @@
     minPlayers: 20
   - type: RevolutionaryRule
   - type: AntagSelection
-    selectionTime: BeforeJobs # Goobstation
+    selectionTime: IntraPlayerSpawn # Goobstation
     definitions:
     - prefRoles: [ HeadRev ]
       min: 2
       max: 3
       playerRatio: 25
       briefing:
-        text: head-rev-role-greeting
-        color: CornflowerBlue
         sound: "/Audio/Ambience/Antag/headrev_start.ogg"
       #startingGear: HeadRevGear -- Funky Station: HRev uplink
       components:
@@ -237,6 +298,9 @@
       - type: HeadRevolutionary
       mindRoles:
       - MindRoleHeadRevolutionary
+  - type: Tag
+    tags:
+    - ExtremeAntag # Funky
 
 - type: entity
   id: Sandbox
@@ -295,13 +359,16 @@
         - Wizard
       - type: RandomMetadata
         nameSegments:
-        - names_wizard_first
-        - names_wizard_last
+        - NamesWizardFirst
+        - NamesWizardLast
       mindRoles:
       - MindRoleWizard
+  - type: Tag
+    tags:
+    - ExtremeAntag # Funky
 
 - type: entity
-  id: Zombie
+  id: medZombies
   parent: BaseGameRule
   components:
   - type: GameRule
@@ -310,6 +377,7 @@
       min: 600
       max: 900
   - type: ZombieRule
+    infectionSpreadMultiplier: 1.0
   - type: AntagSelection
     definitions:
     - prefRoles: [ InitialInfected ]
@@ -319,17 +387,64 @@
         components:
         - ZombieImmune
         - AntagImmune
-      briefing:
-        text: zombie-patientzero-role-greeting
-        color: Plum
-        sound: "/Audio/Ambience/Antag/zombie_start.ogg"
-      components:
-      - type: PendingZombie
-      - type: ZombifyOnDeath
-      - type: IncurableZombie
-      - type: InitialInfected
-      mindRoles:
-      - MindRoleInitialInfected
+
+- type: entity
+  id: lowZombies
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 600
+      max: 900
+  - type: ZombieRule
+    infectionSpreadMultiplier: 0.5
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ InitialInfected ]
+      max: 6
+      playerRatio: 10
+      blacklist:
+        components:
+        - ZombieImmune
+        - AntagImmune
+
+- type: entity
+  id: highZombies
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 600
+      max: 900
+  - type: ZombieRule
+    infectionSpreadMultiplier: 2.0
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ InitialInfected ]
+      max: 6
+      playerRatio: 10
+      blacklist:
+        components:
+        - ZombieImmune
+        - AntagImmune
+
+# This rule makes the chosen players unable to get other antag rules, as a way to prevent metagaming job rolls.
+# Put this before antags assigned to station jobs, but after non-job antags (NukeOps/Wiz).
+- type: entity
+  id: DummyNonAntag
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 5
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn # Pre-selection before jobs; assignment doesn't really matter though, we only care about the pre-selection to block other antags.
+    removeUponFailedSpawn: false
+    definitions:
+    - prefRoles: [ Traitor, Thief, HeadRev ]
+      max: 2
+      playerRatio: 30
 
 # event schedulers
 
@@ -456,3 +571,15 @@
     - id: BloodbathPuddleMessVariationPass
       prob: 0.01
       orGroup: puddleMess
+    - id: SmugglerStashVariationPass
+      prob: 0.90
+    - id: CutWireVariationPass # funkystation
+      prob: 0.20 # would suck if it happened every single round, but it's something for engi to be vigilant of
+#    - id: BasicDecalDirtVariationPass
+#    - id: BasicDecalGraffitiVariationPass
+#    - id: BasicDecalBrunsVariationPass
+#      prob: 0.50
+#      orGroup: monospaceDecals
+#    - id: BasicDecalDirtMonospaceVariationPass
+#      prob: 0.50
+#      orGroup: monospaceDecals

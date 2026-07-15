@@ -1,10 +1,24 @@
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 username <113782077+whateverusername0@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 whateverusername0 <whateveremail>
+// SPDX-FileCopyrightText: 2025 Amethyst <52829582+jackel234@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 V <97265903+formlessnameless@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 miosar <74148670+miosar@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 mqole <113324899+mqole@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
+using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Heretic;
 using Content.Shared.Popups;
+using Content.Shared.Speech.Muting;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -30,7 +44,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
             var dargs = new DoAfterArgs(EntityManager, ent, 10f, new EventHereticFleshSurgeryDoAfter(args.Target), ent, args.Target)
             {
                 BreakOnDamage = true,
-                BreakOnMove = true,
+                BreakOnMove = false,
                 BreakOnHandChange = false,
                 BreakOnDropItem = false,
             };
@@ -39,42 +53,33 @@ public sealed partial class HereticAbilitySystem : EntitySystem
             return;
         }
 
-        // remove a random organ
+        // temporarily disable a random organ
+        // the fucking goob coders were literally just deleting organ components. who thought that was okay
+        // TODO: change this to actually remove/disable organs once newmed comes out next week
         if (TryComp<BodyComponent>(args.Target, out var body))
         {
-            _vomit.Vomit(args.Target, -1000, -1000); // You feel hollow!
-
-            switch (_random.Next(0, 2))
+            //i should really make these their own methods. but i dont want to
+            switch (_random.Next(0, 3))
             {
-                // remove stomach
+                // case 0: barf
                 case 0:
-                    foreach (var entity in _body.GetBodyOrganEntityComps<StomachComponent>((args.Target, body)))
-                        QueueDel(entity.Owner);
-
-                    _popup.PopupEntity(Loc.GetString("admin-smite-stomach-removal-self"), args.Target,
-                        args.Target, PopupType.LargeCaution);
+                    _popup.PopupEntity(Loc.GetString("heretic-fleshsurgery-barf"), args.Target, args.Target, PopupType.LargeCaution);
+                    _vomit.Vomit(args.Target, -1000, -1000); // i frew up
                     break;
 
-                // remove random hand
+                // case 1: blind (fixable!)
                 case 1:
-                    var baseXform = Transform(args.Target);
-                    foreach (var part in _body.GetBodyChildrenOfType(args.Target, BodyPartType.Hand, body))
-                    {
-                        _transform.AttachToGridOrMap(part.Id);
-                        break;
-                    }
-                    _popup.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target, args.Target, PopupType.LargeCaution);
-                    _popup.PopupCoordinates(Loc.GetString("admin-smite-remove-hands-other", ("name", args.Target)), baseXform.Coordinates,
-                        Filter.PvsExcept(args.Target), true, PopupType.Medium);
+                    if (!TryComp<BlindableComponent>(args.Target, out var blindable) || blindable.IsBlind)
+                        return;
+
+                    _popup.PopupEntity(Loc.GetString("heretic-fleshsurgery-eyes"), args.Target, args.Target, PopupType.LargeCaution);
+                    _blindable.AdjustEyeDamage((args.Target, blindable), 7); //same as rawdogging a welder 7 times. fixable but definitely a pain
                     break;
 
-                // remove lungs
+                // case 2: mute for 2.5 minutes
                 case 2:
-                    foreach (var entity in _body.GetBodyOrganEntityComps<LungComponent>((args.Target, body)))
-                        QueueDel(entity.Owner);
-
-                    _popup.PopupEntity(Loc.GetString("admin-smite-lung-removal-self"), args.Target,
-                        args.Target, PopupType.LargeCaution);
+                    _popup.PopupEntity(Loc.GetString("heretic-fleshsurgery-mute"), args.Target, args.Target, PopupType.LargeCaution);
+                    _statusEffect.TryAddStatusEffect<MutedComponent>(args.Target, "Muted", TimeSpan.FromSeconds(150), false);
                     break;
 
                 default:

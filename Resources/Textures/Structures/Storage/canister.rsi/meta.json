@@ -131,10 +131,37 @@
       "name": "healium-1"
     },
     {
+      "name": "white"
+    },
+    {
+      "name": "white-1"
+    },
+    {
+      "name": "nob"
+    },
+    {
+      "name": "proto_nitrate"
+    },
+    {
+      "name": "zauker"
+    },
+    {
+      "name": "halon"
+    },
+    {
+      "name": "helium"
+    },
+    {
+      "name": "antinob"
+    },
+    {
       "name": "scrubber-connector"
     },
     {
       "name": "scrubber-open"
+    },
+    {
+      "name": "can-rainbow"
     }
   ]
 }

@@ -1,3 +1,46 @@
+# SPDX-FileCopyrightText: 2019 moneyl <8206401+Moneyl@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2020 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Elijahrane <60792108+Elijahrane@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+# SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 EmoGarbage404 <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2022 Kara D <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2022 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Moony <moonheart08@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2023 Alekshhh <44923899+Alekshhh@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Boaz1111 <149967078+Boaz1111@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 CrigCrag <137215465+CrigCrag@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Dynexust <47256242+Dynexust@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 GoodWheatley <109803540+GoodWheatley@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Interrobang01 <113810873+Interrobang01@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Maxtone <124747282+MagnusCrowe@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Ubaser <134914314+UbaserB@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Emisse <99158783+Emisse@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Gotimanga <127038462+Gotimanga@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Kira Bridgeton <161087999+Verbalase@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 Token <esil.bektay@yandex.com>
+# SPDX-FileCopyrightText: 2024 Velcroboy <107660393+IamVelcroboy@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 icekot8 <93311212+icekot8@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 potato1234_x <79580518+potato1234x@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Fenn <162015305+TooSillyFennec@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+# SPDX-FileCopyrightText: 2025 Xcybitt <197952719+Xcybitt@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2026 Terkala <appleorange64@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 #- type: reaction
 #  id: Dylovene
 #  reactants:
@@ -218,15 +261,168 @@
   products:
     Ambuzol: 4
 
+# Ambuzol I Reactions (2 versions)
 - type: reaction
-  id: AmbuzolPlus
+  id: Ambuzol1Recipe1
   reactants:
-    Ambuzol:
-      amount: 5
-    Omnizine:
-      amount: 5
+    ZombieBlood:
+      amount: 1
+    Multiver:
+      amount: 1
+    Mannitol:
+      amount: 1
   products:
-    AmbuzolPlus: 10
+    AmbuzolI: 3
+
+- type: reaction
+  id: Ambuzol1Recipe2
+  reactants:
+    ZombieBlood:
+      amount: 1
+    Multiver:
+      amount: 1
+    Mannitol:
+      amount: 1
+  products:
+    AmbuzolI: 3
+
+# Ambuzol II Reactions (4 versions)
+- type: reaction
+  id: Ambuzol2Recipe1
+  reactants:
+    AmbuzolI:
+      amount: 1
+    Ultravasculine:
+      amount: 1
+    Cryoxadone:
+      amount: 1
+  products:
+    AmbuzolII: 3
+
+- type: reaction
+  id: Ambuzol2Recipe2
+  reactants:
+    AmbuzolI:
+      amount: 1
+    Ultravasculine:
+      amount: 1
+    Hemoxadone:
+      amount: 1
+  products:
+    AmbuzolII: 3
+
+- type: reaction
+  id: Ambuzol2Recipe3
+  reactants:
+    AmbuzolI:
+      amount: 1
+    PenteticAcid:
+      amount: 1
+    Cryoxadone:
+      amount: 1
+  products:
+    AmbuzolII: 3
+
+- type: reaction
+  id: Ambuzol2Recipe4
+  reactants:
+    AmbuzolI:
+      amount: 1
+    PenteticAcid:
+      amount: 1
+    Hemoxadone:
+      amount: 1
+  products:
+    AmbuzolII: 3
+
+# Ambuzol III Reactions (2 versions)
+- type: reaction
+  id: Ambuzol3Recipe1
+  reactants:
+    AmbuzolII:
+      amount: 1
+    Natusixadone:
+      amount: 1
+    Uranium:
+      amount: 1
+  products:
+    AmbuzolIII: 3
+
+- type: reaction
+  id: Ambuzol3Recipe2
+  reactants:
+    AmbuzolII:
+      amount: 1
+    Phalanximine:
+      amount: 1
+    Pestiline:
+      amount: 1
+  products:
+    AmbuzolIII: 3
+
+# Ambuzol IV Reactions (2 versions)
+- type: reaction
+  id: Ambuzol4Recipe1
+  reactants:
+    AmbuzolIII:
+      amount: 1
+    Artifexium:
+      amount: 1
+    Omnizine:
+      amount: 1
+  products:
+    AmbuzolIV: 3
+
+- type: reaction
+  id: Ambuzol4Recipe2
+  reactants:
+    AmbuzolIII:
+      amount: 1
+    PolytrinicAcid:
+      amount: 1
+    Pyroxadone:
+      amount: 1
+  products:
+    AmbuzolIV: 3
+
+# Ambuzol V Reactions (2 versions)
+- type: reaction
+  id: Ambuzol5Recipe1
+  reactants:
+    AmbuzolIV:
+      amount: 1
+    Happiness:
+      amount: 1
+    HeartbreakerToxin:
+      amount: 1
+    Impedrezene:
+      amount: 1
+  products:
+    AmbuzolV: 4
+
+- type: reaction
+  id: Ambuzol5Recipe2
+  reactants:
+    AmbuzolIV:
+      amount: 1
+    Pax:
+      amount: 1
+    Heparin:
+      amount: 1
+    Lipolicide:
+      amount: 1
+  products:
+    AmbuzolV: 4
+
+#- type: reaction
+#  id: AmbuzolPlus
+#  reactants:
+#    Ambuzol:
+#      amount: 5
+#    Hypothium:
+#      amount: 5
+#  products:
+#    AmbuzolPlus: 10
 
 - type: reaction
   id: Synaptizine
@@ -562,9 +758,10 @@
   minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
   reactants:
     Cognizine:
-      amount: 1
+      amount: 1 #QoL slop, I think cog being consumed sucks since uh. You kinda have to think about using cog for non productive stuff as just a heavy ask, since you can use that for yk, actual fucking people who are rotting in the morgue. Will however buff the usage of plasma, as ideally it'd be a limiter.
+      catalyst: true
     Plasma:
-      amount: 2
+      amount: 5
     Doxarubixadone:
       amount: 1
   products:

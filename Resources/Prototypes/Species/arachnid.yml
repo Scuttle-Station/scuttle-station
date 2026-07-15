@@ -1,3 +1,15 @@
+# SPDX-FileCopyrightText: 2023 Nairod <110078045+Nairodian@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 PixelTK <85175107+PixelTheKermit@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Adrian16199 <144424013+Adrian16199@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 hivehum <ketchupfaced@gmail.com>
+# SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 tommy <hahmorme@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: species
   id: Arachnid
   name: species-name-arachnid
@@ -8,9 +20,9 @@
   markingLimits: MobArachnidMarkingLimits
   dollPrototype: MobArachnidDummy
   skinColoration: Hues
-  maleFirstNames: names_arachnid_first
-  femaleFirstNames: names_arachnid_first
-  lastNames: names_arachnid_last
+  maleFirstNames: NamesArachnidFirst
+  femaleFirstNames: NamesArachnidFirst
+  lastNames: NamesArachnidLast
   sexes:
   - Unsexed
 
@@ -18,12 +30,13 @@
   id: MobArachnidSprites
   sprites:
     Head: MobArachnidHead
+    Eyes: MobHumanoidAnyMarking #imp, so they can pick their eyes
+    Hair: MobHumanoidAnyMarking
     Snout: MobHumanoidAnyMarking
     Chest: MobArachnidTorso
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking
-    Eyes: MobArachnidEyes
     LArm: MobArachnidLArm
     RArm: MobArachnidRArm
     LHand: MobArachnidLHand
@@ -43,8 +56,12 @@
   id: MobArachnidMarkingLimits
   onlyWhitelisted: true
   points:
+    Eyes: #imp, so they can pick their eyes
+      points: 1
+      required: true
+      defaultMarkings: [ ArachnidEyesDefault ]
     Hair:
-      points: 0
+      points: 1
       required: false
     FacialHair:
       points: 0
@@ -61,7 +78,7 @@
       required: true
       defaultMarkings: [ ArachnidCheliceraeDownwards ]
     Chest:
-      points: 1
+      points: 4 # imp
       required: false
     Legs:
       points: 8 # imp 2<8
@@ -73,83 +90,83 @@
 - type: humanoidBaseSprite
   id: MobArachnidHead
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobArachnidHeadMale
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobArachnidHeadFemale
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: head_f
 
 - type: humanoidBaseSprite
   id: MobArachnidTorso
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: torso_m
 
 - type: humanoidBaseSprite
   id: MobArachnidTorsoMale
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: torso_m
 
 - type: humanoidBaseSprite
   id: MobArachnidTorsoFemale
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: torso_f
 
 - type: humanoidBaseSprite
   id: MobArachnidLLeg
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: l_leg
 
 - type: humanoidBaseSprite
   id: MobArachnidLHand
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: l_hand
 
 - type: humanoidBaseSprite
   id: MobArachnidLArm
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: l_arm
 
 - type: humanoidBaseSprite
   id: MobArachnidLFoot
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: l_foot
 
 - type: humanoidBaseSprite
   id: MobArachnidRLeg
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: r_leg
 
 - type: humanoidBaseSprite
   id: MobArachnidRHand
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: r_hand
 
 - type: humanoidBaseSprite
   id: MobArachnidRArm
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: r_arm
 
 - type: humanoidBaseSprite
   id: MobArachnidRFoot
   baseSprite:
-    sprite: Mobs/Species/Arachnid/parts.rsi
+    sprite: _Impstation/Mobs/Species/Arachnid/parts.rsi
     state: r_foot

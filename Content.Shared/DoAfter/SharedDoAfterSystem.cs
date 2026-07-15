@@ -1,3 +1,24 @@
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <drsmugleaf@gmail.com>
+// SPDX-FileCopyrightText: 2023 Vordenburg <114301317+Vordenburg@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
+// SPDX-FileCopyrightText: 2023 keronshb <54602815+keronshb@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Brandon Hu <103440971+Brandon-Huu@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 LordCarve <27449516+LordCarve@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 nikthechampiongr <32041239+nikthechampiongr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
@@ -5,9 +26,11 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Interaction;
 
 namespace Content.Shared.DoAfter;
 
@@ -23,6 +46,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     /// </summary>
     private static readonly TimeSpan ExcessTime = TimeSpan.FromSeconds(0.5f);
 
+    private static readonly ProtoId<TagPrototype> InstantDoAftersTag = "InstantDoAfters";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -30,6 +55,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
+        SubscribeLocalEvent<GetInteractingEntitiesEvent>(OnGetInteractingEntities);
     }
 
     private void OnUnpaused(EntityUid uid, DoAfterComponent component, ref EntityUnpausedEvent args)
@@ -124,6 +150,25 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             RemCompDeferred<ActiveDoAfterComponent>(uid);
         else
             EnsureComp<ActiveDoAfterComponent>(uid);
+    }
+
+    /// <summary>
+    /// Adds entities which have an active DoAfter matching the target.
+    /// </summary>
+    private void OnGetInteractingEntities(ref GetInteractingEntitiesEvent args)
+    {
+        var enumerator = EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent>();
+        while (enumerator.MoveNext(out _, out var comp))
+        {
+            foreach (var doAfter in comp.DoAfters.Values)
+            {
+                if (doAfter.Cancelled || doAfter.Completed)
+                    continue;
+
+                if (doAfter.Args.Target == args.Target)
+                    args.InteractingEntities.Add(doAfter.Args.User);
+            }
+        }
     }
 
     #region Creation
@@ -233,7 +278,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         // TODO DO AFTER
         // Why does this tag exist? Just make this a bool on the component?
-        if (args.Delay <= TimeSpan.Zero || _tag.HasTag(args.User, "InstantDoAfters"))
+        if (args.Delay <= TimeSpan.Zero || _tag.HasTag(args.User, InstantDoAftersTag))
         {
             RaiseDoAfterEvents(doAfter, comp);
             // We don't store instant do-afters. This is just a lazy way of hiding them from client-side visuals.

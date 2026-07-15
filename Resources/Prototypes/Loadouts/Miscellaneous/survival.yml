@@ -1,3 +1,21 @@
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
+# SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 themias <89101928+themias@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 ATDoop <bug@bug.bug>
+# SPDX-FileCopyrightText: 2025 McBosserson <148172569+McBosserson@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Milon <milonpl.git@proton.me>
+# SPDX-FileCopyrightText: 2025 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 ZarathushtraSpitama <bloodcunt@protonmail.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 kosticia <kosticia46@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 # Species
 - type: loadoutEffectGroup
   id: NitrogenBreather
@@ -24,6 +42,7 @@
     - Harpy
     - Gingerbread
     - Rodentia
+    - Thaven
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
@@ -71,11 +90,29 @@
     - BoxHugSlotsNitrogen # Goobstation - Slots Based Survival Boxes
 
 # Mime
+- type: loadoutEffectGroup
+  id: OxygenBreatherMime
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Reptilian
+
+- type: loadoutEffectGroup
+  id: OxygenBreatherMimeMoth
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Moth
+
 - type: loadout
   id: EmergencyOxygenMime
   effects:
   - !type:GroupLoadoutEffect
-    proto: OxygenBreather
+    proto: OxygenBreatherMime
   storage:
     back:
     - BoxMimeSlots # Goobstation - Slots Based Survival Boxes
@@ -89,6 +126,14 @@
     back:
     - BoxMimeSlotsNitrogen # Goobstation - Slots Based Survival Boxes
 
+- type: loadout
+  id: EmergencySpeciesMothMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherMimeMoth
+  storage:
+    back:
+    - BoxMimeMoth
 
 # Engineering / Extended
 - type: loadout
@@ -108,6 +153,26 @@
   storage:
     back:
     - BoxSurvivalSlotsEngineeringNitrogen # Goobstation - Slots Based Survival Boxes
+
+# Salvage / Extended
+
+- type: loadout
+  id: EmergencyOxygenExtendedSalvage
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalSlotsSalvage # Goobstation - Slots Based Survival Boxes
+
+- type: loadout
+  id: EmergencyNitrogenExtendedSalvage
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalSlotsSalvageNitrogen # Goobstation - Slots Based Survival Boxes
 
 # Medical
 - type: loadout
@@ -175,7 +240,8 @@
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
   equipment:
-    suitstorage: NitrogenTankFilled
+    tankstorage: NitrogenTankFilled
+    neck: ClothingNeckTankHarness
 
 # Full EVA Tank, Any Species
 - type: loadout
@@ -218,7 +284,7 @@
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
   equipment:
-    outerClothing: ClothingOuterVestTank
+    neck: ClothingNeckTankHarness
 
 # Breath Tool On Face
 - type: loadout

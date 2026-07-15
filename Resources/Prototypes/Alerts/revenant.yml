@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2023 lapatison <100279397+lapatison@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: alert
   id: Essence
   category: Health #it's like ghostie health
@@ -10,7 +17,9 @@
 
 - type: alert
   id: Corporeal
-  icons: [ /Textures/Mobs/Ghosts/revenant.rsi/icon.png ]
+  icons:
+  - sprite: /Textures/Mobs/Ghosts/revenant.rsi
+    state: icon
   name: alerts-revenant-corporeal-name
   description: alerts-revenant-corporeal-desc
 

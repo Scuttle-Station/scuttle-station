@@ -1,5 +1,14 @@
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 csqrb <56765288+CaptainSqrBeard@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -87,7 +96,13 @@ public sealed partial class HumanoidAppearanceComponent : Component
     ///     Which layers of this humanoid that should be hidden on equipping a corresponding item..
     /// </summary>
     [DataField]
-    public HashSet<HumanoidVisualLayers> HideLayersOnEquip = [HumanoidVisualLayers.Hair];
+    public HashSet<HumanoidVisualLayers> HideLayersOnEquip = [HumanoidVisualLayers.Hair, HumanoidVisualLayers.Snout, HumanoidVisualLayers.HeadTop, HumanoidVisualLayers.HeadSide, HumanoidVisualLayers.Tail];
+
+    /// <summary>
+    /// The profile that this entity was originally spawned with.
+    /// If null, the entity was not spawned with a profile.
+    /// </summary>
+    public HumanoidCharacterProfile? BaseProfile;
 }
 
 [DataDefinition]

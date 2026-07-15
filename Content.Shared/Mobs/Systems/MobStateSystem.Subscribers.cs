@@ -1,6 +1,28 @@
-﻿using Content.Shared.Bed.Sleep;
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <drsmugleaf@gmail.com>
+// SPDX-FileCopyrightText: 2023 Jezithyr <jezithyr@gmail.com>
+// SPDX-FileCopyrightText: 2023 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Cojoke <83733158+Cojoke-dot@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 DrSmugleaf <10968691+DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Krunklehorn <42424291+Krunklehorn@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Mr. 27 <45323883+Dutch-VanDerLinde@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 nikthechampiongr <32041239+nikthechampiongr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Ilya Mikheev <me@ilyamikcoder.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 Tyranex <bobthezombie4@gmail.com>
+// SPDX-FileCopyrightText: 2025 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 ilyamikcoder <me@ilyamikcoder.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Damage;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
@@ -10,18 +32,25 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
+using Content.Shared.Tag;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
-using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mobs.Systems;
 
 public partial class MobStateSystem
 {
+    [Dependency] private readonly TagSystem _tag = default!;
+
+    private static readonly ProtoId<TagPrototype> ForceStandOnReviveTag = "ForceStandOnRevive";
+
     //General purpose event subscriptions. If you can avoid it register these events inside their own systems
     private void SubscribeEvents()
     {
@@ -44,6 +73,8 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
+        SubscribeLocalEvent<MobStateComponent, DamageModifyEvent>(OnDamageModify);
+        SubscribeLocalEvent<MobStateComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
         SubscribeLocalEvent<MobStateComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
     }
@@ -62,6 +93,8 @@ public partial class MobStateSystem
         {
             case MobState.Dead:
             case MobState.Critical:
+            case MobState.SoftCritical:
+            case MobState.HardCritical:
                 args.Cancelled = true;
                 break;
         }
@@ -75,11 +108,17 @@ public partial class MobStateSystem
                 //unused
                 break;
             case MobState.Critical:
-                _standing.Stand(target);
+            case MobState.SoftCritical:
+                var forceStand = false;
+                if (TryComp<TagComponent>(target, out var tag))
+                    forceStand = _tag.HasTag(tag, ForceStandOnReviveTag);
+
+                _standing.Stand(target, force: forceStand);
+                break;
+            case MobState.HardCritical:
                 break;
             case MobState.Dead:
                 RemComp<CollisionWakeComponent>(target);
-                _standing.Stand(target);
                 break;
             case MobState.Invalid:
                 //unused
@@ -100,10 +139,15 @@ public partial class MobStateSystem
         switch (state)
         {
             case MobState.Alive:
-                _standing.Stand(target);
+                if (HasComp<BorgChassisComponent>(target))
+                    _standing.Stand(target, force: true);
+                else
+                    _standing.Stand(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Alive);
                 break;
             case MobState.Critical:
+            case MobState.SoftCritical:
+            case MobState.HardCritical:
                 _standing.Down(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Critical);
                 break;
@@ -121,6 +165,15 @@ public partial class MobStateSystem
     }
 
     #region Event Subscribers
+
+    private void OnRefreshMovespeed(EntityUid uid, MobStateComponent component, RefreshMovementSpeedModifiersEvent args)
+    {
+        if (component.CurrentState == MobState.SoftCritical)
+        {
+            // apply a 0.4x multiplier (60% slowdown) when in soft crit
+            args.ModifySpeed(0.4f, 0.4f);
+        }
+    }
 
     private void OnSleepAttempt(EntityUid target, MobStateComponent component, ref TryingToSleepEvent args)
     {
@@ -145,6 +198,9 @@ public partial class MobStateSystem
             return;
         }
 
+        if (component.CurrentState == MobState.SoftCritical)
+            args.OnlyWhisper = true;
+
         CheckAct(uid, component, args);
     }
 
@@ -154,6 +210,7 @@ public partial class MobStateSystem
         {
             case MobState.Dead:
             case MobState.Critical:
+            case MobState.HardCritical:
                 args.Cancel();
                 break;
         }
@@ -184,6 +241,11 @@ public partial class MobStateSystem
     private void OnAttemptPacifiedAttack(Entity<MobStateComponent> ent, ref AttemptPacifiedAttackEvent args)
     {
         args.Cancelled = true;
+    }
+
+    private void OnDamageModify(Entity<MobStateComponent> ent, ref DamageModifyEvent args)
+    {
+        args.Damage *= _damageable.UniversalMobDamageModifier;
     }
 
     #endregion

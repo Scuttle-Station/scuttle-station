@@ -1,4 +1,10 @@
-﻿using System.Numerics;
+// SPDX-FileCopyrightText: 2024 John Space <bigdumb421@gmail.com>
+// SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared._Goobstation.Blob;
 using Content.Shared._Goobstation.Blob.Components;
@@ -65,7 +71,7 @@ public sealed partial class BlobChemSwapMenu : DefaultWindow
                 MinSize = new Vector2(64, 64),
                 HorizontalExpand = true,
                 Group = group,
-                StyleClasses = {StyleBase.ButtonSquare},
+                StyleClasses = {StyleClass.ButtonSquare},
                 ToggleMode = true,
                 Pressed = _selectedId == blobChem,
                 ToolTip = Loc.GetString($"blob-chem-{blobChem.ToString().ToLower()}-info"),

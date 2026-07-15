@@ -1,3 +1,9 @@
+// SPDX-FileCopyrightText: 2025 Liamofthesky <157073227+Liamofthesky@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 ReconPangolin <67752926+ReconPangolin@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using Content.Shared._NF.PlantAnalyzer;
 using JetBrains.Annotations;
 
@@ -24,12 +30,12 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
         _window.OpenCenteredLeft();
     }
 
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    protected override void UpdateState(BoundUserInterfaceState state)  //Funkystation - Switched to state instead of message to fix UI bug
     {
         if (_window == null)
             return;
 
-        if (message is not PlantAnalyzerScannedSeedPlantInformation cast)
+        if (state is not PlantAnalyzerScannedSeedPlantInformation cast)  //Funkystation - Switched to state instead of message to fix UI bug
             return;
         _window.Populate(cast);
     }

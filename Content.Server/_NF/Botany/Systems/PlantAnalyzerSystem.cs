@@ -1,8 +1,15 @@
+// SPDX-FileCopyrightText: 2025 Liamofthesky <157073227+Liamofthesky@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 ReconPangolin <67752926+ReconPangolin@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using Content.Server.Botany.Components;
 using Content.Server.PowerCell;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared._NF.PlantAnalyzer;
+using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -79,8 +86,9 @@ public sealed class PlantAnalyzerSystem : EntitySystem
 
         _audio.PlayPvs(ent.Comp.ScanningEndSound, ent);
 
+        ReadScannedPlant(ent, args.Args.Target.Value); //Funkystation - Renamed to match plants instead of copying HealthAnalyzer func names
+
         OpenUserInterface(args.User, ent);
-        UpdateScannedUser(ent, args.Args.Target.Value);
 
         args.Handled = true;
     }
@@ -93,22 +101,20 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         _uiSystem.OpenUi(analyzer, PlantAnalyzerUiKey.Key, actor.PlayerSession);
     }
 
-    public void UpdateScannedUser(Entity<PlantAnalyzerComponent> ent, EntityUid target)
+    public void ReadScannedPlant(Entity<PlantAnalyzerComponent> ent, EntityUid target)  //Funkystation - Renamed to match plants instead of copying HealthAnalyzer func names
     {
-        if (!_uiSystem.HasUi(ent, PlantAnalyzerUiKey.Key))
-            return;
 
         if (TryComp<SeedComponent>(target, out var seedComp))
         {
             if (seedComp.Seed != null)
             {
                 var state = ObtainingGeneDataSeed(seedComp.Seed, target, false, ent.Comp.Settings.AdvancedScan);
-                _uiSystem.ServerSendUiMessage(ent.Owner, PlantAnalyzerUiKey.Key, state);
+                _uiSystem.SetUiState(ent.Owner, PlantAnalyzerUiKey.Key, state);  //Funkystation - Swapped to set state instead of UI message
             }
             else if (seedComp.SeedId != null && _prototypeManager.TryIndex(seedComp.SeedId, out SeedPrototype? protoSeed))
             {
                 var state = ObtainingGeneDataSeed(protoSeed, target, false, ent.Comp.Settings.AdvancedScan);
-                _uiSystem.ServerSendUiMessage(ent.Owner, PlantAnalyzerUiKey.Key, state);
+                _uiSystem.SetUiState(ent.Owner, PlantAnalyzerUiKey.Key, state); //Funkystation - Swapped to set state instead of UI message
             }
         }
         else if (TryComp<PlantHolderComponent>(target, out var plantComp))
@@ -116,7 +122,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             if (plantComp.Seed != null)
             {
                 var state = ObtainingGeneDataSeed(plantComp.Seed, target, true, ent.Comp.Settings.AdvancedScan);
-                _uiSystem.ServerSendUiMessage(ent.Owner, PlantAnalyzerUiKey.Key, state);
+                _uiSystem.SetUiState(ent.Owner, PlantAnalyzerUiKey.Key, state); //Funkystation - Swapped to set state instead of UI message
             }
         }
     }
@@ -206,43 +212,18 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         return ret;
     }
 
-    public GasFlags GetGasFlags(IEnumerable<Gas> gases)
+    //Funkystation - Adjusted to work for new gases
+    public string[] GetGasFlags(IEnumerable<Gas> gases)
     {
-        var gasFlags = GasFlags.None;
+        int gasLength = gases.Count();
+        string[] plantGases = new string[gasLength];
+        int i = 0;
         foreach (var gas in gases)
         {
-            switch (gas)
-            {
-                case Gas.Nitrogen:
-                    gasFlags |= GasFlags.Nitrogen;
-                    break;
-                case Gas.Oxygen:
-                    gasFlags |= GasFlags.Oxygen;
-                    break;
-                case Gas.CarbonDioxide:
-                    gasFlags |= GasFlags.CarbonDioxide;
-                    break;
-                case Gas.Plasma:
-                    gasFlags |= GasFlags.Plasma;
-                    break;
-                case Gas.Tritium:
-                    gasFlags |= GasFlags.Tritium;
-                    break;
-                case Gas.WaterVapor:
-                    gasFlags |= GasFlags.WaterVapor;
-                    break;
-                case Gas.Ammonia:
-                    gasFlags |= GasFlags.Ammonia;
-                    break;
-                case Gas.NitrousOxide:
-                    gasFlags |= GasFlags.NitrousOxide;
-                    break;
-                case Gas.Frezon:
-                    gasFlags |= GasFlags.Frezon;
-                    break;
-            }
+            plantGases[i] = Atmospherics.GasNames.GetValueOrDefault(gas, Loc.GetString("gases-unknown"));
+            i++;
         }
-        return gasFlags;
+        return plantGases;
     }
 
     private void OnModeSelected(Entity<PlantAnalyzerComponent> ent, ref PlantAnalyzerSetMode args)

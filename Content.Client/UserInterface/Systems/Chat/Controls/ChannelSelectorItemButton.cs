@@ -1,3 +1,10 @@
+// SPDX-FileCopyrightText: 2022 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Jezithyr <Jezithyr.@gmail.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Stylesheets;
 using Content.Shared.Chat;
 using Robust.Client.UserInterface.Controls;
@@ -6,6 +13,9 @@ namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
 public sealed class ChannelSelectorItemButton : Button
 {
+    public const string StyleClassChatSelectorOptionButton = "ChatSelectorOptionButton";
+
+
     public readonly ChatSelectChannel Channel;
 
     public bool IsHidden => Parent == null;
@@ -13,7 +23,7 @@ public sealed class ChannelSelectorItemButton : Button
     public ChannelSelectorItemButton(ChatSelectChannel selector)
     {
         Channel = selector;
-        AddStyleClass(StyleNano.StyleClassChatChannelSelectorButton);
+        AddStyleClass(StyleClassChatSelectorOptionButton);
 
         Text = ChannelSelectorButton.ChannelSelectorName(selector);
 

@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 dffdff2423 <dffdff2423@gmail.com>
+SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+
+SPDX-License-Identifier: MIT
+-->
+
 <Document>
   # Space Law: Crime Listing
   Crimes are organized by their Degree (severity) as well as by color, or the letter code they are assigned.
@@ -93,9 +102,8 @@
         [color=black]Manslaughter (M)[/color]
       </Box>
     </ColorBox>
-    <ColorBox Color="#fd6864">
+    <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        [color=black]Attempted Murder (M)[/color]
       </Box>
     </ColorBox>
     <ColorBox>
@@ -115,7 +123,7 @@
     </ColorBox>
     <ColorBox Color="#fd6864">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        [color=black]Assault/Battery (M)[/color]
+        [color=black]Battery (M)[/color]
       </Box>
     </ColorBox>
     <ColorBox Color="#fd6864">
@@ -179,8 +187,9 @@
         [color=black]Trespass (T)[/color]
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#e02894">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+		[color=black]Fraud (F)[/color]
       </Box>
     </ColorBox>
     <ColorBox Color="#9698ED">
@@ -188,8 +197,9 @@
         [color=black]Secure Trespass (T)[/color]
       </Box>
     </ColorBox>
-    <ColorBox>
+    <ColorBox Color="#e02894">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+		[color=black]Grand Fraud (F)[/color]
       </Box>
     </ColorBox>
     <ColorBox>
@@ -208,6 +218,27 @@
     <ColorBox Color="#ffce93">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         [color=black]Grand Theft (G)[/color]
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+      </Box>
+    </ColorBox>
+	<ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Assault
       </Box>
     </ColorBox>
     <ColorBox>
@@ -429,6 +460,21 @@
         Leaders of a riot can be charged with all crimes that happen under their lead.
       </Box>
     </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Fraud
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        To intentionally use deception or trickery for personal gain, or to harm.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Includes topics such as cons, forgeries, and more. A catchall for deceptive, harmful, practices. See Grand Fraud for advanced cases.
+      </Box>
+    </ColorBox>
   </Table>
 
   ## III Degree Crimes
@@ -451,17 +497,32 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Assault/Battery
+        Battery
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To threaten to or to use physical force against someone without the intent to kill.
+        To use physical force against someone without the intent to kill.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted murder and battery are different, make sure you've got it right.
+        Be careful about the difference between Assault and Battery
+      </Box>
+    </ColorBox>
+	<ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Assault
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        To threaten or attempt the use of physical force against someone with intent to cause fear or harm.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Be careful about the difference between Assault and Battery
       </Box>
     </ColorBox>
     <ColorBox>
@@ -578,8 +639,6 @@
 
   ## IV Degree Crimes
   - Particularly violent offenders may be placed in permanent confinement.
-  - Attempted murder and murder are linked crimes and cannot be stacked together.
-  - Attempted murderers should be granted a more lenient sentence than a murderer.
   <Table Columns="3">
     <ColorBox>
       <Box>
@@ -594,21 +653,6 @@
     <ColorBox>
       <Box>
         Notes
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted Murder
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make an attempt to use physical force against someone with the clear intent to kill.
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Make sure you've got the proof to back up the intention claims.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -639,6 +683,21 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         This only changes from attempted to full on murder if the victim enters a state of being deceased, having to be resurrected.
+      </Box>
+    </ColorBox>
+	<ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Grand Fraud
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        To intentionally use deception or trickery for personal gain, or to harm, involving fabrication at a Command, Central Command, or other serious level.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Meant for Fraud at a higher level. Forging CC commands, pretending to be a CC inspectors, playing telephone with Captain and HOP to get All Access, etc. If it requires impersonation of Command or CC credentials or approval, it is likely Grand Fraud.
       </Box>
     </ColorBox>
   </Table>

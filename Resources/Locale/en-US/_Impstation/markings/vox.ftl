@@ -1,7 +1,21 @@
+# SPDX-FileCopyrightText: 2025 V <97265903+formlessnameless@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 marking-FeatheredLegL = Feathered Leg L
 marking-FeatheredLegL-featheredlegl = Feathered Leg L
 marking-FeatheredLegR = Feathered Leg R
 marking-FeatheredLegR-featheredlegr = Feathered Leg R
+marking-VoxLLegScales-l_leg = Leg Scales (Left)
+marking-VoxRLegScales-r_leg = Leg Scales (Right)
+marking-VoxLFootScales-l_foot = Foot Scales (Left)
+marking-VoxRFootScales-r_foot = Foot Scales (Right)
+marking-VoxLArmScales-l_arm = Arm Scales (Left)
+marking-VoxRArmScales-r_arm = Arm Scales (Right)
+marking-VoxLHandScales-l_hand = Hand Scales (Left)
+marking-VoxRHandScales-r_hand = Hand Scales (Right)
 marking-SpotsArmL = Spotted Arm L
 marking-SpotsArmL-spotsarml = Spotted Arm L
 marking-SpotsArmR = Spotted Arm R

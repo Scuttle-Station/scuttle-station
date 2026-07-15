@@ -1,3 +1,26 @@
+// SPDX-FileCopyrightText: 2022 Alex Evgrashin <aevgrashin@yandex.ru>
+// SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 Moony <moonheart08@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Cojoke <83733158+Cojoke-dot@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 DinoWattz <116862698+DinoWattz@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Ed <96445749+TheShuEd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 FunTust <49007663+FunTust@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Mr. 27 <45323883+Dutch-VanDerLinde@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 themias <89101928+themias@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 to4no_fix <156101927+chavonadelal@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Shared.Clothing.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -9,6 +32,7 @@ using Content.Shared.Item;
 using Content.Shared.Strip.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Content.Shared.Toggleable;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -19,6 +43,7 @@ public abstract class ClothingSystem : EntitySystem
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly InventorySystem _invSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -30,6 +55,7 @@ public abstract class ClothingSystem : EntitySystem
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<ClothingComponent, ItemMaskToggledEvent>(OnMaskToggled);
+        SubscribeLocalEvent<ClothingComponent, ItemHeadToggledEvent>(OnHeadToggled);
 
         SubscribeLocalEvent<ClothingComponent, ClothingEquipDoAfterEvent>(OnEquipDoAfter);
         SubscribeLocalEvent<ClothingComponent, ClothingUnequipDoAfterEvent>(OnUnequipDoAfter);
@@ -103,10 +129,19 @@ public abstract class ClothingSystem : EntitySystem
                     {
                         if (TryComp(item, out ClothingComponent? clothing) && clothing.Slots == slot.SlotFlags)
                         {
-                            //Checks for mask toggling. TODO: Make a generic system for this
+                            // Checks for mask toggling
                             if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask))
                             {
                                 if (clothing.EquippedPrefix != mask.EquippedPrefix)
+                                {
+                                    shouldLayerShow = false;
+                                    break;
+                                }
+                            }
+
+                            else if (comp.HideOnToggle && TryComp(item, out HeadToggleComponent? headToggle))
+                            {
+                                if (clothing.EquippedPrefix != headToggle.EquippedPrefix)
                                 {
                                     shouldLayerShow = false;
                                     break;
@@ -200,12 +235,25 @@ public abstract class ClothingSystem : EntitySystem
         args.Additive += ent.Comp.StripDelay;
     }
 
-    private void CheckEquipmentForLayerHide(EntityUid equipment, EntityUid equipee)
+    public void CheckEquipmentForLayerHide(EntityUid equipment, EntityUid equipee)
     {
         if (TryComp(equipment, out HideLayerClothingComponent? clothesComp) && TryComp(equipee, out HumanoidAppearanceComponent? appearanceComp))
             ToggleVisualLayers(equipee, clothesComp.Slots, appearanceComp.HideLayersOnEquip);
     }
+    private void OnHeadToggled(Entity<ClothingComponent> ent, ref ItemHeadToggledEvent args)
+    {
+        // If our custom visual manager is present, stop this default logic from running.
+        if (HasComp<MultiVisualStateComponent>(ent.Owner))
+            return;
 
+        var activePrefix = args.equippedPrefix;
+        var inactivePrefix = "off";
+
+        var newPrefix = ent.Comp.EquippedPrefix == activePrefix ? inactivePrefix : activePrefix;
+
+        SetEquippedPrefix(ent.Owner, newPrefix, ent.Comp);
+        CheckEquipmentForLayerHide(ent.Owner, args.Wearer);
+    }
     #region Public API
 
     public void SetEquippedPrefix(EntityUid uid, string? prefix, ClothingComponent? clothing = null)

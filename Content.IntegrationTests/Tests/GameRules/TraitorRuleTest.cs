@@ -1,3 +1,13 @@
+// SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 IProduceWidgets <107586145+IProduceWidgets@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2025 Quantum-cross <7065792+Quantum-cross@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
@@ -16,7 +26,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
-[Ignore("There are issues with this test that I cannot figure out, but roundstart antags work just fine. If it doesn't, bite me.")]
+//[Ignore("There are issues with this test that I cannot figure out, but roundstart antags work just fine. If it doesn't, bite me.")]
 public sealed class TraitorRuleTest
 {
     private const string TraitorGameRuleProtoId = "Traitor";
@@ -75,7 +85,7 @@ public sealed class TraitorRuleTest
         Assert.That(dummies.All(x => x.AttachedEntity == null));
 
         // Opt-in the player for the traitor role
-        await pair.SetAntagPreference(TraitorAntagRoleName, true);
+        await pair.SetAntagPreferences([TraitorAntagRoleName]);
 
         // Add the game rule
         TraitorRuleComponent traitorRule = null;

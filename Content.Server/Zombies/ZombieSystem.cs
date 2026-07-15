@@ -1,5 +1,39 @@
+// SPDX-FileCopyrightText: 2022 EmoGarbage404 <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Errant <35878406+dmnct@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 metalgearsloth <metalgearsloth@gmail.com>
+// SPDX-FileCopyrightText: 2023 0x6273 <0x40@keemail.me>
+// SPDX-FileCopyrightText: 2023 Alex Evgrashin <aevgrashin@yandex.ru>
+// SPDX-FileCopyrightText: 2023 Doru991 <75124791+Doru991@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Jezithyr <jezithyr@gmail.com>
+// SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Tom Leys <tom@crump-leys.com>
+// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 corentt <36075110+corentt@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 keronshb <54602815+keronshb@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 nikthechampiongr <32041239+nikthechampiongr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 themias <89101928+themias@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Debug <49997488+DebugOk@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Jake Huxell <JakeHuxell@pm.me>
+// SPDX-FileCopyrightText: 2024 MilenVolf <63782763+MilenVolf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Mr. 27 <45323883+Dutch-VanDerLinde@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 QueerCats <jansencheng3@gmail.com>
+// SPDX-FileCopyrightText: 2026 Terkala <appleorange64@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
 using Content.Server.Actions;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
@@ -8,6 +42,7 @@ using Content.Server.Speech.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Cloning;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Damage;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
@@ -17,8 +52,10 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.StatusIcon.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
+using Content.Shared._EinsteinEngines.Silicon.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -69,7 +106,7 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<IncurableZombieComponent, MapInitEvent>(OnPendingMapInit);
 
-            SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
+            SubscribeLocalEvent<ZombieComponent, DamageModifyEvent>(OnDamageModified);
 
         }
 
@@ -192,6 +229,12 @@ namespace Content.Server.Zombies
 
                 // Stop random groaning
                 _autoEmote.RemoveEmote(uid, "ZombieGroan");
+
+                // Handle death infection spread
+                if (args.NewMobState == MobState.Dead)
+                {
+                    _zombieTumor.HandleZombieDeathInfection(uid);
+                }
             }
         }
 
@@ -221,6 +264,8 @@ namespace Content.Server.Zombies
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
             var chance = (max - min) * ((total - items) / total) + min;
+            //multiplies infection chance by set multiplier
+            chance *= component.ZombieInfectionChanceMultiplier;
             return chance;
         }
 
@@ -248,13 +293,46 @@ namespace Content.Server.Zombies
                 {
                     if (!HasComp<ZombieImmuneComponent>(entity) && !HasComp<NonSpreaderZombieComponent>(args.User) && _random.Prob(GetZombieInfectionChance(entity, component)))
                     {
-                        EnsureComp<PendingZombieComponent>(entity);
-                        EnsureComp<ZombifyOnDeathComponent>(entity);
+                        // Check for tiered immunity (bite infections start at Early stage)
+                        bool protectedByTiered = false;
+                        if (TryComp<ZombieTumorTieredImmuneComponent>(entity, out var tieredImmune))
+                        {
+                            // Level 2-5 should block bite infections (Early stage)
+                            protectedByTiered = tieredImmune.ImmunityLevel >= 2;
+                        }
+
+                        if (!protectedByTiered)
+                        {
+                            // For alive (non-crit, non-dead) players, give them zombie tumor infection
+                            // Crit/dead players will be zombified immediately in the block below
+                            if (mobState.CurrentState == MobState.Alive)
+                            {
+                                // Bite infections start at stage 1 (Early)
+                                _zombieTumor.InfectEntity(entity, ZombieTumorInfectionStage.Early);
+                            }
+                            else
+                            {
+                                // For crit/dead players, keep the old behavior
+                                EnsureComp<PendingZombieComponent>(entity);
+                                EnsureComp<ZombifyOnDeathComponent>(entity);
+                                // Ensure StatusIconComponent exists so infection status can be displayed in UI
+                                EnsureComp<StatusIconComponent>(entity);
+                            }
+                        }
                     }
                 }
 
                 if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity) && !HasComp<ZombieImmuneComponent>(entity))
                 {
+                    // Check if this is a critical IPC (has Silicon component AND Bloodstream, is in critical state)
+                    if (_mobState.IsCritical(entity, mobState) &&
+                        HasComp<SiliconComponent>(entity) &&
+                        HasComp<BloodstreamComponent>(entity))
+                    {
+                        // Give IPC a robot tumor before zombifying
+                        _zombieTumor.SpawnTumorOrgan(entity);
+                    }
+
                     ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;
                 }
@@ -296,10 +374,14 @@ namespace Content.Server.Zombies
             return true;
         }
 
-        private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
+        private void OnZombieCloning(Entity<ZombieComponent> ent, ref CloningEvent args)
         {
-            if (UnZombify(args.Source, args.Target, zombiecomp))
-                args.NameHandled = true;
+            UnZombify(ent.Owner, args.CloneUid, ent.Comp);
+        }
+
+        private void OnDamageModified(Entity<ZombieComponent> ent, ref DamageModifyEvent args)
+        {
+            args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, ent.Comp.DamageModifier);
         }
     }
 }

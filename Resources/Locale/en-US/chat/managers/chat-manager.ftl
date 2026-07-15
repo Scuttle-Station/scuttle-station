@@ -1,14 +1,46 @@
+# SPDX-FileCopyrightText: 2021 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Galactic Chimp <63882831+GalacticChimp@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Kara Dinyes <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2022 Michael Phillips <1194692+MeltedPixel@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Morbo <exstrominer@gmail.com>
+# SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 metalgearsloth <comedian_vs_clown@hotmail.com>
+# SPDX-FileCopyrightText: 2023 Errant <35878406+dmnct@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Kara <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Nairod <110078045+Nairodian@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 OctoRocket <88291550+OctoRocket@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+# SPDX-FileCopyrightText: 2023 Scribbles0 <91828755+Scribbles0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 deathride58 <deathride58@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+# SPDX-FileCopyrightText: 2024 chavonadelal <156101927+chavonadelal@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+# SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
 ### UI
 
 chat-manager-max-message-length = Your message exceeds {$maxMessageLength} character limit
 chat-manager-ooc-chat-enabled-message = OOC chat has been enabled.
 chat-manager-ooc-chat-disabled-message = OOC chat has been disabled.
-chat-manager-looc-chat-enabled-message = LOOC chat has been enabled.
-chat-manager-looc-chat-disabled-message = LOOC chat has been disabled.
-chat-manager-dead-looc-chat-enabled-message = Dead players can now use LOOC.
-chat-manager-dead-looc-chat-disabled-message = Dead players can no longer use LOOC.
-chat-manager-crit-looc-chat-enabled-message = Crit players can now use LOOC.
-chat-manager-crit-looc-chat-disabled-message = Crit players can no longer use LOOC.
+chat-manager-looc-chat-enabled-message = Help chat has been enabled.
+chat-manager-looc-chat-disabled-message = Help chat has been disabled.
+chat-manager-dead-looc-chat-enabled-message = Dead players can now use Help.
+chat-manager-dead-looc-chat-disabled-message = Dead players can no longer use Help.
+chat-manager-crit-looc-chat-enabled-message = Crit players can now use Help.
+chat-manager-crit-looc-chat-disabled-message = Crit players can no longer use Help.
 chat-manager-admin-ooc-chat-enabled-message = Admin OOC chat has been enabled.
 chat-manager-admin-ooc-chat-disabled-message = Admin OOC chat has been disabled.
 
@@ -34,7 +66,7 @@ chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
      [true] {CAPITALIZE($entityName)} {$message}[/italic]
     }
 
-chat-manager-entity-looc-wrap-message = LOOC: [bold]{$entityName}:[/bold] {$message}
+chat-manager-entity-looc-wrap-message = Help: [bold]{$entityName}:[/bold] {$message}
 chat-manager-send-ooc-wrap-message = OOC: [bold]{$playerName}:[/bold] {$message}
 chat-manager-send-ooc-patron-wrap-message = OOC: [bold][color={$patronColor}]{$playerName}[/color]:[/bold] {$message}
 
@@ -45,11 +77,11 @@ chat-manager-send-admin-announcement-wrap-message = [bold]{$adminChannelName}: {
 
 chat-manager-send-hook-ooc-wrap-message = OOC: [bold](D){$senderName}:[/bold] {$message}
 
-chat-manager-dead-channel-name = DEAD
+chat-manager-dead-channel-name = GHOST
 chat-manager-admin-channel-name = ADMIN
 
 chat-manager-rate-limited = You are sending messages too quickly!
-chat-manager-rate-limit-admin-announcement = Player { $player } breached chat rate limits. Watch them if this is a regular occurence.
+chat-manager-rate-limit-admin-announcement = Rate limit warning: { $player }
 
 ## Speech verbs for chat
 

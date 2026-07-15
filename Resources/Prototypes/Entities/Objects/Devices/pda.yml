@@ -1,3 +1,118 @@
+# SPDX-FileCopyrightText: 2020 FL-OZ <58238103+FL-OZ@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2020 FL-OZ <anotherscuffed@gmail.com>
+# SPDX-FileCopyrightText: 2020 Hugo Laloge <hugo.laloge@gmail.com>
+# SPDX-FileCopyrightText: 2020 Peter Wedder <burneddi@gmail.com>
+# SPDX-FileCopyrightText: 2020 Víctor Aguilera Puerto <zddm@outlook.es>
+# SPDX-FileCopyrightText: 2020 Ygg01 <daniel.fath7@gmail.com>
+# SPDX-FileCopyrightText: 2021 Elijahrane <60792108+Elijahrane@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Moony <moonheart08@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Paul Ritter <ritter.paul1@googlemail.com>
+# SPDX-FileCopyrightText: 2021 Swept <sweptwastaken@protonmail.com>
+# SPDX-FileCopyrightText: 2021 SweptWasTaken <sweptwastaken@protonmail.com>
+# SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <gradientvera@outlook.com>
+# SPDX-FileCopyrightText: 2021 Visne <39844191+Visne@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2021 mirrorcult <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2022 Alex Evgrashin <aevgrashin@yandex.ru>
+# SPDX-FileCopyrightText: 2022 Cheackraze <71046427+Cheackraze@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Chris V <HoofedEar@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Emisse <99158783+Emisse@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Jacob Tong <10494922+ShadowCommander@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2022 Lamrr <96937466+Lamrr@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 LordEclipse <106132477+LordEclipse@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Mervill <mervills.email@gmail.com>
+# SPDX-FileCopyrightText: 2022 Myctai <108953437+Myctai@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Peptide90 <78795277+Peptide90@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 TheDarkElites <73414180+TheDarkElites@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 hubismal <47284081+hubismal@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 keronshb <54602815+keronshb@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 metalgearsloth <comedian_vs_clown@hotmail.com>
+# SPDX-FileCopyrightText: 2022 theashtronaut <112137107+theashtronaut@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 0x6273 <0x40@keemail.me>
+# SPDX-FileCopyrightText: 2023 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Dakamakat <52600490+dakamakat@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 MagnusCrowe <whiterider1988@yahoo.com>
+# SPDX-FileCopyrightText: 2023 Maxtone <124747282+MagnusCrowe@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 MishaUnity <81403616+MishaUnity@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Nairod <110078045+Nairodian@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Phill101 <28949487+Phill101@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Phill101 <holypics4@gmail.com>
+# SPDX-FileCopyrightText: 2023 Puro <103608145+PuroSlavKing@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Sir Winters <7543955+Owai-Seek@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 TemporalOroboros <TemporalOroboros@gmail.com>
+# SPDX-FileCopyrightText: 2023 Ubaser <134914314+UbaserB@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Whisper <121047731+QuietlyWhisper@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 brainfood1183 <113240905+brainfood1183@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 crazybrain23 <44417085+crazybrain23@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 gus <august.eymann@gmail.com>
+# SPDX-FileCopyrightText: 2023 nmajask <nmajask@gmail.com>
+# SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 ArchRBX <5040911+ArchRBX@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Hanz <41141796+Hanzdegloker@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 IProduceWidgets <107586145+IProduceWidgets@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Julian Giebel <juliangiebel@live.de>
+# SPDX-FileCopyrightText: 2024 K-Dynamic <20566341+K-Dynamic@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 KingFroozy <froozy345@mail.ru>
+# SPDX-FileCopyrightText: 2024 Kira Bridgeton <161087999+Verbalase@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Milon <plmilonpl@gmail.com>
+# SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+# SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2024 PoTeletubby <108604614+PoTeletubby@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Psychpsyo <60073468+Psychpsyo@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Skubman <ba.fallaria@gmail.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+# SPDX-FileCopyrightText: 2024 TsjipTsjip <19798667+TsjipTsjip@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 VMSolidus <evilexecutive@gmail.com>
+# SPDX-FileCopyrightText: 2024 Vasilis <vasilis@pikachu.systems>
+# SPDX-FileCopyrightText: 2024 Zachary Yona <58833995+Magicalus@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 lapatison <100279397+lapatison@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 strO0pwafel <153459934+strO0pwafel@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 themias <89101928+themias@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Эдуард <36124833+Ertanic@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 DevilishMilk <michaellapjr@gmail.com>
+# SPDX-FileCopyrightText: 2025 Josh Hilsberg <thejoulesberg@gmail.com>
+# SPDX-FileCopyrightText: 2025 JoulesBerg <104539820+JoulesBerg@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 MaiaArai <158123176+YaraaraY@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Mish <bluscout78@yahoo.com>
+# SPDX-FileCopyrightText: 2025 PurpleTranStar <tehevilduckiscoming@gmail.com>
+# SPDX-FileCopyrightText: 2025 Rainbow <ev0lvkitten@gmail.com>
+# SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Sophia Rustfield <gitlab@catwolf.xyz>
+# SPDX-FileCopyrightText: 2025 SpaceCat~Chan <49094338+SpaceCat-Chan@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 empty0set <16693552+empty0set@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 empty0set <empty0set@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 mqole <113324899+mqole@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 pa.pecherskij <pa.pecherskij@interfax.ru>
+# SPDX-FileCopyrightText: 2025 rex1431ify <r.l@live.se>
+# SPDX-FileCopyrightText: 2025 rosieposie <52761126+rosieposieeee@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2026 Copilot <175728472+Copilot@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2026 Komoni <131829655+Komonighub@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2026 TheHolyAegis <76066612+TheHolyAegis@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2026 TheHolyAegis <sanderkamphuis719@gmail.com>
+# SPDX-FileCopyrightText: 2026 Xcybitt <197952719+Xcybitt@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2026 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: entity
   abstract: true
   parent: [ BaseItem, StorePresetUplink ] #PDA's have uplinks so they have to inherit the data.
@@ -80,8 +195,11 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - NanoTaskCartridge
       - NewsReaderCartridge
       - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
+      - WordleCartridge
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -96,6 +214,7 @@
   - type: UserInterface
     interfaces:
       enum.PdaUiKey.Key:
+        requireInputValidation: false
         type: PdaBoundUserInterface
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface
@@ -124,6 +243,25 @@
 
 - type: entity
   parent: BasePDA
+  id: BaseWidePDA
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    layers:
+    - map: [ "enum.PdaVisualLayers.Base" ]
+      state: "pda"
+    - state: "light_overlay_wide"
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: "unshaded"
+      visible: false
+    - state: "id_overlay_wide"
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: "unshaded"
+      visible: false
+
+- type: entity
+  parent: BasePDA
   id: BaseSecurityPDA
   abstract: true
   components:
@@ -131,9 +269,12 @@
     preinstalled:
     - CrewManifestCartridge
     - NotekeeperCartridge
+    - NanoTaskCartridge
     - NewsReaderCartridge
     - WantedListCartridge
     - NanoChatCartridge # DeltaV
+    - SOSCartridge # Imp
+    - WordleCartridge
 
 - type: entity
   parent: BasePDA
@@ -145,9 +286,12 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - NanoTaskCartridge
       - NewsReaderCartridge
       - MedTekCartridge
       - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
+      - WordleCartridge
 
 - type: entity
   parent: BasePDA
@@ -161,7 +305,7 @@
     borderColor: "#717059"
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseEngineeringContraband]
   id: TechnicalAssistantPDA
   name: technical assistant PDA
   description: Why isn't it yellow?
@@ -199,10 +343,10 @@
     state: pda-internmed
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
 
 - type: entity
-  parent: BaseSecurityPDA
+  parent: [BaseSecurityPDA, BaseSecurityContraband]
   id: SecurityCadetPDA
   name: security cadet PDA
   description: Why isn't it red?
@@ -221,7 +365,7 @@
     state: pda-interncadet
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseScienceContraband]
   id: ResearchAssistantPDA
   name: research assistant PDA
   description: Why isn't it purple?
@@ -240,7 +384,7 @@
     state: pda-internsci
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: ServiceWorkerPDA
   name: service worker PDA
   description: Why isn't it gray?
@@ -259,7 +403,7 @@
     state: pda-internservice
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: ChefPDA
   name: chef PDA
   description: Covered in grease and flour.
@@ -279,7 +423,7 @@
     accent: italian
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: BotanistPDA
   name: botanist PDA
   description: Has an earthy scent.
@@ -298,7 +442,7 @@
     state: pda-hydro
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: ClownPDA
   name: clown PDA
   description: Looks can be deceiving.
@@ -361,7 +505,7 @@
     - DoorBumpOpener
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: MimePDA
   name: mime PDA
   description: Suprisingly not on mute.
@@ -411,7 +555,7 @@
 
 - type: entity
   name: chaplain PDA
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: ChaplainPDA
   description: God's chosen PDA.
   components:
@@ -440,12 +584,18 @@
 
 - type: entity
   name: quartermaster PDA
-  parent: BasePDA
+  parent: [BasePDA, BaseCommandContraband]
   id: QuartermasterPDA
   description: PDA for the guy that orders the guns.
   components:
   - type: Pda
     id: QuartermasterIDCard
+    penSlot: # Funky
+      startingItem: LuxuryPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -463,9 +613,11 @@
       - NewsReaderCartridge
       - MailMetricsCartridge
       - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
+      - WordleCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCargoContraband]
   id: CargoPDA
   name: cargo PDA
   description: PDA for the guys that order the pizzas.
@@ -481,9 +633,17 @@
     borderColor: "#e39751"
   - type: Icon
     state: pda-cargo
+  - type: CartridgeLoader # DeltaV
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - NanoChatCartridge # DeltaV
+    - SOSCartridge # Imp
+    - WordleCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCargoContraband]
   id: SalvagePDA
   name: salvage PDA
   description: Smells like ash.
@@ -505,12 +665,15 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - NanoTaskCartridge
       - NewsReaderCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
+      - WordleCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: BartenderPDA
   name: bartender PDA
   description: Smells like beer.
@@ -528,7 +691,7 @@
     state: pda-bartender
 
 - type: entity
-  parent: BasePDA
+  parent: [BaseWidePDA, BaseCivilianContraband]
   id: LibrarianPDA
   name: librarian PDA
   description: Smells like books.
@@ -563,7 +726,7 @@
     - DoorBumpOpener
 
 - type: entity
-  parent: BaseSecurityPDA
+  parent: [BaseSecurityPDA, BaseSecurityLawyerContraband]
   id: LawyerPDA
   name: lawyer PDA
   description: For lawyers to poach dubious clients.
@@ -598,7 +761,7 @@
     - DoorBumpOpener
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseJanitorContraband]
   id: JanitorPDA
   name: janitor PDA
   description: Smells like bleach.
@@ -616,7 +779,7 @@
     state: pda-janitor
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCommandContraband]
   id: CaptainPDA
   name: captain PDA
   description: Surprisingly no different from your PDA.
@@ -640,7 +803,7 @@
     state: pda-captain
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCommandContraband]
   id: HoPPDA
   name: head of personnel PDA
   description: Looks like it's been chewed on.
@@ -665,13 +828,19 @@
     state: pda-hop
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCommandContraband]
   id: CEPDA
   name: chief engineer PDA
   description: Looks like it's barely been used.
   components:
   - type: Pda
     id: CEIDCard
+    penSlot: # Funky
+      startingItem: LuxuryPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -684,7 +853,7 @@
     state: pda-ce
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseEngineeringContraband]
   id: EngineerPDA
   name: engineer PDA
   description: Rugged and well-worn.
@@ -703,13 +872,19 @@
     state: pda-engineer
 
 - type: entity
-  parent: BaseMedicalPDA
+  parent: [BaseMedicalPDA, BaseCommandContraband]
   id: CMOPDA
   name: chief medical officer PDA
   description: Extraordinarily shiny and sterile.
   components:
   - type: Pda
     id: CMOIDCard
+    penSlot: # Funky
+      startingItem: LuxuryPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -723,7 +898,7 @@
     state: pda-cmo
 
 - type: entity
-  parent: BaseMedicalPDA
+  parent: [BaseMedicalPDA, BaseMedicalContraband]
   id: MedicalPDA
   name: medical PDA
   description: Shiny and sterile.
@@ -742,7 +917,7 @@
     state: pda-medical
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
 
 - type: entity
   parent: MedicalPDA
@@ -756,7 +931,7 @@
     - DoorBumpOpener
 
 - type: entity
-  parent: BaseMedicalPDA
+  parent: [BaseMedicalPDA, BaseMedicalContraband]
   id: ParamedicPDA
   name: paramedic PDA
   description: Shiny and sterile.
@@ -775,7 +950,7 @@
     state: pda-paramedic
 
 - type: entity
-  parent: BaseMedicalPDA
+  parent: [BaseMedicalPDA, BaseMedicalContraband]
   id: ChemistryPDA
   name: chemistry PDA
   description: It has a few discolored blotches here and there.
@@ -794,13 +969,19 @@
     state: pda-chemistry
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCommandContraband]
   id: RnDPDA
   name: research director PDA
   description: It appears surprisingly ordinary.
   components:
   - type: Pda
     id: RDIDCard
+    penSlot: # Funky
+      startingItem: LuxuryPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -812,9 +993,17 @@
     accentVColor: "#8900c9"
   - type: Icon
     state: pda-rd
+  - type: CartridgeLoader
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
+      - WordleCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseScienceContraband]
   id: SciencePDA
   name: science PDA
   description: It's covered with an unknown gooey substance.
@@ -833,7 +1022,7 @@
     state: pda-science
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseScienceContraband]
   id: RoboticsPDA
   name: robotics PDA
   description: It's covered with scratches all over it.
@@ -845,15 +1034,30 @@
     accentVColor: "#d33725"
   - type: Icon
     state: pda-roboticist
+  - type: CartridgeLoader
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
+      - WordleCartridge
 
 - type: entity
-  parent: BaseSecurityPDA
+  parent: [BaseSecurityPDA, BaseCommandContraband]
   id: HoSPDA
   name: head of security PDA
   description: Whosoever bears this PDA is the law.
   components:
   - type: Pda
     id: HoSIDCard
+    penSlot: # Funky
+      startingItem: HoloflarePen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -868,13 +1072,16 @@
     preinstalled:
     - CrewManifestCartridge
     - NotekeeperCartridge
+    - NanoTaskCartridge
     - NewsReaderCartridge
     - WantedListCartridge
     - LogProbeCartridge
     - NanoChatCartridge # DeltaV
+    - SOSCartridge # Imp
+    - WordleCartridge
 
 - type: entity
-  parent: BaseSecurityPDA
+  parent: [BaseSecurityPDA, BaseSecurityContraband]
   id: WardenPDA
   name: warden PDA
   description: The OS appears to have been jailbroken.
@@ -893,7 +1100,7 @@
     state: pda-warden
 
 - type: entity
-  parent: BaseSecurityPDA
+  parent: [BaseSecurityPDA, BaseSecurityContraband]
   id: SecurityPDA
   name: security PDA
   description: Red to hide the stains of passenger blood.
@@ -911,8 +1118,8 @@
     state: pda-security
 
 - type: entity
-  parent: BaseSecurityPDA
-  id: CentcomPDA
+  parent: [BaseSecurityPDA, BaseCentcommContraband]
+  id: BaseCentcomPDA
   name: CentComm PDA
   description: Light green sign of walking bureaucracy.
   components:
@@ -934,18 +1141,89 @@
     state: pda-centcom
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
+    diskSpace: 12 # DeltaV
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+
+- type: entity
+  parent: BaseCentcomPDA
+  id: CentcomOfficialPDA
+  name: CentComm officials PDA
+  description: Light green sign of walking authoritative bureaucracy.
+  components:
+  - type: Pda
+    id: CentcomIDCard
+    penSlot:
+      startingItem: PenCentcom
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-centcom
+  - type: PdaBorderColor
+    borderColor: "#b8ac04"
+  - type: Icon
+    state: pda-centcom
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
       - NewsReaderCartridge
       - MedTekCartridge
       - WantedListCartridge
       - LogProbeCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
+      - WordleCartridge
 
 - type: entity
-  parent: CentcomPDA
+  parent: BaseCentcomPDA
+  id: CentcomInternPDA
+  name: CentComm intern PDA
+  description: Light green sign of walking authoritative bureaucracy.
+  components:
+  - type: Pda
+    id: CentcomInternIDCard
+    penSlot:
+      startingItem: PenCentcom
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-centcom
+  - type: PdaBorderColor
+    borderColor: "#b8ac04"
+  - type: Icon
+    state: pda-centcom
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - WantedListCartridge
+      - LogProbeCartridge
+      - AstroNavCartridge
+      # - NanoChatCartridge | Commented out so they can't communicate with the station directly
+      # - SOSCartridge | CCIs won't just die, right?
+      - WordleCartridge
+
+- type: entity
+  parent: CentcomOfficialPDA
   id: AdminPDA
   name: Admin PDA
   suffix: Admin
@@ -954,27 +1232,31 @@
   - type: Pda
     id: UniversalIDCard
   - type: HealthAnalyzer
+    maxScanRange: null
     scanDelay: 0
     silent: true
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     notificationsEnabled: false
-    diskSpace: 10 # DeltaV
+    diskSpace: 12 # DeltaV
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - NanoTaskCartridge
       - NewsReaderCartridge
       - LogProbeCartridge
       - WantedListCartridge
       - MedTekCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
+      - WordleCartridge
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
 
 - type: entity
-  parent: CentcomPDA
+  parent: CentcomOfficialPDA
   id: DeathsquadPDA
   suffix: Death Squad
   components:
@@ -985,7 +1267,7 @@
     - DoorBumpOpener
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: MusicianPDA
   name: musician PDA
   description: It fills you with inspiration.
@@ -1019,7 +1301,7 @@
     - DoorBumpOpener
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseEngineeringContraband]
   id: AtmosPDA
   name: atmos PDA
   description: Still smells like plasma.
@@ -1066,7 +1348,7 @@
     - DoorBumpOpener
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseSyndicateContraband]
   id: SyndiPDA
   name: syndicate PDA
   description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
@@ -1087,9 +1369,10 @@
     preinstalled:
       - NotekeeperCartridge
       - NanoChatCartridge # DeltaV
+      - NanoTaskCartridge
 
 - type: entity
-  parent: BaseSecurityPDA
+  parent: [BaseSecurityPDA, BaseCentcommContraband]
   id: ERTLeaderPDA
   name: ERT Leader PDA
   suffix: Leader
@@ -1113,12 +1396,14 @@
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
+      - NanoTaskCartridge
       - NewsReaderCartridge
       - MedTekCartridge
       - WantedListCartridge
       - LogProbeCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1171,7 +1456,7 @@
     id: ERTSecurityIDCard
 
 - type: entity
-  parent: ERTLeaderPDA
+  parent: [ERTLeaderPDA, BaseCentcommContraband]
   id: CBURNPDA
   name: CBURN PDA
   description: Smells like rotten flesh.
@@ -1184,7 +1469,7 @@
     accentVColor: "#447987"
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: PsychologistPDA
   name: psychologist PDA
   description: Looks immaculately cleaned.
@@ -1203,7 +1488,7 @@
     state: pda-medical
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: ReporterPDA
   name: reporter PDA
   description: Smells like freshly printed press.
@@ -1225,9 +1510,17 @@
     borderColor: "#3f3f74"
   - type: Icon
     state: pda-reporter
+  - type: CartridgeLoader # DeltaV
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - NanoChatCartridge # DeltaV
+    - SOSCartridge # Imp
+    - WordleCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: ZookeeperPDA
   name: zookeeper PDA
   description: Made with genuine synthetic leather. Crikey!
@@ -1245,7 +1538,7 @@
     state: pda-zookeeper
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCivilianContraband]
   id: BoxerPDA
   name: boxer PDA
   description: Float like a butterfly, ringtone like a bee.
@@ -1264,7 +1557,7 @@
     state: pda-boxer
 
 - type: entity
-  parent: BaseSecurityPDA
+  parent: [BaseSecurityPDA, BaseSecurityContraband]
   id: DetectivePDA
   name: detective PDA
   description: Smells like rain... pouring down the rooftops...
@@ -1284,13 +1577,16 @@
     preinstalled:
     - CrewManifestCartridge
     - NotekeeperCartridge
+    - NanoTaskCartridge
     - NewsReaderCartridge
     - WantedListCartridge
     - LogProbeCartridge
     - NanoChatCartridge # DeltaV
+    - SOSCartridge # Imp
+    - WordleCartridge
 
 - type: entity
-  parent: BaseMedicalPDA
+  parent: [BaseMedicalPDA, BaseSecurityContraband]
   id: BrigmedicPDA
   name: brigmedic PDA
   description: I wonder whose pulse is on the screen? I hope it doesn't stop...
@@ -1312,10 +1608,13 @@
     preinstalled:
     - CrewManifestCartridge
     - NotekeeperCartridge
+    - NanoTaskCartridge
     - NewsReaderCartridge
     - WantedListCartridge
     - MedTekCartridge
     - NanoChatCartridge # DeltaV
+    - SOSCartridge # Imp
+    - WordleCartridge
 
 - type: entity
   parent: ClownPDA
@@ -1326,6 +1625,13 @@
   components:
   - type: Pda
     id: CluwneIDCard
+    penSlot:
+      startingItem: CrayonGreen
+      ejectSound: /Audio/Items/bikehorn.ogg
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1335,17 +1641,10 @@
     borderColor: "#1c8f4d"
   - type: Icon
     state: pda-cluwne
-    penSlot:
-      startingItem: CrayonGreen
-      ejectSound: /Audio/Items/bikehorn.ogg
-      priority: -1
-      whitelist:
-        tags:
-        - Write
   - type: Unremoveable
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseEngineeringContraband]
   id: SeniorEngineerPDA
   name: senior engineer PDA
   description: Seems to have been taken apart and put back together several times.
@@ -1364,7 +1663,35 @@
     state: pda-seniorengineer
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseCargoContraband]
+  id: SeniorCargoPDA
+  name: senior cargo PDA
+  description: Upgraded with all the latest in expensive, useless PDA accessories.
+  components:
+  - type: Pda
+    id: CargoIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-cargo
+  - type: PdaBorderColor
+    borderColor: "#665346"
+    accentVColor: "#F7BA6A"
+  - type: Icon
+    state: pda-cargo
+  - type: CartridgeLoader # DeltaV - MailMetrics courier tracker
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
+      - WordleCartridge
+      - AstroNavCartridge #because there's no salv senior PDA YET, giving the cargonians astronav
+
+- type: entity
+  parent: [BasePDA, BaseScienceContraband]
   id: SeniorResearcherPDA
   name: senior researcher PDA
   description: Looks like it's been through years of chemical burns and explosions.
@@ -1384,7 +1711,7 @@
     state: pda-seniorresearcher
 
 - type: entity
-  parent: BaseMedicalPDA
+  parent: [BaseMedicalPDA, BaseMedicalContraband]
   id: SeniorPhysicianPDA
   name: senior physician PDA
   description: Smells faintly like iron and chemicals.
@@ -1404,7 +1731,7 @@
     state: pda-seniorphysician
 
 - type: entity
-  parent: BaseSecurityPDA
+  parent: [BaseSecurityPDA, BaseSecurityContraband]
   id: SeniorOfficerPDA
   name: senior officer PDA
   description: Beaten, battered and broken, but just barely useable.
@@ -1439,7 +1766,7 @@
     state: pda-pirate
 
 - type: entity
-  parent: BaseMedicalPDA
+  parent: [BaseMedicalPDA, BaseSyndicateContraband]
   id: SyndiAgentPDA
   name: syndicate agent PDA
   description: For those days when healing normal syndicates aren't enough, try healing nuclear operatives instead!
@@ -1459,6 +1786,7 @@
     uiKey: enum.PdaUiKey.Key
     preinstalled:
       - NotekeeperCartridge
+      - NanoTaskCartridge
       - MedTekCartridge
       - NanoChatCartridge # DeltaV
 
@@ -1520,3 +1848,27 @@
         type: HealthAnalyzerBoundUserInterface
       enum.ChameleonUiKey.Key:
         type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: [BaseWidePDA, BaseMagicalContraband]
+  id: WizardPDA
+  name: wizard PDA
+  description: You hear faint whispers coming from it.
+  components:
+  - type: Pda
+    id: WizardIDCard
+    penSlot:
+      startingItem: PenWiz
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-wizard
+  - type: PdaBorderColor
+    borderColor: "#7F3300"
+  - type: Icon
+    state: pda-wizard

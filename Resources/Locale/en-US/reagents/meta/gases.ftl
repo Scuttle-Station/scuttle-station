@@ -1,3 +1,14 @@
+# SPDX-FileCopyrightText: 2022 Alex Evgrashin <aevgrashin@yandex.ru>
+# SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 metalgearsloth <comedian_vs_clown@hotmail.com>
+# SPDX-FileCopyrightText: 2023 Kara <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 Steve <marlumpy@gmail.com>
+# SPDX-FileCopyrightText: 2025 marc-pelletier <113944176+marc-pelletier@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
 reagent-name-oxygen = oxygen
 reagent-desc-oxygen = An oxidizing, colorless gas.
 
@@ -30,3 +41,21 @@ reagent-desc-nitrium = An experimental performance enhancing gas. Nitrium can ha
 
 reagent-name-pluoxium = pluoxium
 reagent-desc-pluoxium = A gas that could supply even more oxygen to the bloodstream when inhaled, without being an oxidizer.
+
+reagent-name-hyper-noblium = hyper-noblium
+reagent-desc-hyper-noblium = The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occuring.
+
+reagent-name-proto-nitrate = proto-nitrate
+reagent-desc-proto-nitrate = A very volatile gas that reacts differently with various gases.
+
+reagent-name-zauker = zauker
+reagent-desc-zauker = A highly toxic gas, it's production is highly regulated on top of being difficult. It also breaks down when in contact with nitrogen.
+
+reagent-name-halon = halon
+reagent-desc-halon = A potent fire supressant. Removes oxygen from high temperature fires and cools down the area.
+
+reagent-name-helium = helium
+reagent-desc-helium = A very inert gas produced by the fusion of hydrogen and it's derivatives.
+
+reagent-name-anti-noblium = anti-noblium
+reagent-desc-anti-noblium = We still don't know what it does, but it sells for a lot.

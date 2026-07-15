@@ -1,0 +1,315 @@
+// SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 AftrLite <61218133+AftrLite@users.noreply.github.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+using System.Linq;
+using Content.Server.Actions;
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Popups;
+using Content.Server.Research.Systems;
+using Content.Server.Singularity.EntitySystems;
+using Content.Shared._DV.CosmicCult;
+using Content.Shared._DV.CosmicCult.Components;
+using Content.Shared.DoAfter;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
+using Content.Shared.Physics;
+using Content.Shared.Popups;
+using Content.Shared.Power;
+using Content.Shared.Projectiles;
+using Content.Shared.Research.Components;
+using Content.Shared.Singularity.Components;
+using Content.Shared.Temperature.Components;
+using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
+
+namespace Content.Server._DV.CosmicCult.EntitySystems;
+
+public sealed class CosmicRiftSystem : EntitySystem
+{
+    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly IRobustRandom _rand = default!;
+    [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly EmitterSystem _emitter = default!;
+    [Dependency] private readonly ResearchSystem _research = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<CosmicMalignRiftComponent, StartCollideEvent>(OnStartCollide);
+        SubscribeLocalEvent<CosmicMalignRiftComponent, InteractHandEvent>(OnInteract);
+
+        SubscribeLocalEvent<CosmicMalignRiftComponent, EventPurgeRiftDoAfter>(OnPurgeDoAfter);
+        SubscribeLocalEvent<CosmicCultComponent, EventAbsorbRiftDoAfter>(OnAbsorbDoAfter);
+
+        SubscribeLocalEvent<CosmicLambdaParticleSourceComponent, ActivateInWorldEvent>(OnActivated);
+        SubscribeLocalEvent<CosmicLambdaParticleSourceComponent, PowerChangedEvent>(OnPowerChanged);
+    }
+
+    private void OnActivated(Entity<CosmicLambdaParticleSourceComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (!_doAfter.IsRunning(ent.Comp.DoAfterId))
+            return;
+
+        args.Handled = true;
+    }
+    private void OnPowerChanged(Entity<CosmicLambdaParticleSourceComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!args.Powered && _doAfter.IsRunning(ent.Comp.DoAfterId))
+            _doAfter.Cancel(ent.Comp.DoAfterId);
+    }
+
+    private void OnStartCollide(Entity<CosmicMalignRiftComponent> ent, ref StartCollideEvent args)
+    {
+        if (_doAfter.IsRunning(ent.Comp.DoAfterId) || !HasComp<CosmicLambdaParticleComponent>(args.OtherEntity) || !TryComp<ProjectileComponent>(args.OtherEntity, out var apeBullet) || apeBullet.Shooter is null)
+            return;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, apeBullet.Shooter.Value, ent.Comp.PurgeTime, new EventPurgeRiftDoAfter(), ent, ent)
+        {
+            NeedHand = false,
+            BreakOnWeightlessMove = true,
+            BreakOnMove = true,
+            BreakOnHandChange = false,
+            BreakOnDropItem = false,
+            BreakOnDamage = false,
+            RequireCanInteract = false,
+            DistanceThreshold = 10
+        };
+        _popup.PopupEntity(Loc.GetString("cosmiccult-rift-lambda-charging"), apeBullet.Shooter.Value);
+        _doAfter.TryStartDoAfter(doAfterArgs, out var doAfterId);
+        ent.Comp.DoAfterId = doAfterId;
+
+        if (TryComp<CosmicLambdaParticleSourceComponent>(apeBullet.Shooter, out var particleSource))
+            particleSource.DoAfterId = doAfterId;
+    }
+
+    public void SpawnRift(EntityUid grid)
+    {
+        if (!TryComp<MapGridComponent>(grid, out var gridComp))
+            return;
+
+        var xform = Transform(grid);
+
+        var targetCoords = xform.Coordinates;
+        var gridBounds = gridComp.LocalAABB.Scale(0.7f);
+
+        for (var i = 0; i < 25; i++)
+        {
+            var randomX = _rand.Next((int) gridBounds.Left, (int) gridBounds.Right);
+            var randomY = _rand.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
+
+            var tile = new Vector2i(randomX, randomY);
+
+            // no air-blocked areas.
+            if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile) ||
+                _atmosphere.IsTileAirBlocked(grid, tile, mapGridComp: gridComp))
+            {
+                continue;
+            }
+
+            // don't spawn inside of solid objects
+            var physQuery = GetEntityQuery<PhysicsComponent>();
+            var valid = true;
+
+            // TODO: This should be using static lookup.
+            foreach (var ent in _mapSystem.GetAnchoredEntities(grid, gridComp, tile))
+            {
+                if (!physQuery.TryGetComponent(ent, out var body))
+                    continue;
+                if (body.BodyType != BodyType.Static ||
+                    !body.Hard ||
+                    (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                    continue;
+
+                valid = false;
+                break;
+            }
+            if (!valid)
+                continue;
+
+            var pos = _mapSystem.GridTileToLocal(grid, gridComp, tile);
+
+            targetCoords = pos;
+            break;
+        }
+
+        Spawn("CosmicMalignRift", targetCoords);
+    }
+
+    private void OnInteract(Entity<CosmicMalignRiftComponent> ent, ref InteractHandEvent args)
+    {
+        if (args.Handled || _doAfter.IsRunning(ent.Comp.DoAfterId))
+        {
+            _popup.PopupEntity(Loc.GetString("cosmiccult-rift-inuse"), args.User, args.User);
+            return;
+        }
+
+        if (!TryComp<CosmicCultComponent>(args.User, out var cultist))
+        {
+            _popup.PopupEntity(Loc.GetString("cosmiccult-rift-invaliduser"), args.User, args.User);
+            return;
+        }
+
+        if (cultist.CosmicEmpowered)
+        {
+            _popup.PopupEntity(Loc.GetString("cosmiccult-rift-alreadyempowered"), args.User, args.User);
+            return;
+        }
+
+        if (cultist.WasEmpowered)
+        {
+            _popup.PopupEntity(Loc.GetString("cosmiccult-rift-wasempowered"), args.User, args.User);
+            return;
+        }
+
+        args.Handled = true;
+        _popup.PopupEntity(Loc.GetString("cosmiccult-rift-beginabsorb"), args.User, args.User);
+        var doargs = new DoAfterArgs(EntityManager,
+            args.User,
+            ent.Comp.AbsorbTime,
+            new EventAbsorbRiftDoAfter(),
+            args.User,
+            ent)
+        {
+            DistanceThreshold = 1.5f, Hidden = true, BreakOnDamage = true, BreakOnHandChange = true, BreakOnMove = true,
+            MovementThreshold = 0.5f,
+        };
+        _doAfter.TryStartDoAfter(doargs, out var doAfterId);
+        ent.Comp.DoAfterId = doAfterId;
+    }
+
+    private void OnAbsorbDoAfter(Entity<CosmicCultComponent> uid, ref EventAbsorbRiftDoAfter args)
+    {
+        var comp = uid.Comp;
+        if (args.Args.Target is not { } target || args.Cancelled || args.Handled)
+            return;
+
+        args.Handled = true;
+        var tgtpos = Transform(target).Coordinates;
+        _actions.AddAction(uid, ref uid.Comp.CosmicFragmentationActionEntity, uid.Comp.CosmicFragmentationAction, uid);
+        Spawn(uid.Comp.AbsorbVFX, tgtpos);
+        comp.ActionEntities.Add(uid.Comp.CosmicFragmentationActionEntity);
+        comp.WasEmpowered = true;
+        comp.CosmicEmpowered = true;
+        comp.CosmicSiphonQuantity = 2;
+        comp.CosmicGlareRange = 10;
+        comp.CosmicGlareDuration = TimeSpan.FromSeconds(10);
+        comp.CosmicGlareStun = TimeSpan.FromSeconds(1);
+        comp.CosmicImpositionDuration = TimeSpan.FromSeconds(7.4);
+        comp.CosmicBlankDuration = TimeSpan.FromSeconds(26);
+        comp.CosmicBlankDelay = TimeSpan.FromSeconds(0.4);
+        comp.Respiration = false;
+        EnsureComp<PressureImmunityComponent>(args.User);
+        EnsureComp<TemperatureImmunityComponent>(args.User);
+        _popup.PopupCoordinates(
+            Loc.GetString("cosmiccult-rift-absorb", ("NAME", Identity.Entity(args.Args.User, EntityManager))),
+            Transform(args.Args.User).Coordinates,
+            PopupType.MediumCaution);
+        QueueDel(target);
+    }
+
+    private void OnPurgeDoAfter(Entity<CosmicMalignRiftComponent> ent, ref EventPurgeRiftDoAfter args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
+        args.Handled = true;
+        var tgtpos = Transform(ent).Coordinates;
+
+        _protoMan.TryIndex(ent.Comp.BeamVFX, out var proto);
+        if (proto is null)
+            return;
+        DoShitCodedBeam(ent, args.User, 90, proto);  // Why the fuck do i have to rotate this by 90 degrees? Whatever.
+
+        if (TryComp<EmitterComponent>(args.User, out var emitterComp))
+            _emitter.PowerOff(args.User, emitterComp);
+
+        _popup.PopupCoordinates(
+            Loc.GetString("cosmiccult-rift-purge"),
+            Transform(ent).Coordinates,
+            PopupType.Medium);
+        var purgeVFX = Spawn(ent.Comp.PurgeVFX, tgtpos);
+        _audio.PlayPvs(ent.Comp.PurgeSFX, Transform(purgeVFX).Coordinates);
+        _audio.PlayPvs(ent.Comp.BeamSFX, Transform(args.User).Coordinates);
+        QueueDel(ent);
+
+        var allServers = EntityQueryEnumerator<ResearchServerComponent>();
+        while (allServers.MoveNext(out var server, out _))
+        {
+            _research.ModifyServerPoints(server, 1200);
+        }
+    }
+
+    /// <summary>
+    /// This code is lifted, in part, from SharedGunSystem.
+    /// I cleaned it up because i want to be able to arbitrarily shoot lasers without needing guns.
+    /// No, i'm not writing a yummy API-friendly arbitrary sprite-to-raycast visualization system. This is good enough. Fuck you.
+    /// </summary>
+    private void DoShitCodedBeam(EntityUid target, EntityUid source, double rotationOffset, HitscanPrototype hitscan)
+    {
+
+        var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
+        var fromCoordinates = Transform(source).Coordinates;
+        var fromMap = _transform.ToMapCoordinates(Transform(source).Coordinates);
+        var toMap = _transform.ToMapCoordinates(Transform(target).Coordinates);
+        var angle = Transform(source).LocalRotation - Angle.FromDegrees(rotationOffset);
+        var distance = (toMap.Position - fromMap.Position).Length();
+
+        if (distance >= 1f)
+        {
+            if (hitscan.MuzzleFlash != null)
+            {
+                var coords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
+                var netCoords = GetNetCoordinates(coords);
+
+                sprites.Add((netCoords, angle, hitscan.MuzzleFlash, 1f));
+            }
+
+            if (hitscan.TravelFlash != null)
+            {
+                var coords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
+                var netCoords = GetNetCoordinates(coords);
+
+                sprites.Add((netCoords, angle, hitscan.TravelFlash, distance - 1.5f));
+            }
+        }
+
+        if (hitscan.ImpactFlash != null)
+        {
+            var coords = fromCoordinates.Offset(angle.ToVec() * distance);
+            var netCoords = GetNetCoordinates(coords);
+
+            sprites.Add((netCoords, angle.FlipPositive(), hitscan.ImpactFlash, 1f));
+        }
+
+        if (_netManager.IsServer && sprites.Count > 0)
+        {
+            RaiseNetworkEvent(new HitscanEvent
+            {
+                Sprites = sprites,
+            }, Filter.Pvs(fromCoordinates, entityMan: EntityManager));
+        }
+    }
+}

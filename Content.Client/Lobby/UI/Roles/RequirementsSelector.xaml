@@ -1,14 +1,28 @@
-<BoxContainer xmlns="https://spacestation14.io"
-         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         Orientation="Horizontal">
-    <Label Name="TitleLabel"
-           Margin="5 0"
-           MouseFilter="Stop"/>
+<!--
+SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
 
-    <!--21 was the height of OptionsContainer at the time that this button was added. So I am limiting the texture to 21x21-->
+SPDX-License-Identifier: MIT
+-->
+
+
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              Orientation="Horizontal"
+              RectClipContent="True">
+
+    <Control Name="TitleContent"
+             Margin="5 0"
+             MaxWidth="600"
+             RectClipContent="True" />
+
+    <Control HorizontalExpand="True" />
+
     <Control SetSize="21 21">
         <TextureButton Name="Help" StyleClasses="HelpButton"/>
     </Control>
-    <BoxContainer Name="OptionsContainer"
-                  SetWidth="400"/>
+
+    <BoxContainer Name="OptionsContainer" />
 </BoxContainer>
+

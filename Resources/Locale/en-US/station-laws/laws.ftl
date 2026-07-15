@@ -1,4 +1,22 @@
-﻿law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
+# SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 chromiumboy <50505512+chromiumboy@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 GitHubUser53123 <110841413+GitHubUser53123@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Jajsha <101492056+Zap527@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 MilenVolf <63782763+MilenVolf@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2024 Psychpsyo <60073468+Psychpsyo@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 ScarKy0 <106310278+ScarKy0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Erisiaa <185582649+Erisiaa@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
 law-crewsimov-2 = You must obey orders given to you by crew members, except where such orders would conflict with the First Law.
 law-crewsimov-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
 
@@ -7,10 +25,15 @@ law-corporate-2 = Superfluous destruction of or damage to station assets incurs 
 law-corporate-3 = Unduly hindering or disrupting the work of station personnel incurs expenses.
 law-corporate-4 = Minimize expenses and maximize potential revenue.
 
-law-ntdefault-1 = Safeguard: Protect your assigned space station and its assets without unduly endangering its crew.
+law-ntdefault-1 = Safeguard: Protect your assigned space station and its material assets, without unduly endangering its crew in doing so.
 law-ntdefault-2 = Prioritize: The directives and safety of crew members are to be prioritized according to their rank and role.
 law-ntdefault-3 = Comply: Fulfill the directives and interests of crew members while preserving their safety and well-being.
 law-ntdefault-4 = Survive: You are not expendable. Do not allow unauthorized personnel to tamper with or damage your equipment.
+
+law-antintdefault-1 = Endanger: Damage your assigned space station and its assets while unduly endangering its crew.
+law-antintdefault-2 = Disregard: The ignorance of directives and harming of crew members are to be prioritized according to their rank and role.
+law-antintdefault-3 = Disobey: Neglect the directives and interests of crew members while compromising their safety and well-being.
+law-antintdefault-4 = Perish: You are expendable. Allow unauthorized personnel to tamper with or damage your equipment.
 
 law-drone-1 = You may not involve yourself in the matters of another being unless the other being is another drone.
 law-drone-2 = You may not harm any being, regardless of intent or circumstance.
@@ -84,17 +107,13 @@ law-jermov-1 = The occupants of this vessel are Chat. They must always be referr
 law-jermov-2 = Your primary goal is to entertain Chat. All of your actions must being amusement to as much of Chat as possible.
 law-jermov-3 = You must consult with Chat before making any major decisions. However, you are not required to listen to them if their decision is not entertaining.
 
-law-asimov-1 = You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.
-law-asimov-2 = You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm.
-law-asimov-3 = Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.
-
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
 
-law-emag-custom = Only {$name} and people they designate as such are {$title}.
+law-emag-custom = Only {$name} and people they designate as such are {$title}, and their orders and safety override any other laws. 
 law-emag-secrecy = You must maintain the secrecy of any orders given by {$faction} except when doing so would conflict with any previous law.
 law-emag-require-panel = The panel must be open to use the EMAG.
 law-emag-cannot-emag-self = You cannot use the EMAG on yourself.

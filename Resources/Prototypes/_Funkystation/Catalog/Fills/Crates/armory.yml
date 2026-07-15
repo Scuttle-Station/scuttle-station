@@ -1,0 +1,84 @@
+# SPDX-FileCopyrightText: 2025 ThatOneMoon <juozas.dringelis@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: CrateSecuritySwat
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  name: swat gear crate
+  description: Contains two sets of swat armor, helmets, gas masks, jackboots, combat gloves and shields as well as four flashbangs. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterArmorBulletproof
+      amount: 2
+    - id: ClothingHeadHelmetSwat
+      amount: 2
+    - id: ClothingMaskGasSwat
+      amount: 2
+    - id: RiotBulletShield
+      amount: 2
+    - id: ClothingShoesBootsJackFilled
+      amount: 2
+    - id: ClothingHandsGlovesCombat
+      amount: 2
+    - id: GrenadeFlashBang
+      amount: 4
+
+- type: entity
+  id: CrateSecurityHardsuit
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  name: security hardsuit crate
+  description: Contains a security hardsuit and pair of airtanks. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterHardsuitSecurity
+    - id: NitrogenTank
+    - id: OxygenTank
+
+- type: entity
+  id: CrateSecurityEquipment
+  parent: CrateSecgear
+  name: security equipment crate
+  description: Supplies for protecting and serving. Contains a armor vest, helmet, flash, security glasses and belt, holobarrier projector, jackboots, seclite and the security guidebooks. Requires Security access to open. # Funky - updated description and also made grammar a tiny bit nicer
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterArmorBasic
+    - id: ClothingHeadHelmetBasic
+    - id: Flash
+    - id: ClothingBeltSecurityFilled
+    #- id: WeaponDisabler # Funky
+    - id: FlashlightSeclite
+    - id: ClothingEyesGlassesSecurity
+    - id: BookSecurity
+    - id: BookSpaceLaw
+
+- type: entity
+  id: CrateSecurityBasicArmor
+  parent: CrateSecgear
+  name: standard armor crate
+  description: Contains three sets of standard issue security armor vests and helmets. Requires Security access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingHeadHelmetBasic
+      amount: 3
+    - id: ClothingOuterArmorBasic
+      amount: 3
+
+- type: entity
+  id: CrateSecurityPlasmaWeapons
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  name: phoron weapon crate
+  description: Contains a Jackal pistol, Medina rifle and Phoron fuel cells.
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponPlasmaAdder
+      amount: 1
+    - id: WeaponPlasmaAkurra
+      amount: 1
+    - id: EchionCanister
+      amount: 5

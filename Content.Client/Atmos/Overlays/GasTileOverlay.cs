@@ -1,3 +1,29 @@
+// SPDX-FileCopyrightText: 2020 Metal Gear Sloth <metalgearsloth@gmail.com>
+// SPDX-FileCopyrightText: 2020 Víctor Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 E F R <602406+Efruit@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 GraniteSidewalk <32942106+GraniteSidewalk@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 Acruid <shatter66@gmail.com>
+// SPDX-FileCopyrightText: 2022 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 hubismal <47284081+hubismal@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2022 metalgearsloth <comedian_vs_clown@hotmail.com>
+// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Ygg01 <y.laughing.man.y@gmail.com>
+// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 TemporalOroboros <TemporalOroboros@gmail.com>
+// SPDX-FileCopyrightText: 2024 eoineoineoin <github@eoinrul.es>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 MaiaArai <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 YaraaraY <158123176+YaraaraY@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 vivry <249628524+vivry@users.noreply.github.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Numerics;
 using Content.Client.Atmos.Components;
 using Content.Client.Atmos.EntitySystems;
@@ -35,7 +61,8 @@ namespace Content.Client.Atmos.Overlays
         private readonly Texture[][] _frames;
 
         // Fire overlays
-        private const int FireStates = 3;
+        private const int FireStates = 6;
+        private const int FireTemperatureVariations = 3;
         private const string FireRsiPath = "/Textures/Effects/fire.rsi";
 
         private readonly float[] _fireTimer = new float[FireStates];
@@ -139,7 +166,7 @@ namespace Content.Client.Atmos.Overlays
 
                 if (_fireTimer[i] < time) continue;
                 _fireTimer[i] -= time;
-                _fireFrameCounter[i] = (frameCount + 1) % _fireFrames[i].Length;
+                _fireFrameCounter[i] = (frameCount + 1) % (_fireFrames[i].Length / FireTemperatureVariations);
             }
         }
 
@@ -243,8 +270,18 @@ namespace Content.Client.Atmos.Overlays
                             if (!localBounds.Contains(index))
                                 continue;
 
-                            var fireState = gas.FireState - 1;
-                            var texture = state.fireFrames[fireState][state.fireFrameCounter[fireState]];
+                            //There are currently 12 frames in the fire spritesheets, a subset of 4 is played depending on the tile temperature.
+                            //4 is the standard 'average temperature' offset, resulting in frames 4-8 of the spritesheet being played.
+                            var temperatureTextureOffset = 4;
+
+                            if (gas.Temperature < 1273.15f) { //<1000C
+                                temperatureTextureOffset = 0;
+                            } else if (gas.Temperature > 2273.15f) { //>2000C
+                                temperatureTextureOffset = 8;
+                            }
+
+                            var fireState = gas.FireState - 1 + gas.FireType * 3;
+                            var texture = state.fireFrames[fireState][state.fireFrameCounter[fireState]+temperatureTextureOffset];
                             state.drawHandle.DrawTexture(texture, index);
                         }
                     }

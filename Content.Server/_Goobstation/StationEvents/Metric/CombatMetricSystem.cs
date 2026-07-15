@@ -1,4 +1,9 @@
-﻿using Content.Server.Station.Systems;
+// SPDX-FileCopyrightText: 2025 misghast <51974455+misterghast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+using Content.Server.Station.Systems;
 using Content.Server._Goobstation.StationEvents.Metric;
 using Content.Server._Goobstation.StationEvents.Metric.Components;
 using Content.Shared.Damage;
@@ -8,6 +13,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Roles;
+using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
@@ -47,6 +53,16 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
             if (tagsQ.TryGetComponent(item, out var tags)) // thanks code rabbit
             {
                 allTags.UnionWith(tags.Tags);
+                if(TryComp<StorageComponent>(item, out var storageComponent))
+                {
+                    foreach (var nested_item in storageComponent.StoredItems.Keys)
+                    {
+                        if (tagsQ.TryGetComponent(nested_item, out var nested_item_tags))
+                        {
+                            allTags.UnionWith(nested_item_tags.Tags);
+                        }
+                    }
+                }
             }
         }
 

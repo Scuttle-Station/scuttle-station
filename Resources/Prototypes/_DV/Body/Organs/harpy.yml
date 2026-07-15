@@ -1,9 +1,23 @@
+# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 TheSecondLord <88201625+TheSecondLord@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 mkanke-real <mikekanke@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 - type: entity
   id: OrganHarpyLungs
   parent: BaseHumanOrgan
   name: lungs
   description: "An advanced pair of avian lungs. Filters oxygen by way of moving air constantly through air sacs."
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    heldPrefix: lungs
   - type: Sprite
     layers:
       - state: lung-l
@@ -24,8 +38,8 @@
     solutions:
       organ:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: UncookedAnimalProteins # Funky - change organs to be made of uncooked animal proteins
+          Quantity: 8 # Funky - a full slab of raw meat is 9
       Lung:
         maxVol: 100.0
         canReact: false

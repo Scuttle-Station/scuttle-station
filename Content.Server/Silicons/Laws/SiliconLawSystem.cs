@@ -1,4 +1,32 @@
+// SPDX-FileCopyrightText: 2023 Bixkitts <72874643+Bixkitts@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 LankLTE <135308300+LankLTE@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Pieter-Jan Briers <pieterjan.briers@gmail.com>
+// SPDX-FileCopyrightText: 2023 ShadowCommander <10494922+ShadowCommander@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 chromiumboy <50505512+chromiumboy@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2024 Jajsha <101492056+Zap527@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Jake Huxell <JakeHuxell@pm.me>
+// SPDX-FileCopyrightText: 2024 LordCarve <27449516+LordCarve@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Simon <63975668+Simyon264@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tadeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Tay <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2025 Tyranex <bobthezombie4@gmail.com>
+// SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+// SPDX-FileCopyrightText: 2026 ALooseGoose <ALooseGoosey@gmail.com>
+// SPDX-FileCopyrightText: 2026 AftrLite <61218133+AftrLite@users.noreply.github.com>
+//
+// SPDX-License-Identifier: MIT
+
 using System.Linq;
+using Content.Server._DV.Objectives.Events;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.Radio.Components;
@@ -20,6 +48,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
+using Content.Server._Impstation.Borgs.FreeformLaws;
+using System.Linq;
 
 namespace Content.Server.Silicons.Laws;
 
@@ -121,6 +151,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (args.Handled)
             return;
 
+        // Only initialize from prototype if Lawset is completely null
+        // Don't overwrite custom laws that were set by SetLaws
         if (component.Lawset == null)
             component.Lawset = GetLawset(component.Laws);
 
@@ -194,7 +226,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             return new SiliconLawset();
 
         var ev = new GetSiliconLawsEvent(uid);
-
         RaiseLocalEvent(uid, ref ev);
         if (ev.Handled)
         {
@@ -282,11 +313,16 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// </summary>
     public void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
     {
+
         if (!TryComp<SiliconLawProviderComponent>(target, out var component))
+        {
             return;
+        }
 
         if (component.Lawset == null)
+        {
             component.Lawset = new SiliconLawset();
+        }
 
         component.Lawset.Laws = newLaws;
         NotifyLawsChanged(target, cue);
@@ -294,16 +330,57 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     protected override void OnUpdaterInsert(Entity<SiliconLawUpdaterComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        // TODO: Prediction dump this
         if (!TryComp(args.Entity, out SiliconLawProviderComponent? provider))
             return;
 
-        var lawset = GetLawset(provider.Laws).Laws;
-        var query = EntityManager.CompRegistryQueryEnumerator(ent.Comp.Components);
+        List<SiliconLaw> lawset;
 
+        // Just overrides regular laws with freeform if required
+        if (EntityManager.HasComponent<FreeformLawEntryComponent>(provider.Owner))
+        {
+            var lawEv = new GetSiliconLawsEvent(provider.Owner);
+            RaiseLocalEvent(provider.Owner, ref lawEv);
+
+            lawset = lawEv.Handled ? lawEv.Laws.Laws : new List<SiliconLaw>();
+        }
+        else
+        {
+            lawset = GetLawset(provider.Laws).Laws;
+        }
+
+        var query = EntityManager.CompRegistryQueryEnumerator(ent.Comp.Components);
         while (query.MoveNext(out var update))
         {
             SetLaws(lawset, update, provider.LawUploadSound);
+
+            var evt = new AILawUpdatedEvent(update, provider.Laws);
+            RaiseLocalEvent(ref evt);
+        }
+    }
+
+    public SiliconLawset GetFreeformLaws(EntityUid uid)
+    {
+        if (EntityManager.HasComponent<FreeformLawEntryComponent>(uid))
+        {
+            // Use a separate variable to avoid conflict with the main ev
+            var freeformEv = new GetSiliconLawsEvent(uid);
+            RaiseLocalEvent(uid, ref freeformEv);
+
+            if (freeformEv.Handled)
+            {
+                return freeformEv.Laws;
+            }
+
+            // If no laws were set yet, return empty
+            return new SiliconLawset()
+            {
+                Laws = new List<SiliconLaw>(),
+                ObeysTo = "Freeform"
+            };
+        }
+        else
+        {
+            return new SiliconLawset();
         }
     }
 }

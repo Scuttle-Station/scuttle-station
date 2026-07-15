@@ -1,0 +1,75 @@
+# SPDX-FileCopyrightText: 2025 8tv <eightev@gmail.com>
+# SPDX-FileCopyrightText: 2025 corresp0nd <46357632+corresp0nd@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+- type: entity
+  parent: Jug
+  suffix: holywater
+  id: JugHolywater
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-holywater
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Holywater
+          Quantity: 200
+
+- type: entity
+  parent: CratePlastic
+  id: CrateChaplain
+  name: religious crate
+  components:
+  - type: Icon
+    sprite: _Impstation/Structures/Storage/Crates/religious.rsi
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/Crates/religious.rsi
+
+- type: entity
+  id: CrateServiceReligious
+  parent: CrateChaplain
+  name: religious supplies crate
+  description: Contains holy water and a bible.
+  components:
+    - type: StorageFill
+      contents:
+        - id: Bible
+        - id: JugHolywater
+          amount: 2
+
+- type: entity
+  id: CrateScienceAnomalousContainment
+  parent: CrateScience
+  name: anomalous containment supplies crate
+  description: Contains a Containment Oubliette circuit board and two A.P.E circuit boards.
+  components:
+    - type: StorageFill
+      contents:
+        - id: OublietteCircuitBoard
+        - id: APECircuitboard
+          amount: 2
+
+- type: cargoProduct
+  id: ServiceReligiousSupplies
+  icon:
+    sprite: _Impstation/Structures/Storage/Crates/religious.rsi
+    state: icon
+  product: CrateServiceReligious
+  cost: 1500
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ScienceAnomalousContainmentSupplies
+  icon:
+    sprite: Structures/Storage/Crates/science.rsi
+    state: icon
+  product: CrateScienceAnomalousContainment
+  cost: 8000
+  category: cargoproduct-category-name-science
+  group: market

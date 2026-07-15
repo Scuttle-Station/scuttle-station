@@ -1,3 +1,10 @@
+// SPDX-FileCopyrightText: 2024 John Space <bigdumb421@gmail.com>
+// SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
+// SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
 using Content.Server._Goobstation.Blob.Components;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
@@ -77,6 +84,12 @@ public sealed class BlobPodSystem : SharedBlobPodSystem
         {
             _explosionSystem.QueueExplosion(uid, blobCoreComponent.BlobExplosive, 4, 1, 2, maxTileBreak: 0);
         }
+
+        if (component.Factory == null || !TryComp<BlobFactoryComponent>(component.Factory, out var factoryComp))
+            return;
+        
+        factoryComp.BlobPods.Remove(uid);
+        factoryComp.SpawnedCount -= 1;
     }
 
     public bool Zombify(Entity<BlobPodComponent> ent, EntityUid target)

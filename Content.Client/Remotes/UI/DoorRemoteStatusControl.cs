@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Remotes.Components;
@@ -18,7 +23,7 @@ public sealed class DoorRemoteStatusControl : Control
     public DoorRemoteStatusControl(Entity<DoorRemoteComponent> entity)
     {
         _entity = entity;
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         AddChild(_label);
     }
 
